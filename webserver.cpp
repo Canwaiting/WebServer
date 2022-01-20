@@ -103,37 +103,39 @@ void WebServer::thread_pool()
 void WebServer::eventListen()
 {
     //网络编程基础步骤
-    m_listenfd = socket(PF_INET, SOCK_STREAM, 0);
-    assert(m_listenfd >= 0);
+    m_listenfd = socket(PF_INET, SOCK_STREAM, 0); /*创建Socket*/
+    assert(m_listenfd >= 0); /*判断是否成功创建,否则输出错误信息,并结束*/
 
     //优雅关闭连接
-    if (0 == m_OPT_LINGER)
+    if (0 == m_OPT_LINGER) /*TODO: m_OPT_LINGER*/
     {
-        struct linger tmp = {0, 1};
-        setsockopt(m_listenfd, SOL_SOCKET, SO_LINGER, &tmp, sizeof(tmp));
+        struct linger tmp = {0, 1}; /*TODO:linger */
+        setsockopt(m_listenfd, SOL_SOCKET, SO_LINGER, &tmp, sizeof(tmp)); /*设置socket的属性*/
     }
     else if (1 == m_OPT_LINGER)
     {
         struct linger tmp = {1, 1};
-        setsockopt(m_listenfd, SOL_SOCKET, SO_LINGER, &tmp, sizeof(tmp));
+        setsockopt(m_listenfd, SOL_SOCKET, SO_LINGER, &tmp, sizeof(tmp)); /*设置socket的属性*/
     }
 
     int ret = 0;
     struct sockaddr_in address;
-    bzero(&address, sizeof(address));
-    address.sin_family = AF_INET;
+    bzero(&address, sizeof(address)); /*初始化address*/ 
+    /*初始化属性*/
+    address.sin_family = AF_INET; 
     address.sin_addr.s_addr = htonl(INADDR_ANY);
     address.sin_port = htons(m_port);
 
     int flag = 1;
-    setsockopt(m_listenfd, SOL_SOCKET, SO_REUSEADDR, &flag, sizeof(flag));
-    ret = bind(m_listenfd, (struct sockaddr *)&address, sizeof(address));
-    assert(ret >= 0);
-    ret = listen(m_listenfd, 5);
+    setsockopt(m_listenfd, SOL_SOCKET, SO_REUSEADDR, &flag, sizeof(flag));/*设置socket的属性*/ 
+    ret = bind(m_listenfd, (struct sockaddr *)&address, sizeof(address)); /*Bind*/
+    assert(ret >= 0); 
+    ret = listen(m_listenfd, 5); /*Listen*/
     assert(ret >= 0);
 
-    utils.init(TIMESLOT);
+    utils.init(TIMESLOT); /*TODO:ALL*/ 
 
+    /*TODO*/
     //epoll创建内核事件表
     epoll_event events[MAX_EVENT_NUMBER];
     m_epollfd = epoll_create(5);
