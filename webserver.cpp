@@ -387,8 +387,7 @@ void WebServer::eventLoop()
     //一直在监听epoll池
     while (!stop_server)
     {
-        /*TODO:主线程调用epoll_wait等待一组文件描述符上的事件，并将当前所有就绪的epoll_event复制到events数组中 */
-        int number = epoll_wait(m_epollfd, events, MAX_EVENT_NUMBER, -1); /*内核监听epoll池,发生事件后,置位并返回发生事件数*/
+        int number = epoll_wait(m_epollfd, events, MAX_EVENT_NUMBER, -1); /*主线程调用epoll_wait等待一组文件描述符上的事件，并将当前所有就绪的epoll_event复制到events数组中 */
         //错误
         if (number < 0 && errno != EINTR)
         {
