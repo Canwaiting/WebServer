@@ -129,7 +129,7 @@ void WebServer::eventListen()
     int flag = 1;
     setsockopt(m_listenfd, SOL_SOCKET, SO_REUSEADDR, &flag, sizeof(flag));/*设置socket的属性*/ 
     ret = bind(m_listenfd, (struct sockaddr *)&address, sizeof(address)); /*Bind*/
-    assert(ret >= 0); 
+    assert(ret >= 0);
     ret = listen(m_listenfd, 5); /*Listen*/
     assert(ret >= 0);
 
@@ -137,14 +137,14 @@ void WebServer::eventListen()
     utils.init(TIMESLOT); /*TODO:设置utils的超时时间为TIMESLOT*/
 
     //epoll创建内核事件表
-    epoll_event events[MAX_EVENT_NUMBER];
-    m_epollfd = epoll_create(5); /*TODO*/
-    assert(m_epollfd != -1);
+    epoll_event events[MAX_EVENT_NUMBER]; /*TODO:*/
+    m_epollfd = epoll_create(5); /*TODO:创建一个拥有5个FD的epoll池*/
+    assert(m_epollfd != -1); /*确保成功创建*/
 
-    utils.addfd(m_epollfd, m_listenfd, false, m_LISTENTrigmode); /*TODO:utils*/
-    http_conn::m_epollfd = m_epollfd; /*TODO*/
+    utils.addfd(m_epollfd, m_listenfd, false, m_LISTENTrigmode); /*TODO:绑定EPOLL池中FD的监听事件*/
+    http_conn::m_epollfd = m_epollfd; /*TODO:*/
 
-    ret = socketpair(PF_UNIX, SOCK_STREAM, 0, m_pipefd); /*TODO:socketpair*/
+    ret = socketpair(PF_UNIX, SOCK_STREAM, 0, m_pipefd); /*TODO:不知道有什么用*/
     assert(ret != -1);
     utils.setnonblocking(m_pipefd[1]); /*setnonblocking*/
     utils.addfd(m_epollfd, m_pipefd[0], false, 0); /*addfd*/
@@ -384,47 +384,54 @@ void WebServer::eventLoop()
     bool timeout = false;
     bool stop_server = false;
 
+    //一直在监听epoll池
     while (!stop_server)
     {
-        int number = epoll_wait(m_epollfd, events, MAX_EVENT_NUMBER, -1);
+        /*TODO:主线程调用epoll_wait等待一组文件描述符上的事件，并将当前所有就绪的epoll_event复制到events数组中 */
+        int number = epoll_wait(m_epollfd, events, MAX_EVENT_NUMBER, -1); /*内核监听epoll池,发生事件后,置位并返回发生事件数*/
+        //错误
         if (number < 0 && errno != EINTR)
         {
             LOG_ERROR("%s", "epoll failure");
             break;
         }
 
+        //遍历数组 复杂度为O(1)
         for (int i = 0; i < number; i++)
         {
-            int sockfd = events[i].data.fd;
+            int sockfd = events[i].data.fd; /*事件表中就绪的socket文件描述符*/
 
             //处理新到的客户连接
-            if (sockfd == m_listenfd)
+            if (sockfd == m_listenfd) /*TODO:不知道这里干了什么*/
             {
                 bool flag = dealclinetdata();
                 if (false == flag)
                     continue;
             }
+
+            // 如有异常，则直接关闭客户连接，并删除该用户的timer
             else if (events[i].events & (EPOLLRDHUP | EPOLLHUP | EPOLLERR))
             {
-                //服务器端关闭连接，移除对应的定时器
-                util_timer *timer = users_timer[sockfd].timer;
-                deal_timer(timer, sockfd);
+                util_timer *timer = users_timer[sockfd].timer; /*获取对应fd的timer*/
+                deal_timer(timer, sockfd); /*删除timer*/
             }
+
             //处理信号
+            /*TODO:pipefd[0]是什么信号*/
             else if ((sockfd == m_pipefd[0]) && (events[i].events & EPOLLIN))
             {
-                bool flag = dealwithsignal(timeout, stop_server);
+                bool flag = dealwithsignal(timeout, stop_server); /*TODO*/
                 if (false == flag)
                     LOG_ERROR("%s", "dealclientdata failure");
             }
             //处理客户连接上接收到的数据
-            else if (events[i].events & EPOLLIN)
+            else if (events[i].events & EPOLLIN) /*可读*/
             {
-                dealwithread(sockfd);
+                dealwithread(sockfd); /*TODO:dealwithread*/
             }
-            else if (events[i].events & EPOLLOUT)
+            else if (events[i].events & EPOLLOUT) /*可写*/
             {
-                dealwithwrite(sockfd);
+                dealwithwrite(sockfd); /*TODO:dealwithwrite*/
             }
         }
         if (timeout)
