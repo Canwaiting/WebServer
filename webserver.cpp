@@ -133,29 +133,32 @@ void WebServer::eventListen()
     ret = listen(m_listenfd, 5); /*Listen*/
     assert(ret >= 0);
 
-    utils.init(TIMESLOT); /*TODO:ALL*/ 
+    /*TODO:这是为了连接的超时吗?utils是什么*/
+    utils.init(TIMESLOT); /*TODO:设置utils的超时时间为TIMESLOT*/
 
-    /*TODO*/
     //epoll创建内核事件表
     epoll_event events[MAX_EVENT_NUMBER];
-    m_epollfd = epoll_create(5);
+    m_epollfd = epoll_create(5); /*TODO*/
     assert(m_epollfd != -1);
 
-    utils.addfd(m_epollfd, m_listenfd, false, m_LISTENTrigmode);
-    http_conn::m_epollfd = m_epollfd;
+    utils.addfd(m_epollfd, m_listenfd, false, m_LISTENTrigmode); /*TODO:utils*/
+    http_conn::m_epollfd = m_epollfd; /*TODO*/
 
-    ret = socketpair(PF_UNIX, SOCK_STREAM, 0, m_pipefd);
+    ret = socketpair(PF_UNIX, SOCK_STREAM, 0, m_pipefd); /*TODO:socketpair*/
     assert(ret != -1);
-    utils.setnonblocking(m_pipefd[1]);
-    utils.addfd(m_epollfd, m_pipefd[0], false, 0);
+    utils.setnonblocking(m_pipefd[1]); /*setnonblocking*/
+    utils.addfd(m_epollfd, m_pipefd[0], false, 0); /*addfd*/
 
+    /*TODO:addsig用来干什么*/
     utils.addsig(SIGPIPE, SIG_IGN);
     utils.addsig(SIGALRM, utils.sig_handler, false);
     utils.addsig(SIGTERM, utils.sig_handler, false);
 
+    /*TODO:alarm*/
     alarm(TIMESLOT);
 
     //工具类,信号和描述符基础操作
+    /*TODO:Utils*/
     Utils::u_pipefd = m_pipefd;
     Utils::u_epollfd = m_epollfd;
 }
