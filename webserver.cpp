@@ -138,7 +138,7 @@ void WebServer::eventListen()
 
     //epoll创建内核事件表
     epoll_event events[MAX_EVENT_NUMBER]; /*TODO:*/
-    m_epollfd = epoll_create(5); /*TODO:创建一个拥有5个FD的epoll池*/
+    m_epollfd = epoll_create(5); /*TODO:创建一个拥有5个FD的epoll池,SIZE不起作用*/
     assert(m_epollfd != -1); /*确保成功创建*/
 
     utils.addfd(m_epollfd, m_listenfd, false, m_LISTENTrigmode); /*TODO:绑定EPOLL池中FD的监听事件*/
