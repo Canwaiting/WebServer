@@ -44,6 +44,7 @@ void WebServer::init(int port, string user, string passWord, string databaseName
     m_actormodel = actor_model;
 }
 
+//LT和ET模式
 void WebServer::trig_mode()
 {
     //LT + LT
