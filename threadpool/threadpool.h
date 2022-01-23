@@ -36,25 +36,30 @@ private:
     int m_actor_model;          //模型切换
 };
 
-/*TODO:这个有什么用(C++)?初始化线程池?*/
+//初始化线程,使其成功运行,但是分离回收
 template <typename T>
 threadpool<T>::threadpool( int actor_model, connection_pool *connPool, int thread_number, int max_requests) : m_actor_model(actor_model),m_thread_number(thread_number), m_max_requests(max_requests), m_threads(NULL),m_connPool(connPool)
 {
     if (thread_number <= 0 || max_requests <= 0) /*检查报错*/
         throw std::exception();
 
+    /*TODO:为什么要有这一步*/
     m_threads = new pthread_t[m_thread_number]; /*TODO:多少个,还是一个线程id初始化*/
 
     if (!m_threads) /*TODO:线程数为0则报错*/
         throw std::exception();
 
+    //循环初始化线程
     for (int i = 0; i < thread_number; ++i)
     {
+        //创建线程
         if (pthread_create(m_threads + i, NULL, worker, this) != 0)
         {
-            delete[] m_threads;
+            delete[] m_threads; /*TODO:不知道*/
             throw std::exception();
         }
+
+        //分离回收
         if (pthread_detach(m_threads[i]))
         {
             delete[] m_threads;
@@ -62,12 +67,15 @@ threadpool<T>::threadpool( int actor_model, connection_pool *connPool, int threa
         }
     }
 }
+
+//TODO:删除什么 m_threads?
 template <typename T>
 threadpool<T>::~threadpool()
 {
     delete[] m_threads;
 }
 
+//TODO:这个添加的是什么
 template <typename T>
 bool threadpool<T>::append(T *request, int state)
 {
@@ -84,50 +92,70 @@ bool threadpool<T>::append(T *request, int state)
     return true;
 }
 
+//向请求队列中添加任务
 template <typename T>
 bool threadpool<T>::append_p(T *request)
 {
-    m_queuelocker.lock();
-    if (m_workqueue.size() >= m_max_requests)
+    m_queuelocker.lock(); /*TODO:线程锁?*/
+
+    //根据硬件，预先设置请求队列的最大值
+    if (m_workqueue.size() >= m_max_requests) /*如果请求队列大于允许最大请求数,就结束*/
     {
-        m_queuelocker.unlock();
+        m_queuelocker.unlock(); /*TODO:为什么要unlock*/
         return false;
     }
+
+    //添加任务
     m_workqueue.push_back(request);
-    m_queuelocker.unlock();
-    m_queuestat.post();
+    m_queuelocker.unlock(); /*TODO:m_queuelocker有什么用*/
+
+    //信号量提醒有任务处理
+    m_queuestat.post(); /*TODO:m_queuestat会把状态调成post吗*/
     return true;
 }
 
-//工作线程
+//线程处理函数
 template <typename T>
 void *threadpool<T>::worker(void *arg)
 {
+    //TODO:将参数强转为线程池类，调用成员方法
     threadpool *pool = (threadpool *)arg;
-    pool->run();
-    return pool;
+    pool->run(); /*TODO:调用run函数?*/
+    return pool; /*TODO:为什么要返回这个*/
 }
+
+//执行任务
 template <typename T>
 void threadpool<T>::run()
 {
     while (true)
     {
+        //TODO:信号量等待
         m_queuestat.wait();
+
+        //被唤醒后,先加互斥锁
         m_queuelocker.lock();
-        if (m_workqueue.empty())
+        if (m_workqueue.empty()) /*TODO:如果空了就不用上锁?*/
         {
             m_queuelocker.unlock();
             continue;
         }
-        T *request = m_workqueue.front();
-        m_workqueue.pop_front();
-        m_queuelocker.unlock();
-        if (!request)
+
+        //处理队列事件
+        T *request = m_workqueue.front(); /*获取队列中的第一个任务*/
+        m_workqueue.pop_front(); /*把队列中第一个任务删掉*/
+        m_queuelocker.unlock(); /*TODO:解锁*/
+
+        if (!request) /*TODO:有什么意义,有无请求都会继续*/
             continue;
+
+        /*TODO: m_actor_model是什么,ET和LT?*/
         if (1 == m_actor_model)
         {
+            /*TODO:m_state是什么,信号量,还是第几次发请求*/
             if (0 == request->m_state)
             {
+                /*TODO:判断是不是第一次遇见?是的话就处理?*/
                 if (request->read_once())
                 {
                     request->improv = 1;
@@ -153,10 +181,12 @@ void threadpool<T>::run()
                 }
             }
         }
+
+        /*TODO:应该是某个直接处理的模式,ET和LT那些*/
         else
         {
-            connectionRAII mysqlcon(&request->mysql, m_connPool);
-            request->process();
+            connectionRAII mysqlcon(&request->mysql, m_connPool); /*TODO:有关数据库的获取*/
+            request->process(); /*process(模板类中的方法,这里是http类)进行处理*/
         }
     }
 }
