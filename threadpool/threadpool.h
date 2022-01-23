@@ -8,13 +8,14 @@
 #include "../lock/locker.h"
 #include "../CGImysql/sql_connection_pool.h"
 
+/*TODO:template */
 template <typename T>
 class threadpool
 {
 public:
-    /*thread_number是线程池中线程的数量，max_requests是请求队列中最多允许的、等待处理的请求的数量*/
+    /*connPool是数据库连接池指针,thread_number是线程池中线程的数量，max_requests是请求队列中最多允许的、等待处理的请求的数量*/
     threadpool(int actor_model, connection_pool *connPool, int thread_number = 8, int max_request = 10000);
-    ~threadpool();
+    ~threadpool(); /*TODO:可能是空的析构函数*/
     bool append(T *request, int state);
     bool append_p(T *request);
 
@@ -23,6 +24,7 @@ private:
     static void *worker(void *arg);
     void run();
 
+//定义线程池中的参数
 private:
     int m_thread_number;        //线程池中的线程数
     int m_max_requests;         //请求队列中允许的最大请求数
@@ -33,6 +35,7 @@ private:
     connection_pool *m_connPool;  //数据库
     int m_actor_model;          //模型切换
 };
+
 template <typename T>
 threadpool<T>::threadpool( int actor_model, connection_pool *connPool, int thread_number, int max_requests) : m_actor_model(actor_model),m_thread_number(thread_number), m_max_requests(max_requests), m_threads(NULL),m_connPool(connPool)
 {
@@ -60,6 +63,7 @@ threadpool<T>::~threadpool()
 {
     delete[] m_threads;
 }
+
 template <typename T>
 bool threadpool<T>::append(T *request, int state)
 {
@@ -75,6 +79,7 @@ bool threadpool<T>::append(T *request, int state)
     m_queuestat.post();
     return true;
 }
+
 template <typename T>
 bool threadpool<T>::append_p(T *request)
 {
@@ -89,6 +94,8 @@ bool threadpool<T>::append_p(T *request)
     m_queuestat.post();
     return true;
 }
+
+//工作线程
 template <typename T>
 void *threadpool<T>::worker(void *arg)
 {
