@@ -8,7 +8,7 @@
 #include "../lock/locker.h"
 #include "../CGImysql/sql_connection_pool.h"
 
-/*TODO:template */
+/*TODO:template不知道怎么用 */
 template <typename T>
 class threadpool
 {
@@ -16,8 +16,8 @@ public:
     /*connPool是数据库连接池指针,thread_number是线程池中线程的数量，max_requests是请求队列中最多允许的、等待处理的请求的数量*/
     threadpool(int actor_model, connection_pool *connPool, int thread_number = 8, int max_request = 10000);
     ~threadpool(); /*TODO:可能是空的析构函数*/
-    bool append(T *request, int state);
-    bool append_p(T *request);
+    bool append(T *request, int state); /*TODO:向请求队列中插入任务请求,state是什么?状态?*/
+    bool append_p(T *request); /*TODO:应该这个才是单纯插入任务请求*/
 
 private:
     /*工作线程运行的函数，它不断从工作队列中取出任务并执行之*/
@@ -32,16 +32,20 @@ private:
     std::list<T *> m_workqueue; //请求队列
     locker m_queuelocker;       //保护请求队列的互斥锁
     sem m_queuestat;            //是否有任务需要处理
-    connection_pool *m_connPool;  //数据库
+    connection_pool *m_connPool;  //数据库连接池
     int m_actor_model;          //模型切换
 };
 
+/*TODO:这个有什么用(C++)?初始化线程池?*/
 template <typename T>
 threadpool<T>::threadpool( int actor_model, connection_pool *connPool, int thread_number, int max_requests) : m_actor_model(actor_model),m_thread_number(thread_number), m_max_requests(max_requests), m_threads(NULL),m_connPool(connPool)
 {
+    //TODO:报错?
     if (thread_number <= 0 || max_requests <= 0)
         throw std::exception();
+
     m_threads = new pthread_t[m_thread_number];
+
     if (!m_threads)
         throw std::exception();
     for (int i = 0; i < thread_number; ++i)
