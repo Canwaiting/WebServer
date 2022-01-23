@@ -40,14 +40,14 @@ private:
 template <typename T>
 threadpool<T>::threadpool( int actor_model, connection_pool *connPool, int thread_number, int max_requests) : m_actor_model(actor_model),m_thread_number(thread_number), m_max_requests(max_requests), m_threads(NULL),m_connPool(connPool)
 {
-    //TODO:报错?
-    if (thread_number <= 0 || max_requests <= 0)
+    if (thread_number <= 0 || max_requests <= 0) /*检查报错*/
         throw std::exception();
 
-    m_threads = new pthread_t[m_thread_number];
+    m_threads = new pthread_t[m_thread_number]; /*TODO:多少个,还是一个线程id初始化*/
 
-    if (!m_threads)
+    if (!m_threads) /*TODO:线程数为0则报错*/
         throw std::exception();
+
     for (int i = 0; i < thread_number; ++i)
     {
         if (pthread_create(m_threads + i, NULL, worker, this) != 0)
