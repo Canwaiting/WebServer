@@ -120,6 +120,7 @@ private:
     LINE_STATUS parse_line();
     /*TODO*/
     void unmap();
+    //根据响应报文格式,生成对应8个部分,以下函数均由do_request调用
     bool add_response(const char *format, ...);
     bool add_content(const char *content);
     bool add_status_line(int status, const char *title);
@@ -130,42 +131,48 @@ private:
     bool add_blank_line();
 
 public:
-    static int m_epollfd;
-    static int m_user_count;
-    MYSQL *mysql;
+    static int m_epollfd; /*TODO*/
+    static int m_user_count; /*TODO:用户数?*/
+    MYSQL *mysql; /*TODO*/
     int m_state;  //读为0, 写为1
 
 private:
-    int m_sockfd;
-    sockaddr_in m_address;
-    char m_read_buf[READ_BUFFER_SIZE];
-    int m_read_idx;
-    int m_checked_idx;
-    int m_start_line;
-    char m_write_buf[WRITE_BUFFER_SIZE];
-    int m_write_idx;
-    CHECK_STATE m_check_state;
-    METHOD m_method;
-    char m_real_file[FILENAME_LEN];
+    int m_sockfd; /*socket*/
+    sockaddr_in m_address; /*socket的地址*/
+    char m_read_buf[READ_BUFFER_SIZE]; /*存储读取的请求报文数据*/
+    int m_read_idx; /*TODO:长度?缓冲区中m_read_buf中数据的最后一个字节的下一个位置*/
+    int m_checked_idx; /*TODO:m_read_buf读取的位置,已经读了,不管是否解析?*/
+    int m_start_line; /*m_read_buf中已经解析的字符个数*/
+
+    char m_write_buf[WRITE_BUFFER_SIZE]; /*存储发出的响应报文数据*/
+    int m_write_idx; /*指示buffer中的长度*/
+
+    CHECK_STATE m_check_state; /*主状态机的状态*/
+    METHOD m_method; /*请求方法*/
+    /*以下为解析请求报文中对应的6个变量*/
+    char m_real_file[FILENAME_LEN]; /*存储读取文件的名称*/
     char *m_url;
     char *m_version;
     char *m_host;
     int m_content_length;
     bool m_linger;
-    char *m_file_address;
-    struct stat m_file_stat;
-    struct iovec m_iv[2];
-    int m_iv_count;
+
+    char *m_file_address; /*读取服务器上的文件地址*/
+    struct stat m_file_stat; /*TODO:被读取文件的状态*/
+    struct iovec m_iv[2]; /*TODO:IO向量机制iovec,这个是什么来的*/
+    int m_iv_count; /*TODO:iovec的数量?*/
+    /*TODO:CGI是什么*/
     int cgi;        //是否启用的POST
     char *m_string; //存储请求头数据
-    int bytes_to_send;
-    int bytes_have_send;
-    char *doc_root;
+    int bytes_to_send; /*剩余发送字节数*/
+    int bytes_have_send; /*已发送字节数*/
+    char *doc_root; /*TODO:文档的根?*/
 
-    map<string, string> m_users;
-    int m_TRIGMode;
-    int m_close_log;
+    map<string, string> m_users; /*TODO:可能存储的是用户的名字和密码*/
+    int m_TRIGMode; /*TODO:ET和LT模式?*/
+    int m_close_log; /*关闭LOG?*/
 
+    /*TODO:数据库相关的存储?user里面有passwd和name*/
     char sql_user[100];
     char sql_passwd[100];
     char sql_name[100];
