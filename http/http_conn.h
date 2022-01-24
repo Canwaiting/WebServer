@@ -29,12 +29,12 @@
 class http_conn
 {
 public:
-    static const int FILENAME_LEN = 200;
-    static const int READ_BUFFER_SIZE = 2048;
-    static const int WRITE_BUFFER_SIZE = 1024;
-    enum METHOD
-    {
-        GET = 0,
+    static const int FILENAME_LEN = 200; /*设置读取文件的名称m_real_file大小*/
+    static const int READ_BUFFER_SIZE = 2048; /*设置读缓冲区m_read_buf大小*/
+    static const int WRITE_BUFFER_SIZE = 1024; /*设置写缓冲区m_write_buf大小*/
+    /*TODO:HEAD,PUT那些为什么要写上来*/
+    enum METHOD /*设置报文的请求方式,本项目只用到GET和POST*/
+    { GET = 0,
         POST,
         HEAD,
         PUT,
@@ -44,13 +44,13 @@ public:
         CONNECT,
         PATH
     };
-    enum CHECK_STATE
+    enum CHECK_STATE /*TODO:主状态机的状态,CHECK_STATE_HEADER这些是什么*/
     {
         CHECK_STATE_REQUESTLINE = 0,
         CHECK_STATE_HEADER,
         CHECK_STATE_CONTENT
     };
-    enum HTTP_CODE
+    enum HTTP_CODE /*TODO:报文解析的结果,其他是什么意思*/
     {
         NO_REQUEST,
         GET_REQUEST,
@@ -61,7 +61,7 @@ public:
         INTERNAL_ERROR,
         CLOSED_CONNECTION
     };
-    enum LINE_STATUS
+    enum LINE_STATUS /*TODO:从状态机的状态,具体意思?*/
     {
         LINE_OK = 0,
         LINE_BAD,
@@ -73,8 +73,11 @@ public:
     ~http_conn() {}
 
 public:
+    /*TODO:初始化socket的地址和sql啥的*/
     void init(int sockfd, const sockaddr_in &addr, char *, int, int, string user, string passwd, string sqlname);
+    /*TODO:关闭http连接,具体怎么样不知道*/
     void close_conn(bool real_close = true);
+    /*TODO:对进程干了什么?*/
     void process();
     bool read_once();
     bool write();
