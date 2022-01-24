@@ -350,9 +350,10 @@ http_conn::HTTP_CODE http_conn::parse_content(char *text)
 
 http_conn::HTTP_CODE http_conn::process_read()
 {
-    LINE_STATUS line_status = LINE_OK;
-    HTTP_CODE ret = NO_REQUEST;
-    char *text = 0;
+    //初始化从状态机状态、HTTP请求解析结果
+    LINE_STATUS line_status = LINE_OK; /*完整读取一行*/
+    HTTP_CODE ret = NO_REQUEST; /*请求不完整,继续请求*/
+    char *text = 0; /*TODO:文本为什么是0,不是应该清空数组吗*/
 
     while ((m_check_state == CHECK_STATE_CONTENT && line_status == LINE_OK) || ((line_status = parse_line()) == LINE_OK))
     {
@@ -635,6 +636,7 @@ bool http_conn::add_content(const char *content)
 {
     return add_response("%s", content);
 }
+
 bool http_conn::process_write(HTTP_CODE ret)
 {
     switch (ret)
@@ -694,18 +696,27 @@ bool http_conn::process_write(HTTP_CODE ret)
     bytes_to_send = m_write_idx;
     return true;
 }
+
+//TODO:用来接收报文和写入报文,不解析?
 void http_conn::process()
 {
-    HTTP_CODE read_ret = process_read();
-    if (read_ret == NO_REQUEST)
+    HTTP_CODE read_ret = process_read(); /*TODO*/
+
+    //NO_REQUEST表示请求不完整,需要继续接收请求数据
+    if (read_ret == NO_REQUEST) /*TODO:如何继续接收数据,如同断连一样*/
     {
+        /*TODO:注册并监听读事件*/
         modfd(m_epollfd, m_sockfd, EPOLLIN, m_TRIGMode);
         return;
     }
-    bool write_ret = process_write(read_ret);
+
+    //调用 process_write 完成报文响应
+    bool write_ret = process_write(read_ret); /*TODO:应该是返回是否成功*/
     if (!write_ret)
     {
         close_conn();
     }
+    //注册并监听写事件
+    /*TODO:这时候还注册写干嘛*/
     modfd(m_epollfd, m_sockfd, EPOLLOUT, m_TRIGMode);
 }

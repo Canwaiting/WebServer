@@ -143,6 +143,7 @@ void WebServer::eventListen()
     assert(m_epollfd != -1); /*确保成功创建*/
 
     utils.addfd(m_epollfd, m_listenfd, false, m_LISTENTrigmode); /*TODO:绑定EPOLL池中FD的监听事件*/
+    /*TODO:就是这一行不知道,复制到conn中,以后有事件发生后会联动吗*/
     http_conn::m_epollfd = m_epollfd; /*TODO:复制到http中的对象,让其拥有一样epollfd的属性,使其可以被操作*/
 
     ret = socketpair(PF_UNIX, SOCK_STREAM, 0, m_pipefd); /*TODO:不知道有什么用*/

@@ -44,30 +44,31 @@ public:
         CONNECT,
         PATH
     };
-    enum CHECK_STATE /*TODO:主状态机的状态,CHECK_STATE_HEADER这些是什么*/
+
+    enum CHECK_STATE /*主状态机的状态*/
     {
-        CHECK_STATE_REQUESTLINE = 0,
-        CHECK_STATE_HEADER,
-        CHECK_STATE_CONTENT
+        CHECK_STATE_REQUESTLINE = 0, /*解析请求行*/
+        CHECK_STATE_HEADER, /*解析请求头*/
+        CHECK_STATE_CONTENT /*解析消息体,仅用于解析post请求*/
     };
+
     /*TODO:是不是一整个报文*/
     enum HTTP_CODE /*TODO:报文解析的结果,其他是什么意思*/
     {
-        NO_REQUEST,
-        GET_REQUEST,
-        BAD_REQUEST,
+        NO_REQUEST, /*请求不完整,需要继续读取请求报文数据*/
+        GET_REQUEST, /*获取了完整的HTTP请求*/
+        BAD_REQUEST, /*HTTP请求报文有语法错误*/
         NO_RESOURCE,
         FORBIDDEN_REQUEST,
         FILE_REQUEST,
-        INTERNAL_ERROR,
-        CLOSED_CONNECTION
+        INTERNAL_ERROR, /*服务器内部错误，该结果在主状态机逻辑switch的default下，一般不会触发*/
+        CLOSED_CONNECTION /*关闭连接*/
     };
-    enum LINE_STATUS /*TODO:从状态机的状态,具体意思?*/
+    enum LINE_STATUS /*从状态机的状态*/
     {
-        /*TODO:OK,BAD,OPEN是什么意思*/
-        LINE_OK = 0,
-        LINE_BAD,
-        LINE_OPEN
+        LINE_OK = 0, /*完整读取一行*/
+        LINE_BAD, /*报文语法有误*/
+        LINE_OPEN /*读取的行不完整*/
     };
 
 public:
