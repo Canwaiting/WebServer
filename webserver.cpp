@@ -3,7 +3,7 @@
 WebServer::WebServer()
 {
     //http_conn类对象
-    users = new http_conn[MAX_FD];
+    users = new http_conn[MAX_FD]; /*TODO:http_conn这个对象有什么*/
 
     //root文件夹路径
     char server_path[200];
@@ -143,7 +143,7 @@ void WebServer::eventListen()
     assert(m_epollfd != -1); /*确保成功创建*/
 
     utils.addfd(m_epollfd, m_listenfd, false, m_LISTENTrigmode); /*TODO:绑定EPOLL池中FD的监听事件*/
-    http_conn::m_epollfd = m_epollfd; /*TODO:*/
+    http_conn::m_epollfd = m_epollfd; /*TODO:复制到http中的对象,让其拥有一样epollfd的属性,使其可以被操作*/
 
     ret = socketpair(PF_UNIX, SOCK_STREAM, 0, m_pipefd); /*TODO:不知道有什么用*/
     assert(ret != -1);
@@ -388,6 +388,7 @@ void WebServer::eventLoop()
     //一直在监听epoll池
     while (!stop_server)
     {
+        /*等待所监控的socket有事件发生*/
         int number = epoll_wait(m_epollfd, events, MAX_EVENT_NUMBER, -1); /*主线程调用epoll_wait等待一组文件描述符上的事件，并将当前所有就绪的epoll_event复制到events数组中 */
         //错误
         if (number < 0 && errno != EINTR)

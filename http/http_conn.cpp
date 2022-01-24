@@ -197,18 +197,22 @@ http_conn::LINE_STATUS http_conn::parse_line()
 //非阻塞ET工作模式下，需要一次性将数据读完
 bool http_conn::read_once()
 {
+    /*判断读到的位置是否大于总大小*/
     if (m_read_idx >= READ_BUFFER_SIZE)
     {
         return false;
     }
-    int bytes_read = 0;
+    int bytes_read = 0; /*初始化读了多少个字节*/
 
     //LT读取数据
+    /*TODO:不知道LT和ET的区别*/
     if (0 == m_TRIGMode)
     {
+        /*从socket中接收数据,储存在m_read_buf */
         bytes_read = recv(m_sockfd, m_read_buf + m_read_idx, READ_BUFFER_SIZE - m_read_idx, 0);
-        m_read_idx += bytes_read;
+        m_read_idx += bytes_read; /*更新index*/
 
+        /*错误判断*/
         if (bytes_read <= 0)
         {
             return false;
@@ -221,18 +225,23 @@ bool http_conn::read_once()
     {
         while (true)
         {
+            /*接收数据*/
             bytes_read = recv(m_sockfd, m_read_buf + m_read_idx, READ_BUFFER_SIZE - m_read_idx, 0);
+
             if (bytes_read == -1)
             {
+                /*TODO:如果返回的不是下次再询问,或者 EWOULDBLOCK,则结束*/
                 if (errno == EAGAIN || errno == EWOULDBLOCK)
                     break;
                 return false;
             }
+
             else if (bytes_read == 0)
             {
                 return false;
             }
-            m_read_idx += bytes_read;
+
+            m_read_idx += bytes_read; /*更新数据*/
         }
         return true;
     }
