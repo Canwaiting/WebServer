@@ -50,6 +50,7 @@ public:
         CHECK_STATE_HEADER,
         CHECK_STATE_CONTENT
     };
+    /*TODO:是不是一整个报文*/
     enum HTTP_CODE /*TODO:报文解析的结果,其他是什么意思*/
     {
         NO_REQUEST,
@@ -79,24 +80,37 @@ public:
     void close_conn(bool real_close = true);
     /*TODO:对进程干了什么?*/
     void process();
+    /*TODO:读取浏览器端发来的全部数据,具体怎么样去读*/
     bool read_once();
+    /*TODO:响应报文写入函数*/
     bool write();
+    /*TODO:用于获取地址的函数?*/
     sockaddr_in *get_address()
     {
         return &m_address;
     }
+    /*TODO:CGI使用线程池初始化数据库表,即从池中选择一个来初始化*/
     void initmysql_result(connection_pool *connPool);
+    /*TODO:时钟是否到时?*/
     int timer_flag;
+    /*TODO*/
     int improv;
 
 
 private:
+    /*TODO:初始化什么?*/
     void init();
+    /*TODO:从m_read_buf读取里面的状态,并处理请求报文*/
     HTTP_CODE process_read();
+    /*TODO:往m_write_buf中写入响应报文数据,究竟是状态还是主体数据还是什么*/
     bool process_write(HTTP_CODE ret);
+    /*TODO:主状态机解析报文中的请求行数据*/
     HTTP_CODE parse_request_line(char *text);
+    /*TODO:主状态机解析报文中的请求头数据*/
     HTTP_CODE parse_headers(char *text);
+    /*TODO:主状态机解析报文中的请求内容数据*/
     HTTP_CODE parse_content(char *text);
+    /*TODO:生成响应报文*/
     HTTP_CODE do_request();
     char *get_line() { return m_read_buf + m_start_line; };
     LINE_STATUS parse_line();
