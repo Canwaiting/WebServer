@@ -64,6 +64,7 @@ public:
     };
     enum LINE_STATUS /*TODO:从状态机的状态,具体意思?*/
     {
+        /*TODO:OK,BAD,OPEN是什么意思*/
         LINE_OK = 0,
         LINE_BAD,
         LINE_OPEN
@@ -112,8 +113,12 @@ private:
     HTTP_CODE parse_content(char *text);
     /*TODO:生成响应报文*/
     HTTP_CODE do_request();
+    /*TODO:m_start_line是已经解析的字符,为什么还需要添加m_read_buf*/
+    /*get_line用于将指针向后偏移,指向未处理的字符*/
     char *get_line() { return m_read_buf + m_start_line; };
+    /*TODO:从状态机读取一行,分析是请求报文的哪一部分,OK,BAD,OPEN*/
     LINE_STATUS parse_line();
+    /*TODO*/
     void unmap();
     bool add_response(const char *format, ...);
     bool add_content(const char *content);
