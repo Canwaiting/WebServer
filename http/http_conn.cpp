@@ -355,11 +355,15 @@ http_conn::HTTP_CODE http_conn::process_read()
     HTTP_CODE ret = NO_REQUEST; /*请求不完整,继续请求*/
     char *text = 0; /*TODO:文本为什么是0,不是应该清空数组吗*/
 
+    /*TODO:主状态机和从状态机只要有一个在解析就可以了*/
     while ((m_check_state == CHECK_STATE_CONTENT && line_status == LINE_OK) || ((line_status = parse_line()) == LINE_OK))
     {
-        text = get_line();
-        m_start_line = m_checked_idx;
-        LOG_INFO("%s", text);
+        text = get_line(); /*获取一行文本*/
+        /*m_start_line是每一个数据行在m_read_buf中的起始位置*/
+        /*m_checked_idx表示从状态机在m_read_buf中读取的位置*/
+        m_start_line = m_checked_idx; /*更新读取的位置*/
+        LOG_INFO("%s", text); /*TODO:应该是报文中的分隔符*/
+        /**/
         switch (m_check_state)
         {
         case CHECK_STATE_REQUESTLINE:
