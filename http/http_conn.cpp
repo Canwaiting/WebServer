@@ -363,37 +363,37 @@ http_conn::HTTP_CODE http_conn::process_read()
         /*m_checked_idx表示从状态机在m_read_buf中读取的位置*/
         m_start_line = m_checked_idx; /*更新读取的位置*/
         LOG_INFO("%s", text); /*TODO:应该是报文中的分隔符*/
-        /**/
+        /*主状态机的三种状态逻辑*/
         switch (m_check_state)
         {
-        case CHECK_STATE_REQUESTLINE:
+        case CHECK_STATE_REQUESTLINE: /*解析请求行*/
         {
             ret = parse_request_line(text);
             if (ret == BAD_REQUEST)
                 return BAD_REQUEST;
             break;
         }
-        case CHECK_STATE_HEADER:
+        case CHECK_STATE_HEADER: /*解析请求头*/
         {
             ret = parse_headers(text);
-            if (ret == BAD_REQUEST)
+            if (ret == BAD_REQUEST) /*解析有语法错误*/
                 return BAD_REQUEST;
-            else if (ret == GET_REQUEST)
+            else if (ret == GET_REQUEST) /*完整解析get请求后,跳转到报文响应函数*/
             {
                 return do_request();
             }
             break;
         }
-        case CHECK_STATE_CONTENT:
+        case CHECK_STATE_CONTENT: /*解析消息体*/
         {
             ret = parse_content(text);
-            if (ret == GET_REQUEST)
+            if (ret == GET_REQUEST) /*完整解析post请求后,跳转到报文响应函数*/
                 return do_request();
-            line_status = LINE_OPEN;
+            line_status = LINE_OPEN; /*把状态设置成完成报文解析,防止继续循环*/
             break;
         }
         default:
-            return INTERNAL_ERROR;
+            return INTERNAL_ERROR; /*服务器内部错误，该结果在主状态机逻辑switch的default下，一般不会触发*/
         }
     }
     return NO_REQUEST;
