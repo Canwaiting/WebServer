@@ -439,10 +439,11 @@ http_conn::HTTP_CODE http_conn::process_read()
 
 http_conn::HTTP_CODE http_conn::do_request()
 {
+    /*将初始化的m_real_file赋值为网站根目录doc_root*/
     strcpy(m_real_file, doc_root);
     int len = strlen(doc_root);
     //printf("m_url:%s\n", m_url);
-    const char *p = strrchr(m_url, '/');
+    const char *p = strrchr(m_url, '/'); /*TODO:找出m_url中/的位置,是否为了获取后面的值*/
 
     //处理cgi
     /*TODO:如何获取这些数值的?url中有123才能进入?*/
@@ -569,19 +570,24 @@ http_conn::HTTP_CODE http_conn::do_request()
     else
         strncpy(m_real_file + len, m_url, FILENAME_LEN - len - 1);
 
+    /*通过stat获取请求资源文件信息m_file_stat,成功则将信息更新到m_real_file结构体中*/
     if (stat(m_real_file, &m_file_stat) < 0)
-        return NO_RESOURCE;
+        return NO_RESOURCE; /*失败则返回NO_RESOURCE状态,表示资源不存在*/
 
+    /*判断文件的权限,是否可读*/
     if (!(m_file_stat.st_mode & S_IROTH))
-        return FORBIDDEN_REQUEST;
+        return FORBIDDEN_REQUEST; /*文件不可读*/
 
+    /*判断文件的类型,如果是目录*/
     if (S_ISDIR(m_file_stat.st_mode))
-        return BAD_REQUEST;
+        return BAD_REQUEST; /*请求报文有误*/
 
-    int fd = open(m_real_file, O_RDONLY);
+    /*以只读方式获取文件描述符,通过mmap将文件映射到内存中*/
+    int fd = open(m_real_file, O_RDONLY); /*TODO:open函数*/
+    /*TODO:mmap函数*/
     m_file_address = (char *)mmap(0, m_file_stat.st_size, PROT_READ, MAP_PRIVATE, fd, 0);
-    close(fd);
-    return FILE_REQUEST;
+    close(fd); /*TODO:为什么要创建一个fd来进行映射*/
+    return FILE_REQUEST; /*表示文件存在,且可以访问*/
 }
 void http_conn::unmap()
 {
@@ -648,21 +654,31 @@ bool http_conn::write()
         }
     }
 }
+
 bool http_conn::add_response(const char *format, ...)
 {
+    /*如果写入内容比buffer大,则报错*/
     if (m_write_idx >= WRITE_BUFFER_SIZE)
         return false;
-    va_list arg_list;
-    va_start(arg_list, format);
+
+    va_list arg_list; /*TODO:定义可变参数列表*/
+    va_start(arg_list, format); /*将变量arg_list初始化为传入参数*/
+    /*TODO:将数据format从可变参数列表写入缓冲区写,返回写入数据的长度*/
+    /*TODO:写入的是什么*/
     int len = vsnprintf(m_write_buf + m_write_idx, WRITE_BUFFER_SIZE - 1 - m_write_idx, format, arg_list);
+    /*如果写入的数据长度超过缓冲区剩余空间,则报错*/
     if (len >= (WRITE_BUFFER_SIZE - 1 - m_write_idx))
     {
-        va_end(arg_list);
+        va_end(arg_list); /*va_end有什么用*/
         return false;
     }
+    /*成功写后,更新m_write_idx的位置*/
     m_write_idx += len;
+    /*清空可变参数列表*/
+    /*TODO:arg_list是什么来的*/
     va_end(arg_list);
 
+    /*log*/
     LOG_INFO("request:%s", m_write_buf);
 
     return true;

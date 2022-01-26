@@ -58,9 +58,9 @@ public:
         NO_REQUEST, /*请求不完整,需要继续读取请求报文数据*/
         GET_REQUEST, /*获取了完整的HTTP请求*/
         BAD_REQUEST, /*HTTP请求报文有语法错误*/
-        NO_RESOURCE,
-        FORBIDDEN_REQUEST,
-        FILE_REQUEST,
+        NO_RESOURCE, /*资源不存在*/
+        FORBIDDEN_REQUEST, /*文件不可读*/
+        FILE_REQUEST, /*表示文件存在*/
         INTERNAL_ERROR, /*服务器内部错误，该结果在主状态机逻辑switch的default下，一般不会触发*/
         CLOSED_CONNECTION /*关闭连接*/
     };
