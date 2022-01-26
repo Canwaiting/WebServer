@@ -283,18 +283,23 @@ http_conn::HTTP_CODE http_conn::parse_request_line(char *text)
         return BAD_REQUEST; /*语法错误,没有get也没有post*/
     /*m_url此时跳过了第一个空格或\t字符，但不知道之后是否还有*/
     /*将m_url向后偏移，通过查找，继续跳过空格和\t字符，指向请求资源的第一个字符*/
+    /*TODO:逻辑不知道什么意思*/
     m_url += strspn(m_url, " \t"); /*TODO:strspn*/
+    /*使用方法和判断请求方式的相同逻辑,判断HTTP版本号*/
     m_version = strpbrk(m_url, " \t"); /*TODO:strpbrk*/
-    if (!m_version)
-        return BAD_REQUEST;
+    if (!m_version) /*TODO:m_version有东西就不会进入*/
+        return BAD_REQUEST; /*请求报文有语法错误*/
+    /*将该位置改成\0,用于将前面数据取出*/
     *m_version++ = '\0';
-    m_version += strspn(m_version, " \t");
-    if (strcasecmp(m_version, "HTTP/1.1") != 0)
+    m_version += strspn(m_version, " \t"); /*TODO:取出数据*/
+    /*下面都是判断*/
+    if (strcasecmp(m_version, "HTTP/1.1") != 0) /*仅支持HTTP/1.1*/
         return BAD_REQUEST;
+    /*TODO:是不是识别到前缀后,就开始读后面的东西*/
     if (strncasecmp(m_url, "http://", 7) == 0)
     {
-        m_url += 7;
-        m_url = strchr(m_url, '/');
+        m_url += 7; /*TODO:前面的http://?*/
+        m_url = strchr(m_url, '/'); /*TODO:获取后面的东西?*/
     }
 
     if (strncasecmp(m_url, "https://", 8) == 0)
@@ -303,66 +308,80 @@ http_conn::HTTP_CODE http_conn::parse_request_line(char *text)
         m_url = strchr(m_url, '/');
     }
 
+    /*一般不带上面两种前缀的,都是想直接/或用/加资源访问服务器资源*/
     if (!m_url || m_url[0] != '/')
         return BAD_REQUEST;
     //当url为/时，显示判断界面
     if (strlen(m_url) == 1)
         strcat(m_url, "judge.html");
+    /*请求行处理后,将主状态机转移处理请求头*/
     m_check_state = CHECK_STATE_HEADER;
-    return NO_REQUEST;
+    return NO_REQUEST; /*更新为没有请求*/
 }
 
 //解析http请求的一个头部信息
 http_conn::HTTP_CODE http_conn::parse_headers(char *text)
 {
+    /*判断是空行还是请求头*/
     if (text[0] == '\0')
     {
+        /*判断是GET还是POST请求*/
         if (m_content_length != 0)
         {
+            /*POST需要跳转到消息体处理状态*/
             m_check_state = CHECK_STATE_CONTENT;
-            return NO_REQUEST;
+            return NO_REQUEST; /*TODO:为什么说请求不完整,然后继续接收?*/
         }
-        return GET_REQUEST;
+        /*GET*/
+        return GET_REQUEST; /*返回接收完全*/
     }
+    /*解析请求头部连接字段*/
     else if (strncasecmp(text, "Connection:", 11) == 0)
     {
+        /*把指针后移,然后读取前面的东西?*/
         text += 11;
-        text += strspn(text, " \t");
-        if (strcasecmp(text, "keep-alive") == 0)
+        text += strspn(text, " \t"); /*TODO:跳过空格和\t字符*/
+        if (strcasecmp(text, "keep-alive") == 0) /*等于0即为长连接*/
         {
+            /*如果是长连接,则将linger标志设置为true*/
             m_linger = true;
         }
     }
+    /*解析请求头部内容长度字段*/
     else if (strncasecmp(text, "Content-length:", 15) == 0)
     {
         text += 15;
         text += strspn(text, " \t");
-        m_content_length = atol(text);
+        m_content_length = atol(text); /*TODO:atol,应该是获取内容的函数*/
     }
+    /*解析请求头部HOST字段*/
     else if (strncasecmp(text, "Host:", 5) == 0)
     {
+        /*应该是把指针指向HOST:后面,然后读取后面到\t部分*/
         text += 5;
         text += strspn(text, " \t");
         m_host = text;
     }
+    /*打印错误信息*/
     else
     {
         LOG_INFO("oop!unknow header: %s", text);
     }
-    return NO_REQUEST;
+    return NO_REQUEST; /*处理完成*/
 }
 
 //判断http请求是否被完整读入
 http_conn::HTTP_CODE http_conn::parse_content(char *text)
 {
+    /*判断buffer中是否读取了消息体*/
     if (m_read_idx >= (m_content_length + m_checked_idx))
     {
-        text[m_content_length] = '\0';
+        text[m_content_length] = '\0'; /*TODO:为什么又要判断\0,从状态机传了什么过来*/
         //POST请求中最后为输入的用户名和密码
         m_string = text;
-        return GET_REQUEST;
+        return GET_REQUEST; /*获取了完整的请求*/
     }
-    return NO_REQUEST;
+    return NO_REQUEST; /*完成该请求的解析*/
 }
 
 http_conn::HTTP_CODE http_conn::process_read()
@@ -373,6 +392,7 @@ http_conn::HTTP_CODE http_conn::process_read()
     char *text = 0; /*TODO:文本为什么是0,不是应该清空数组吗*/
 
     /*TODO:主状态机和从状态机只要有一个在解析就可以了*/
+    /*TODO:因为消息体的末尾没有任何字符,所以如果要解析post,就必须扯上主状态机*/
     while ((m_check_state == CHECK_STATE_CONTENT && line_status == LINE_OK) || ((line_status = parse_line()) == LINE_OK))
     {
         text = get_line(); /*获取一行文本*/
