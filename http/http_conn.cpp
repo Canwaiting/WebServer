@@ -15,16 +15,17 @@ const char *error_500_title = "Internal Error";
 const char *error_500_form = "There was an unusual problem serving the request file.\n";
 
 locker m_lock;
-map<string, string> users;
+map<string, string> users; /*用一个map来管理user的key-name和value-password*/
 
+/*载入数据库中的用户名和密码到服务器中*/
 void http_conn::initmysql_result(connection_pool *connPool)
 {
     //先从连接池中取一个连接
     MYSQL *mysql = NULL;
-    connectionRAII mysqlcon(&mysql, connPool);
+    connectionRAII mysqlcon(&mysql, connPool); /*TODO:用RAII释放它?*/
 
     //在user表中检索username，passwd数据，浏览器端输入
-    if (mysql_query(mysql, "SELECT username,passwd FROM user"))
+    if (mysql_query(mysql, "SELECT username,passwd FROM user")) /*TODO:为什么没有加！*/
     {
         LOG_ERROR("SELECT error:%s\n", mysql_error(mysql));
     }
@@ -36,14 +37,14 @@ void http_conn::initmysql_result(connection_pool *connPool)
     int num_fields = mysql_num_fields(result);
 
     //返回所有字段结构的数组
-    MYSQL_FIELD *fields = mysql_fetch_fields(result);
+    MYSQL_FIELD *fields = mysql_fetch_fields(result); /*TODO:不知道具体如何把数据存储到数据结构*/
 
     //从结果集中获取下一行，将对应的用户名和密码，存入map中
     while (MYSQL_ROW row = mysql_fetch_row(result))
     {
         string temp1(row[0]);
         string temp2(row[1]);
-        users[temp1] = temp2;
+        users[temp1] = temp2; /*MAP也可以这样存储*/
     }
 }
 
@@ -444,35 +445,45 @@ http_conn::HTTP_CODE http_conn::do_request()
     const char *p = strrchr(m_url, '/');
 
     //处理cgi
+    /*TODO:如何获取这些数值的?url中有123才能进入?*/
     if (cgi == 1 && (*(p + 1) == '2' || *(p + 1) == '3'))
     {
 
         //根据标志判断是登录检测还是注册检测
         char flag = m_url[1];
 
+        /*TODO:m_url_real是什么,分配一个内存空间给他 */
         char *m_url_real = (char *)malloc(sizeof(char) * 200);
+        /*TODO:获取些什么*/
         strcpy(m_url_real, "/");
         strcat(m_url_real, m_url + 2);
+        /*TODO:这一行是使用*/
         strncpy(m_real_file + len, m_url_real, FILENAME_LEN - len - 1);
-        free(m_url_real);
+        /*意味着m_url_real是暂时用来存东西的*/
+        free(m_url_real); /*TODO:释放m_url_real*/
 
         //将用户名和密码提取出来
         //user=123&passwd=123
         char name[100], password[100];
         int i;
+        /*以&为分隔符,前面的为用户名,这是post的结果*/
         for (i = 5; m_string[i] != '&'; ++i)
-            name[i - 5] = m_string[i];
-        name[i - 5] = '\0';
+            name[i - 5] = m_string[i]; /*TODO:应该是获取name\user:后面的*/
+        name[i - 5] = '\0'; /*TODO:方便以后状态机分析?*/
 
+        /*获取密码*/
         int j = 0;
+        /*10是不是password:*/
         for (i = i + 10; m_string[i] != '\0'; ++i, ++j)
             password[j] = m_string[i];
         password[j] = '\0';
 
+        /*2是登录校验,3是注册校验*/
         if (*(p + 1) == '3')
         {
             //如果是注册，先检测数据库中是否有重名的
             //没有重名的，进行增加数据
+            /*只是初始化,并没有执行,所以还是要进行判断*/
             char *sql_insert = (char *)malloc(sizeof(char) * 200);
             strcpy(sql_insert, "INSERT INTO user(username, passwd) VALUES(");
             strcat(sql_insert, "'");
@@ -481,16 +492,20 @@ http_conn::HTTP_CODE http_conn::do_request()
             strcat(sql_insert, password);
             strcat(sql_insert, "')");
 
-            if (users.find(name) == users.end())
+            /*TODO:检测是否有重名,find函数和end函数*/
+            if (users.find(name) == users.end()) /*如果没有重名才进入主体*/
             {
-                m_lock.lock();
-                int res = mysql_query(mysql, sql_insert);
-                users.insert(pair<string, string>(name, password));
-                m_lock.unlock();
+                m_lock.lock(); /*先锁住*/
+                int res = mysql_query(mysql, sql_insert); /*执行mysql语句*/
+                users.insert(pair<string, string>(name, password)); /*更新服务器中的数据*/
+                m_lock.unlock(); /*解锁*/
 
+                /*res即返回,返回0为注册成功*/
                 if (!res)
+                    /*注册成功,跳转登录界面*/
                     strcpy(m_url, "/log.html");
                 else
+                    /*注册失败,跳转注册失败页面*/
                     strcpy(m_url, "/registerError.html");
             }
             else
@@ -500,22 +515,25 @@ http_conn::HTTP_CODE http_conn::do_request()
         //若浏览器端输入的用户名和密码在表中可以查找到，返回1，否则返回0
         else if (*(p + 1) == '2')
         {
+            /*TODO:为什么要有前面这一部分*/
             if (users.find(name) != users.end() && users[name] == password)
-                strcpy(m_url, "/welcome.html");
+                strcpy(m_url, "/welcome.html"); /*成功,返回首页*/
             else
-                strcpy(m_url, "/logError.html");
+                strcpy(m_url, "/logError.html"); /*失败,返回错误页面*/
         }
     }
 
-    if (*(p + 1) == '0')
+    /*TODO:p是通过m_url定位/所在位置,根据/后的第一个字符?*/
+    if (*(p + 1) == '0') /*跳转注册页面,get*/
     {
+        /*申请暂时资源,用完后释放?*/
         char *m_url_real = (char *)malloc(sizeof(char) * 200);
         strcpy(m_url_real, "/register.html");
         strncpy(m_real_file + len, m_url_real, strlen(m_url_real));
 
         free(m_url_real);
     }
-    else if (*(p + 1) == '1')
+    else if (*(p + 1) == '1') /*跳转登录页面,get*/
     {
         char *m_url_real = (char *)malloc(sizeof(char) * 200);
         strcpy(m_url_real, "/log.html");
@@ -523,7 +541,7 @@ http_conn::HTTP_CODE http_conn::do_request()
 
         free(m_url_real);
     }
-    else if (*(p + 1) == '5')
+    else if (*(p + 1) == '5') /*显示图片页面,post*/
     {
         char *m_url_real = (char *)malloc(sizeof(char) * 200);
         strcpy(m_url_real, "/picture.html");
@@ -531,7 +549,7 @@ http_conn::HTTP_CODE http_conn::do_request()
 
         free(m_url_real);
     }
-    else if (*(p + 1) == '6')
+    else if (*(p + 1) == '6') /*显示视频页面,post*/
     {
         char *m_url_real = (char *)malloc(sizeof(char) * 200);
         strcpy(m_url_real, "/video.html");
@@ -539,7 +557,7 @@ http_conn::HTTP_CODE http_conn::do_request()
 
         free(m_url_real);
     }
-    else if (*(p + 1) == '7')
+    else if (*(p + 1) == '7') /*显示关注页面,post*/
     {
         char *m_url_real = (char *)malloc(sizeof(char) * 200);
         strcpy(m_url_real, "/fans.html");
@@ -547,6 +565,7 @@ http_conn::HTTP_CODE http_conn::do_request()
 
         free(m_url_real);
     }
+    /*TODO:否则发送url实际请求文件?意思是假设服务器中有hello.txt文件,你就可以获取?*/
     else
         strncpy(m_real_file + len, m_url, FILENAME_LEN - len - 1);
 
