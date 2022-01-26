@@ -173,8 +173,10 @@ http_conn::LINE_STATUS http_conn::parse_line()
         /*行的结束为\r\n,所以判断是否可能读取到完整行*/
         if (temp == '\r')
         {
+            /*读完了还没有\n,即接收不完整,需要继续接收*/
             if ((m_checked_idx + 1) == m_read_idx)
                 return LINE_OPEN;
+            /*下一个字符是\n,读完了该行,将\r\n改成\0\0*/
             else if (m_read_buf[m_checked_idx + 1] == '\n')
             {
                 m_read_buf[m_checked_idx++] = '\0';
@@ -183,18 +185,22 @@ http_conn::LINE_STATUS http_conn::parse_line()
             }
             return LINE_BAD;
         }
+        /*上次读到的是\r,但是没有完整读完就会出现这种情况*/
         else if (temp == '\n')
         {
+            /*检查前一个字符是否是\r*/
             if (m_checked_idx > 1 && m_read_buf[m_checked_idx - 1] == '\r')
             {
+                /*将\r\n改成\0\0*/
                 m_read_buf[m_checked_idx - 1] = '\0';
                 m_read_buf[m_checked_idx++] = '\0';
                 return LINE_OK;
             }
+            /*前一个字符不是\r,返回语法有错误*/
             return LINE_BAD;
         }
     }
-    return LINE_OPEN;
+    return LINE_OPEN; /*获取到的行不完整*/
 }
 
 //循环读取客户数据，直到无数据可读或对方关闭连接
@@ -254,24 +260,31 @@ bool http_conn::read_once()
 //解析http请求行，获得请求方法，目标url及http版本号
 http_conn::HTTP_CODE http_conn::parse_request_line(char *text)
 {
-    m_url = strpbrk(text, " \t");
+    /*在HTTP报文中，请求行用来说明请求类型,要访问的资源以及所使用的HTTP版本，其中各个部分之间通过\t或空格分隔。*/
+    /*TODO:不了解代码意思,请求行中最先含有空格和\t任一字符的位置并返回*/
+    m_url = strpbrk(text, " \t"); /*TODO:可能返回的是布尔类型,是否有空格或\t*/
+    /*如果没有空格或\t,则报文格式有误*/
     if (!m_url)
     {
-        return BAD_REQUEST;
+        return BAD_REQUEST; /*TODO: BAD_REQUEST*/
     }
-    *m_url++ = '\0';
-    char *method = text;
-    if (strcasecmp(method, "GET") == 0)
+    /*将该位置改成\0,用于将前面数据取出*/
+    *m_url++ = '\0'; /*++完不是空格后面的数吗*/
+    char *method = text; /*TODO:取出数据*/
+    /*TODO:应该是匹配字符,抓住method后面的值*/
+    if (strcasecmp(method, "GET") == 0) /*GET*/
         m_method = GET;
-    else if (strcasecmp(method, "POST") == 0)
+    else if (strcasecmp(method, "POST") == 0) /*POST*/
     {
         m_method = POST;
-        cgi = 1;
+        cgi = 1; /*TODO:cgi是什么*/
     }
     else
-        return BAD_REQUEST;
-    m_url += strspn(m_url, " \t");
-    m_version = strpbrk(m_url, " \t");
+        return BAD_REQUEST; /*语法错误,没有get也没有post*/
+    /*m_url此时跳过了第一个空格或\t字符，但不知道之后是否还有*/
+    /*将m_url向后偏移，通过查找，继续跳过空格和\t字符，指向请求资源的第一个字符*/
+    m_url += strspn(m_url, " \t"); /*TODO:strspn*/
+    m_version = strpbrk(m_url, " \t"); /*TODO:strpbrk*/
     if (!m_version)
         return BAD_REQUEST;
     *m_version++ = '\0';
