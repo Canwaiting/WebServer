@@ -22,7 +22,7 @@ public:
 	void DestroyPool();					 //销毁所有连接
 
 	//单例模式
-	static connection_pool *GetInstance();
+	static connection_pool *GetInstance(); /*TODO*/
 
 	void init(string url, string User, string PassWord, string DataBaseName, int Port, int MaxConn, int close_log); 
 
