@@ -49,7 +49,8 @@ public:
 class connectionRAII{
 
 public:
-	connectionRAII(MYSQL **con, connection_pool *connPool);
+    /*双指针对MYSQL * con修改*/
+	connectionRAII(MYSQL **con, connection_pool *connPool); /*TODO:具体内存管理*/
 	~connectionRAII();
 	
 private:
