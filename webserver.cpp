@@ -155,7 +155,8 @@ void WebServer::eventListen()
     /*TODO:就是这一行不知道,复制到conn中,以后有事件发生后会联动吗*/
     http_conn::m_epollfd = m_epollfd; /*TODO:复制到http中的对象,让其拥有一样epollfd的属性,使其可以被操作*/
 
-    ret = socketpair(PF_UNIX, SOCK_STREAM, 0, m_pipefd); /*TODO:不知道有什么用*/
+    /*TODO:TODO:*/
+    ret = socketpair(PF_UNIX, SOCK_STREAM, 0, m_pipefd);
     assert(ret != -1);
     utils.setnonblocking(m_pipefd[1]); /*setnonblocking*/
     utils.addfd(m_epollfd, m_pipefd[0], false, 0); /*addfd*/

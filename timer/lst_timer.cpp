@@ -151,12 +151,13 @@ void Utils::init(int timeslot)
 }
 
 //对文件描述符设置非阻塞
+/*TOOD:非阻塞是什么意思*/
 int Utils::setnonblocking(int fd)
 {
-    int old_option = fcntl(fd, F_GETFL);
-    int new_option = old_option | O_NONBLOCK;
-    fcntl(fd, F_SETFL, new_option);
-    return old_option;
+    int old_option = fcntl(fd, F_GETFL); /*获取fd的状态标志*/
+    int new_option = old_option | O_NONBLOCK; /*设置非阻塞标志*/
+    fcntl(fd, F_SETFL, new_option); /*把fd设置为新的设定*/
+    return old_option; /*返回旧的状态标志,方便日后恢复这个状态*/
 }
 
 //将内核事件表注册读事件，ET模式，选择开启EPOLLONESHOT
@@ -172,16 +173,18 @@ void Utils::addfd(int epollfd, int fd, bool one_shot, int TRIGMode)
     if (1 == TRIGMode)
         /*EPOLLIN:可读 */
         /*EPOLLRDHUP:TCP链接被对方关闭*/
-        /*EPOLLET:ET的标志*/
+        /*EPOLLET:TODO:ET的标志,跟连接的时候是ET有关系?直接挂起?*/
         event.events = EPOLLIN | EPOLLET | EPOLLRDHUP;
     else
         event.events = EPOLLIN | EPOLLRDHUP;
 
-    /*TODO:one_shot*/
     if (one_shot)
+        /*EPOLLONESHOT:确保一次只能一个工作线程处理,就像一种状态,不像事件*/
         event.events |= EPOLLONESHOT;
+    /*往事件表epollfd中注册fd上的事件*/
     epoll_ctl(epollfd, EPOLL_CTL_ADD, fd, &event);
-    setnonblocking(fd);
+    /*TODO:用ET模式一定要保证非阻塞(确保在没有数据可读的时候,该文件描述符不会一直阻塞)*/
+    setnonblocking(fd); /*设置非阻塞*/
 }
 
 //信号处理函数
