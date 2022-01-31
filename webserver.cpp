@@ -145,13 +145,13 @@ void WebServer::eventListen()
     /*TODO:这是为了连接的超时吗?utils是什么*/
     utils.init(TIMESLOT); /*TODO:设置utils的超时时间为TIMESLOT*/
 
-    /*TODO*/
     //epoll创建内核事件表
-    epoll_event events[MAX_EVENT_NUMBER]; /*TODO:*/
-    m_epollfd = epoll_create(5); /*TODO:创建一个拥有5个FD的epoll池,SIZE不起作用*/
+    epoll_event events[MAX_EVENT_NUMBER]; /*TODO:用于存储就绪事件的事件表,提取有事件的fd出来*/
+    m_epollfd = epoll_create(5); /*创建一个拥有5个FD的epoll事件表,返回事件表的标识*/
     assert(m_epollfd != -1); /*确保成功创建*/
 
-    utils.addfd(m_epollfd, m_listenfd, false, m_LISTENTrigmode); /*TODO:绑定EPOLL池中FD的监听事件*/
+    /*意味着epoll事件表中有每个fd绑定了还有事件和模式,one_shot*/
+    utils.addfd(m_epollfd, m_listenfd, false, m_LISTENTrigmode);
     /*TODO:就是这一行不知道,复制到conn中,以后有事件发生后会联动吗*/
     http_conn::m_epollfd = m_epollfd; /*TODO:复制到http中的对象,让其拥有一样epollfd的属性,使其可以被操作*/
 

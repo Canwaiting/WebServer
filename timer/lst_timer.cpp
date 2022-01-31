@@ -162,14 +162,22 @@ int Utils::setnonblocking(int fd)
 //将内核事件表注册读事件，ET模式，选择开启EPOLLONESHOT
 void Utils::addfd(int epollfd, int fd, bool one_shot, int TRIGMode)
 {
-    epoll_event event;
-    event.data.fd = fd;
+    epoll_event event; /*有fd的各种属性和事件*/
+    event.data.fd = fd; /*绑定fd*/
 
+    /*触发模式:LT+ET*/
+    /*m_LISTENTrigmode = 0即listen时是LT*/
+    /*m_CONNTrigmode = 1即connect时是ET */
+    /*和书上的图一样,就是异步放进请求列表中,然后工作线程为同步*/
     if (1 == TRIGMode)
+        /*EPOLLIN:可读 */
+        /*EPOLLRDHUP:TCP链接被对方关闭*/
+        /*EPOLLET:ET的标志*/
         event.events = EPOLLIN | EPOLLET | EPOLLRDHUP;
     else
         event.events = EPOLLIN | EPOLLRDHUP;
 
+    /*TODO:one_shot*/
     if (one_shot)
         event.events |= EPOLLONESHOT;
     epoll_ctl(epollfd, EPOLL_CTL_ADD, fd, &event);
