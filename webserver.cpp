@@ -103,7 +103,9 @@ void WebServer::thread_pool()
 
 void WebServer::eventListen()
 {
-    //网络编程基础步骤
+    /*PF_INET:IPV4,底层协议族*/
+    /*SOCK_STREAM:流服务,TCP/IP选这个*/
+    /*0:默认值*/
     m_listenfd = socket(PF_INET, SOCK_STREAM, 0); /*创建Socket*/
     assert(m_listenfd >= 0); /*判断是否成功创建,否则输出错误信息,并结束*/
 
@@ -120,23 +122,30 @@ void WebServer::eventListen()
     }
 
     int ret = 0;
-    struct sockaddr_in address;
+    struct sockaddr_in address; /*弄一个地址结构体,到时候和socket绑定在一起*/
     bzero(&address, sizeof(address)); /*初始化address*/ 
     /*初始化属性*/
-    address.sin_family = AF_INET; 
-    address.sin_addr.s_addr = htonl(INADDR_ANY);
-    address.sin_port = htons(m_port);
+    address.sin_family = AF_INET; /*协议为IPV4*/
+    /* Address to accept any incoming messages.  */
+    /* Functions to convert between host and network byte order.*/
+    address.sin_addr.s_addr = htonl(INADDR_ANY); /*TODO:就如同一个参数使其可以接收任何东西,网络地址*/
+    address.sin_port = htons(m_port); /*TODO:即telnet那样吗?只不过用浏览器去访问,到时候传入的是9006,端口号*/
 
     int flag = 1;
+    /*SOL_SOCKET:通用的,与协议无关,有这个才能继续选optname*/
+    /*SO_REUSEADDR:重用本地地址,直接跳过time_wait()*/
+    /*optval和optlen分别是SO_REUSEADDR的值和长度*/
     setsockopt(m_listenfd, SOL_SOCKET, SO_REUSEADDR, &flag, sizeof(flag));/*设置socket的属性*/ 
-    ret = bind(m_listenfd, (struct sockaddr *)&address, sizeof(address)); /*Bind*/
-    assert(ret >= 0);
-    ret = listen(m_listenfd, 5); /*Listen*/
+    ret = bind(m_listenfd, (struct sockaddr *)&address, sizeof(address)); /*相当与现在有一个socket,但是没有地址,然后就把该socket绑定在某个地址上*/
+    assert(ret >= 0); /*-1是错误,其他都正常,*/
+    /*listen的意思是该socket可以接收n+1个客户端的连接,epoll是多个socket*/
+    ret = listen(m_listenfd, 5);
     assert(ret >= 0);
 
     /*TODO:这是为了连接的超时吗?utils是什么*/
     utils.init(TIMESLOT); /*TODO:设置utils的超时时间为TIMESLOT*/
 
+    /*TODO*/
     //epoll创建内核事件表
     epoll_event events[MAX_EVENT_NUMBER]; /*TODO:*/
     m_epollfd = epoll_create(5); /*TODO:创建一个拥有5个FD的epoll池,SIZE不起作用*/
