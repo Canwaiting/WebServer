@@ -216,12 +216,16 @@ bool http_conn::read_once()
     int bytes_read = 0; /*接收了多少个字节*/
 
     //LT读取数据
+    /*TODO:只接收一次,没有看见EWOULDBLOCK*/
     if (0 == m_TRIGMode) /*TODO: m_TRIGMode从哪里来*/
     {
         /*从socket中接收数据,储存在m_read_buf */
         /*TODO:recv是在接收了才交给工作线程还是先给了再接收*/
+        /*socket:m_sockfd buffer:m_read_buf + m_read_idx,这样方便再次读,就是永远都是追加*/
+        /* READ_BUFFER_SIZE - m_read_idx意味着还剩下最多是多少*/
+        /*flags:0 no react*/
         bytes_read = recv(m_sockfd, m_read_buf + m_read_idx, READ_BUFFER_SIZE - m_read_idx, 0);
-        m_read_idx += bytes_read; /*更新index*/
+        m_read_idx += bytes_read; /*更新index,上面的指针,已读的*/
 
         /*错误判断*/
         if (bytes_read <= 0)
@@ -231,7 +235,9 @@ bool http_conn::read_once()
 
         return true;
     }
+
     //ET读数据
+    /*TODO:用while(true)不断读完,但是没有看见sleep该epoll_wait*/
     else
     {
         while (true)
@@ -239,15 +245,15 @@ bool http_conn::read_once()
             /*接收数据*/
             bytes_read = recv(m_sockfd, m_read_buf + m_read_idx, READ_BUFFER_SIZE - m_read_idx, 0);
 
-            if (bytes_read == -1)
+            if (bytes_read == -1) /*recv:-1-->错误,并返回errno错误信息*/
             {
-                /*TODO:如果返回的不是下次再询问,或者 EWOULDBLOCK,则结束*/
-                if (errno == EAGAIN || errno == EWOULDBLOCK)
+                /*如果返回的不是下次再询问,或者 EWOULDBLOCK,则结束*/
+                if (errno == EAGAIN || errno == EWOULDBLOCK) /*TODO:哪里可以获得errno,linux内核定义的吗*/
                     break;
                 return false;
             }
 
-            else if (bytes_read == 0)
+            else if (bytes_read == 0) /*recv:0-->客户端已经关闭*/
             {
                 return false;
             }

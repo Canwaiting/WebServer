@@ -141,8 +141,8 @@ private:
     int m_sockfd; /*socket*/
     sockaddr_in m_address; /*socket的地址*/
     char m_read_buf[READ_BUFFER_SIZE]; /*存储读取的请求报文数据*/
-    int m_read_idx; /*TODO:长度?缓冲区中m_read_buf中数据的最后一个字节的下一个位置*/
-    int m_checked_idx; /*TODO:m_read_buf读取的位置,已经读了,不管是否解析?*/
+    int m_read_idx; /*缓冲区中m_read_buf中数据的最后一个字节的下一个位置*/
+    int m_checked_idx; /*m_read_buf读取的位置*/
     int m_start_line; /*m_read_buf中已经解析的字符个数*/
 
     char m_write_buf[WRITE_BUFFER_SIZE]; /*存储发出的响应报文数据*/
