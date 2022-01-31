@@ -213,13 +213,13 @@ bool http_conn::read_once()
     {
         return false;
     }
-    int bytes_read = 0; /*初始化读了多少个字节*/
+    int bytes_read = 0; /*接收了多少个字节*/
 
     //LT读取数据
-    /*TODO:不知道LT和ET的区别*/
-    if (0 == m_TRIGMode)
+    if (0 == m_TRIGMode) /*TODO: m_TRIGMode从哪里来*/
     {
         /*从socket中接收数据,储存在m_read_buf */
+        /*TODO:recv是在接收了才交给工作线程还是先给了再接收*/
         bytes_read = recv(m_sockfd, m_read_buf + m_read_idx, READ_BUFFER_SIZE - m_read_idx, 0);
         m_read_idx += bytes_read; /*更新index*/
 
