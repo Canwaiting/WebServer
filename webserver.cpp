@@ -155,11 +155,13 @@ void WebServer::eventListen()
     /*TODO:就是这一行不知道,复制到conn中,以后有事件发生后会联动吗*/
     http_conn::m_epollfd = m_epollfd; /*TODO:复制到http中的对象,让其拥有一样epollfd的属性,使其可以被操作*/
 
-    /*TODO:TODO:*/
+    /*TODO:为什么要有这个管道*/
+    /*创建两个互相连接的socket,UNIX协议,TCP协议,默认协议TODO:管道m_pipefd*/
     ret = socketpair(PF_UNIX, SOCK_STREAM, 0, m_pipefd);
     assert(ret != -1);
-    utils.setnonblocking(m_pipefd[1]); /*setnonblocking*/
-    utils.addfd(m_epollfd, m_pipefd[0], false, 0); /*addfd*/
+    utils.setnonblocking(m_pipefd[1]); /*设置写入端非阻塞,即如果满了还写也不会阻塞 TODO:应该是丢包而已*/
+    /*TODO:时钟的东西*/
+    utils.addfd(m_epollfd, m_pipefd[0], false, 0);
 
     /*TODO:addsig用来干什么*/
     utils.addsig(SIGPIPE, SIG_IGN);

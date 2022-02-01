@@ -183,7 +183,7 @@ void Utils::addfd(int epollfd, int fd, bool one_shot, int TRIGMode)
         event.events |= EPOLLONESHOT;
     /*往事件表epollfd中注册fd上的事件*/
     epoll_ctl(epollfd, EPOLL_CTL_ADD, fd, &event);
-    /*TODO:用ET模式一定要保证非阻塞(确保在没有数据可读的时候,该文件描述符不会一直阻塞)*/
+    /*用ET模式一定要保证非阻塞(确保在没有数据可读的时候,该文件描述符不会一直阻塞,因为他一直在等有东西读)*/
     setnonblocking(fd); /*设置非阻塞*/
 }
 

@@ -394,14 +394,17 @@ http_conn::HTTP_CODE http_conn::parse_content(char *text)
 http_conn::HTTP_CODE http_conn::process_read()
 {
     //初始化从状态机状态、HTTP请求解析结果
-    LINE_STATUS line_status = LINE_OK; /*完整读取一行*/
+    LINE_STATUS line_status = LINE_OK; /*TODO:完整读取一行,初始调这个,方便接收*/
     HTTP_CODE ret = NO_REQUEST; /*请求不完整,继续请求*/
+    /*TODO:CPP,可能这就是数组*/
     char *text = 0; /*TODO:文本为什么是0,不是应该清空数组吗*/
 
-    /*TODO:主状态机和从状态机只要有一个在解析就可以了*/
-    /*TODO:因为消息体的末尾没有任何字符,所以如果要解析post,就必须扯上主状态机*/
+    /*主状态机m_check_state:CHECK_STATE_CONTENT解析消息体(post) */
+    /*line_status:完整读取一行*/
+    /*TODO:为什么还要这个check_state,不是只要读了完整行就行了吗*/
     while ((m_check_state == CHECK_STATE_CONTENT && line_status == LINE_OK) || ((line_status = parse_line()) == LINE_OK))
     {
+        /**/
         text = get_line(); /*获取一行文本*/
         /*m_start_line是每一个数据行在m_read_buf中的起始位置*/
         /*m_checked_idx表示从状态机在m_read_buf中读取的位置*/
