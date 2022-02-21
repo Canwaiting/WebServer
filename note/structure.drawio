@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="-9LdkB6BGpCHB9lK342g" name="第 1 页">
-        <mxGraphModel dx="2952" dy="1045" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="1920" background="#FFFFFF" math="0" shadow="0">
+        <mxGraphModel dx="5404" dy="2508" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="1920" background="#FFFFFF" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -236,7 +236,7 @@
                     <mxGeometry x="570" y="2155" width="210" height="100" as="geometry"/>
                 </mxCell>
                 <mxCell id="103" value="block_queue" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
-                    <mxGeometry x="580" y="2380" width="120" height="60" as="geometry"/>
+                    <mxGeometry x="600" y="2350" width="120" height="60" as="geometry"/>
                 </mxCell>
                 <mxCell id="104" value="block_queue" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
                     <mxGeometry x="-190" y="2560" width="120" height="60" as="geometry"/>
@@ -318,6 +318,42 @@
                 </mxCell>
                 <mxCell id="131" value="总结:&lt;br&gt;所有都是对队列的操作&lt;br&gt;就跟数据结构的差不多&lt;br&gt;除了有延时这个东西" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontColor=#000000;fontSize=20;strokeWidth=1;perimeterSpacing=1;" vertex="1" parent="1">
                     <mxGeometry x="540" y="2730" width="220" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="134" value="log" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="590" y="2950" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="135" value="log" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="130" y="3200" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="136" value="应该是初始化" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontColor=#000000;fontSize=20;strokeWidth=1;perimeterSpacing=1;" vertex="1" parent="1">
+                    <mxGeometry x="130" y="3150" width="140" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="137" value="~log" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="340" y="3210" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="138" value="应该是关闭线程去写&lt;br&gt;函数中写的是关闭&lt;br&gt;某个东西的流&lt;br&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontColor=#000000;fontSize=20;strokeWidth=1;perimeterSpacing=1;" vertex="1" parent="1">
+                    <mxGeometry x="320" y="3125" width="200" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="139" value="init" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="585" y="3200" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="140" value="初始化写日志需要的东西&lt;br&gt;可以初始化成&lt;br&gt;1.异步 2.同步&lt;br&gt;如果设置队列长度就当成异步" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontColor=#000000;fontSize=20;strokeWidth=1;perimeterSpacing=1;" vertex="1" parent="1">
+                    <mxGeometry x="570" y="3100" width="280" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="141" value="write_log" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="905" y="3210" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="142" value="按照规格写日志&lt;br&gt;应该是从内存拿出来&lt;br&gt;然后写到文件中" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontColor=#000000;fontSize=20;strokeWidth=1;perimeterSpacing=1;" vertex="1" parent="1">
+                    <mxGeometry x="890" y="3120" width="200" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="143" value="flush" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="1110" y="3200" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="144" value="强制刷新流写入缓存区&lt;br&gt;不知道有什么用&lt;br&gt;要是漏掉东西怎么办" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontColor=#000000;fontSize=20;strokeWidth=1;perimeterSpacing=1;" vertex="1" parent="1">
+                    <mxGeometry x="1095" y="3110" width="220" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="145" value="总结:&lt;br&gt;所有都是对日志的操作&lt;br&gt;具体：&lt;br&gt;新建一个线程,不断while&lt;br&gt;只要队列有日志就写到文件中" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontColor=#000000;fontSize=20;strokeWidth=1;perimeterSpacing=1;" vertex="1" parent="1">
+                    <mxGeometry x="545" y="3330" width="280" height="120" as="geometry"/>
                 </mxCell>
             </root>
         </mxGraphModel>
