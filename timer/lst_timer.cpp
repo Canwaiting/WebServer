@@ -25,6 +25,7 @@ void sort_timer_lst::add_timer(util_timer *timer)
     {
         return;
     }
+    //如果链表是空的,直接增加
     if (!head)
     {
         head = tail = timer;
