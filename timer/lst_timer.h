@@ -24,23 +24,34 @@
 #include <time.h>
 #include "../log/log.h"
 
+//连接资源结构体成员需要用到定时器类
+//需要前向声明
 class util_timer;
 
+
+//开辟用户socket结构 对应于最大处理fd
+//连接资源
 struct client_data
 {
+    //客户端socket地址
     sockaddr_in address;
+    //socket文件描述符
     int sockfd;
+    //定时器
     util_timer *timer;
 };
 
+//定时器类
 class util_timer
 {
 public:
     util_timer() : prev(NULL), next(NULL) {}
 
 public:
+
+    //超时时间
     time_t expire;
-    
+    //回调函数
     void (* cb_func)(client_data *);
     client_data *user_data;
     util_timer *prev;
