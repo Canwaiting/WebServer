@@ -319,6 +319,7 @@ bool WebServer::dealwithsignal(bool &timeout, bool &stop_server)
     return true;
 }
 
+//Reactor和Proactor方式读取数据
 void WebServer::dealwithread(int sockfd)
 {
     //获取当前fd的计时器
@@ -374,10 +375,11 @@ void WebServer::dealwithread(int sockfd)
     }
 }
 
+//Reactor和Proactor方式写入数据
 void WebServer::dealwithwrite(int sockfd)
 {
     util_timer *timer = users_timer[sockfd].timer;
-    //reactor
+    //reactor 把就绪的写事件放入队列
     if (1 == m_actormodel)
     {
         if (timer)
@@ -401,9 +403,10 @@ void WebServer::dealwithwrite(int sockfd)
             }
         }
     }
+
+    //proactor 把写完成事件放进队列
     else
     {
-        //proactor
         if (users[sockfd].write())
         {
             LOG_INFO("send data to the client(%s)", inet_ntoa(users[sockfd].get_address()->sin_addr));

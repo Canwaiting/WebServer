@@ -15,9 +15,11 @@ class threadpool
 public:
     /*connPool是数据库连接池指针,thread_number是线程池中线程的数量，max_requests是请求队列中最多允许的、等待处理的请求的数量*/
     threadpool(int actor_model, connection_pool *connPool, int thread_number = 8, int max_request = 10000);
-    ~threadpool(); /*TODO:可能是空的析构函数*/
-    bool append(T *request, int state); /*TODO:向请求队列中插入任务请求,state是什么?状态?*/
-    bool append_p(T *request); /*TODO:应该这个才是单纯插入任务请求*/
+    ~threadpool();
+    //插入队列,插入的是就绪事件listen
+    bool append(T *request, int state);
+    //插入队列,插入的是完成事件connect
+    bool append_p(T *request);
 
 private:
     /*工作线程运行的函数，它不断从工作队列中取出任务并执行之*/
@@ -130,26 +132,29 @@ void threadpool<T>::run()
 {
     while (true)
     {
-        //TODO:信号量等待
+        //信号量等待
         m_queuestat.wait();
 
         //被唤醒后,先加互斥锁
         m_queuelocker.lock();
-        if (m_workqueue.empty()) /*TODO:如果空了就不用上锁?*/
+        if (m_workqueue.empty())
         {
             m_queuelocker.unlock();
             continue;
         }
 
         //处理队列事件
-        T *request = m_workqueue.front(); /*获取队列中的第一个任务*/
-        m_workqueue.pop_front(); /*把队列中第一个任务删掉*/
-        m_queuelocker.unlock(); /*TODO:解锁*/
+        T *request = m_workqueue.front();
+        m_workqueue.pop_front();
 
-        if (!request) /*TODO:有什么意义,有无请求都会继续*/
+        //解锁
+        m_queuelocker.unlock();
+
+        //TODO
+        if (!request)
             continue;
 
-        /*TODO: m_actor_model是什么,ET和LT?*/
+        //TODO:下一个要看的是 m_actor_model和request的结构
         if (1 == m_actor_model)
         {
             /*TODO:m_state是什么,信号量,还是第几次发请求*/
