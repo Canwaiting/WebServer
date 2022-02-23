@@ -150,23 +150,25 @@ void threadpool<T>::run()
         //解锁
         m_queuelocker.unlock();
 
-        //TODO
+        //如果队列中没有任务,跳到下一次循环
         if (!request)
             continue;
 
-        //TODO:下一个要看的是 m_actor_model和request的结构
         if (1 == m_actor_model)
         {
-            /*TODO:m_state是什么,信号量,还是第几次发请求*/
+            //TODO:m_state是人家插入队列时规定的
             if (0 == request->m_state)
             {
-                /*TODO:判断是不是第一次遇见?是的话就处理?*/
+                //TODO
                 if (request->read_once())
                 {
                     request->improv = 1;
+                    //获取数据库链接
                     connectionRAII mysqlcon(&request->mysql, m_connPool);
+                    //process进行处理
                     request->process();
                 }
+
                 else
                 {
                     request->improv = 1;
@@ -190,8 +192,10 @@ void threadpool<T>::run()
         /*TODO:应该是某个直接处理的模式,ET和LT那些*/
         else
         {
-            connectionRAII mysqlcon(&request->mysql, m_connPool); /*TODO:有关数据库的获取*/
-            request->process(); /*process(模板类中的方法,这里是http类)进行处理*/
+            //获取数据库链接
+            connectionRAII mysqlcon(&request->mysql, m_connPool);
+            //process(模板类中的方法,这里是http类)进行处理
+            request->process();
         }
     }
 }
