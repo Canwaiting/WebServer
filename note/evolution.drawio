@@ -181,6 +181,9 @@
                 <mxCell id="96" value="先有轮询才有accept" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=25;fontColor=#000000;" vertex="1" parent="1">
                     <mxGeometry x="920" y="910" width="240" height="40" as="geometry"/>
                 </mxCell>
+                <mxCell id="98" value="如果是有用户连接&lt;br&gt;LT&lt;br&gt;ET" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=25;fontColor=#000000;" vertex="1" parent="1">
+                    <mxGeometry x="940" y="990" width="220" height="100" as="geometry"/>
+                </mxCell>
             </root>
         </mxGraphModel>
     </diagram>

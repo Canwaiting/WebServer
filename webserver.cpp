@@ -276,11 +276,14 @@ bool WebServer::dealclinetdata()
     return true;
 }
 
+//epoll中获取管道信号处理
 bool WebServer::dealwithsignal(bool &timeout, bool &stop_server)
 {
     int ret = 0;
     int sig;
     char signals[1024];
+
+    //从管道读出信号值,返回字节数
     ret = recv(m_pipefd[0], signals, sizeof(signals), 0);
     if (ret == -1)
     {
@@ -290,22 +293,26 @@ bool WebServer::dealwithsignal(bool &timeout, bool &stop_server)
     {
         return false;
     }
+
+    //处理信号值
     else
     {
         for (int i = 0; i < ret; ++i)
         {
             switch (signals[i])
             {
-            case SIGALRM:
-            {
-                timeout = true;
-                break;
-            }
-            case SIGTERM:
-            {
-                stop_server = true;
-                break;
-            }
+                //计时器过期
+                case SIGALRM:
+                {
+                    timeout = true;
+                    break;
+                }
+                //关闭服务器
+                case SIGTERM:
+                {
+                    stop_server = true;
+                    break;
+                }
             }
         }
     }
@@ -314,11 +321,13 @@ bool WebServer::dealwithsignal(bool &timeout, bool &stop_server)
 
 void WebServer::dealwithread(int sockfd)
 {
+    //获取当前fd的计时器
     util_timer *timer = users_timer[sockfd].timer;
 
-    //reactor
+    //reactor 放读就绪到队列上
     if (1 == m_actormodel)
     {
+        //调整计时器,相当与LRU那样
         if (timer)
         {
             adjust_timer(timer);
@@ -341,21 +350,23 @@ void WebServer::dealwithread(int sockfd)
             }
         }
     }
+    //proactor 放读完成到队列上
     else
     {
-        //proactor
         if (users[sockfd].read_once())
         {
             LOG_INFO("deal with the client(%s)", inet_ntoa(users[sockfd].get_address()->sin_addr));
 
-            //若监测到读事件，将该事件放入请求队列
+            //读完成事件,将该事件放入队列
             m_pool->append_p(users + sockfd);
 
+            //调整计时器
             if (timer)
             {
                 adjust_timer(timer);
             }
         }
+
         else
         {
             deal_timer(timer, sockfd);
@@ -451,17 +462,18 @@ void WebServer::eventLoop()
             //处理信号
             else if ((sockfd == m_pipefd[0]) && (events[i].events & EPOLLIN))
             {
-                bool flag = dealwithsignal(timeout, stop_server); /*TODO*/
+                bool flag = dealwithsignal(timeout, stop_server);
+                //未能处理,打日志
                 if (false == flag)
                     LOG_ERROR("%s", "dealclientdata failure");
             }
 
             //处理客户连接上接收到的数据
-            else if (events[i].events & EPOLLIN) /*可读*/
+            else if (events[i].events & EPOLLIN)
             {
                 dealwithread(sockfd);
             }
-            else if (events[i].events & EPOLLOUT) /*可写*/
+            else if (events[i].events & EPOLLOUT)
             {
                 dealwithwrite(sockfd);
             }
