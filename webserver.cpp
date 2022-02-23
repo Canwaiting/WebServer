@@ -103,11 +103,9 @@ void WebServer::thread_pool()
 
 void WebServer::eventListen()
 {
-    /*PF_INET:IPV4,底层协议族*/
-    /*SOCK_STREAM:流服务,TCP/IP选这个*/
-    /*0:默认值*/
-    m_listenfd = socket(PF_INET, SOCK_STREAM, 0); /*创建Socket*/
-    assert(m_listenfd >= 0); /*判断是否成功创建,否则输出错误信息,并结束*/
+    //创建socket
+    m_listenfd = socket(PF_INET, SOCK_STREAM, 0);
+    assert(m_listenfd >= 0);
 
     //优雅关闭连接
     if (0 == m_OPT_LINGER) /*TODO: m_OPT_LINGER*/
@@ -121,24 +119,23 @@ void WebServer::eventListen()
         setsockopt(m_listenfd, SOL_SOCKET, SO_LINGER, &tmp, sizeof(tmp)); /*设置socket的属性*/
     }
 
+    //建立地址
     int ret = 0;
     struct sockaddr_in address; /*弄一个地址结构体,到时候和socket绑定在一起*/
     bzero(&address, sizeof(address)); /*初始化address*/ 
-    /*初始化属性*/
     address.sin_family = AF_INET; /*协议为IPV4*/
-    /* Address to accept any incoming messages.  */
-    /* Functions to convert between host and network byte order.*/
     address.sin_addr.s_addr = htonl(INADDR_ANY); /*TODO:就如同一个参数使其可以接收任何东西,网络地址*/
     address.sin_port = htons(m_port); /*TODO:即telnet那样吗?只不过用浏览器去访问,到时候传入的是9006,端口号*/
 
+    //可以重用地址和端口
     int flag = 1;
-    /*SOL_SOCKET:通用的,与协议无关,有这个才能继续选optname*/
-    /*SO_REUSEADDR:重用本地地址,直接跳过time_wait()*/
-    /*optval和optlen分别是SO_REUSEADDR的值和长度*/
-    setsockopt(m_listenfd, SOL_SOCKET, SO_REUSEADDR, &flag, sizeof(flag));/*设置socket的属性*/ 
+    setsockopt(m_listenfd, SOL_SOCKET, SO_REUSEADDR, &flag, sizeof(flag));/*设置socket的属性*/
+
+    //bind操作
     ret = bind(m_listenfd, (struct sockaddr *)&address, sizeof(address)); /*相当与现在有一个socket,但是没有地址,然后就把该socket绑定在某个地址上*/
     assert(ret >= 0); /*-1是错误,其他都正常,*/
-    /*listen的意思是该socket可以接收n+1个客户端的连接,epoll是多个socket*/
+
+    //listen操作
     ret = listen(m_listenfd, 5);
     assert(ret >= 0);
 
@@ -146,9 +143,9 @@ void WebServer::eventListen()
     utils.init(TIMESLOT); /*TODO:设置utils的超时时间为TIMESLOT*/
 
     //epoll创建内核事件表
-    epoll_event events[MAX_EVENT_NUMBER]; /*TODO:用于存储就绪事件的事件表,提取有事件的fd出来*/
-    m_epollfd = epoll_create(5); /*创建一个拥有5个FD的epoll事件表,返回事件表的标识*/
-    assert(m_epollfd != -1); /*确保成功创建*/
+    epoll_event events[MAX_EVENT_NUMBER];
+    m_epollfd = epoll_create(5);
+    assert(m_epollfd != -1);
 
     /*意味着epoll事件表中有每个fd绑定了还有事件和模式,one_shot*/
     utils.addfd(m_epollfd, m_listenfd, false, m_LISTENTrigmode);
