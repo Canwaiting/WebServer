@@ -3,7 +3,7 @@
 WebServer::WebServer()
 {
     //http_conn类对象
-    users = new http_conn[MAX_FD]; /*TODO:http_conn这个对象有什么*/
+    users = new http_conn[MAX_FD];
 
     //root文件夹路径
     char server_path[200];
@@ -210,47 +210,69 @@ void WebServer::deal_timer(util_timer *timer, int sockfd)
     LOG_INFO("close fd %d", users_timer[sockfd].sockfd);
 }
 
+//监听 ET/LT
 bool WebServer::dealclinetdata()
 {
+    //初始化用户地址
     struct sockaddr_in client_address;
     socklen_t client_addrlength = sizeof(client_address);
+
+    //ET
     if (0 == m_LISTENTrigmode)
     {
+        //accept
         int connfd = accept(m_listenfd, (struct sockaddr *)&client_address, &client_addrlength);
         if (connfd < 0)
         {
             LOG_ERROR("%s:errno is:%d", "accept error", errno);
+            //未能成功处理用户
             return false;
         }
+
+        //用户已满
         if (http_conn::m_user_count >= MAX_FD)
         {
             utils.show_error(connfd, "Internal server busy");
             LOG_ERROR("%s", "Internal server busy");
+            //未能成功处理用户
             return false;
         }
+
+        //建立计时器
         timer(connfd, client_address);
     }
 
+    //LT
     else
     {
+        //直到用户被处理,或者accpet报错才退出
         while (1)
         {
+            //accept
             int connfd = accept(m_listenfd, (struct sockaddr *)&client_address, &client_addrlength);
             if (connfd < 0)
             {
                 LOG_ERROR("%s:errno is:%d", "accept error", errno);
                 break;
             }
+
+            //用户已满
             if (http_conn::m_user_count >= MAX_FD)
             {
                 utils.show_error(connfd, "Internal server busy");
                 LOG_ERROR("%s", "Internal server busy");
                 break;
             }
+
+            //建立计时器
             timer(connfd, client_address);
         }
+
+        //未能成功处理用户
         return false;
     }
+
+    //成功处理用户
     return true;
 }
 
@@ -392,7 +414,7 @@ void WebServer::eventLoop()
     bool timeout = false;
     bool stop_server = false;
 
-    //一直在监听epoll池
+    //只要服务器在运行,就不断轮询epoll
     while (!stop_server)
     {
         //获取发生事件的fd表
@@ -412,7 +434,9 @@ void WebServer::eventLoop()
             //处理新到的客户连接
             if (sockfd == m_listenfd)
             {
+                //ET成功返回T,反之F  LT必返回F
                 bool flag = dealclinetdata();
+                //F直接处理下一个fd的事件
                 if (false == flag)
                     continue;
             }

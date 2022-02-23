@@ -70,10 +70,10 @@ public:
     epoll_event events[MAX_EVENT_NUMBER];
 
     int m_listenfd;
-    int m_OPT_LINGER; /*TODO:linger*/
+    int m_OPT_LINGER;
     int m_TRIGMode;
-    int m_LISTENTrigmode;
-    int m_CONNTrigmode;
+    int m_LISTENTrigmode; //监听 ET/LT
+    int m_CONNTrigmode; //连接 ET/LT
 
     //定时器相关
     client_data *users_timer;
