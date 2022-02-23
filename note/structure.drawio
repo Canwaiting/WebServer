@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="-9LdkB6BGpCHB9lK342g" name="第 1 页">
-        <mxGraphModel dx="3536" dy="1393" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="1920" background="#FFFFFF" math="0" shadow="0">
+        <mxGraphModel dx="2952" dy="1045" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="1920" background="#FFFFFF" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -46,8 +46,8 @@
                 <mxCell id="29" value="&lt;font style=&quot;font-size: 17px;&quot;&gt;evenfdListen&lt;/font&gt;" style="whiteSpace=wrap;html=1;fontSize=17;" vertex="1" parent="1">
                     <mxGeometry x="300" y="605" width="120" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="30" value="1.epoll树&lt;br style=&quot;font-size: 17px;&quot;&gt;2.超时设定&lt;br style=&quot;font-size: 17px;&quot;&gt;3.统一事件源&lt;br style=&quot;font-size: 17px;&quot;&gt;4.设置listenfd" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontColor=#000000;fontSize=17;strokeWidth=1;perimeterSpacing=1;" vertex="1" parent="1">
-                    <mxGeometry x="300" y="510" width="120" height="90" as="geometry"/>
+                <mxCell id="30" value="1.socket,bind,listen&lt;br&gt;2.创建epoll内核表,同时注册第一步的socket进来&lt;br&gt;3.注册信号,并处理epoll使得事件统一处理" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontColor=#000000;fontSize=17;strokeWidth=1;perimeterSpacing=1;" vertex="1" parent="1">
+                    <mxGeometry x="180" y="505" width="380" height="70" as="geometry"/>
                 </mxCell>
                 <mxCell id="31" value="&lt;font style=&quot;font-size: 17px;&quot;&gt;eventloop&lt;/font&gt;" style="whiteSpace=wrap;html=1;fontSize=17;" vertex="1" parent="1">
                     <mxGeometry x="520" y="605" width="120" height="60" as="geometry"/>
