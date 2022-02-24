@@ -120,10 +120,9 @@ bool threadpool<T>::append_p(T *request)
 template <typename T>
 void *threadpool<T>::worker(void *arg)
 {
-    //TODO:将参数强转为线程池类，调用成员方法
     threadpool *pool = (threadpool *)arg;
-    pool->run(); /*TODO:调用run函数?*/
-    return pool; /*TODO:为什么要返回这个*/
+    pool->run();
+    return pool;
 }
 
 //执行任务
