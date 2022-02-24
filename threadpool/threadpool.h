@@ -153,7 +153,6 @@ void threadpool<T>::run()
 
         if (1 == m_actor_model)
         {
-            //TODO:m_state是人家插入队列时规定的
             if (0 == request->m_state)
             {
                 //TODO

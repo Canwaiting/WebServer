@@ -208,26 +208,18 @@ http_conn::LINE_STATUS http_conn::parse_line()
 //非阻塞ET工作模式下，需要一次性将数据读完
 bool http_conn::read_once()
 {
-    /*判断读到的位置是否大于总大小*/
     if (m_read_idx >= READ_BUFFER_SIZE)
     {
         return false;
     }
-    int bytes_read = 0; /*接收了多少个字节*/
+    int bytes_read = 0;
 
     //LT读取数据
-    /*TODO:只接收一次,没有看见EWOULDBLOCK*/
-    if (0 == m_TRIGMode) /*TODO: m_TRIGMode从哪里来*/
+    if (0 == m_TRIGMode)
     {
-        /*从socket中接收数据,储存在m_read_buf */
-        /*TODO:recv是在接收了才交给工作线程还是先给了再接收*/
-        /*socket:m_sockfd buffer:m_read_buf + m_read_idx,这样方便再次读,就是永远都是追加*/
-        /* READ_BUFFER_SIZE - m_read_idx意味着还剩下最多是多少*/
-        /*flags:0 no react*/
+        //从socket中接收数据,储存在m_read_buf
         bytes_read = recv(m_sockfd, m_read_buf + m_read_idx, READ_BUFFER_SIZE - m_read_idx, 0);
-        m_read_idx += bytes_read; /*更新index,上面的指针,已读的*/
-
-        /*错误判断*/
+        m_read_idx += bytes_read;
         if (bytes_read <= 0)
         {
             return false;
@@ -237,15 +229,13 @@ bool http_conn::read_once()
     }
 
     //ET读数据
-    /*TODO:用while(true)不断读完,但是没有看见sleep该epoll_wait*/
     else
     {
         while (true)
         {
-            /*接收数据*/
+            //从socket中接收数据,储存在m_read_buf
             bytes_read = recv(m_sockfd, m_read_buf + m_read_idx, READ_BUFFER_SIZE - m_read_idx, 0);
-
-            if (bytes_read == -1) /*recv:-1-->错误,并返回errno错误信息*/
+            if (bytes_read == -1) /*TODO*/
             {
                 /*如果返回的不是下次再询问,或者 EWOULDBLOCK,则结束*/
                 if (errno == EAGAIN || errno == EWOULDBLOCK) /*TODO:哪里可以获得errno,linux内核定义的吗*/
@@ -291,43 +281,43 @@ http_conn::HTTP_CODE http_conn::parse_request_line(char *text)
 
     //识别并指向资源
     m_url += strspn(m_url, " \t");
+
+    //识别并指向版本
     m_version = strpbrk(m_url, " \t");
-    if (!m_version) /*TODO:m_version有东西就不会进入*/
-        return BAD_REQUEST; /*请求报文有语法错误*/
-    /*将该位置改成\0,用于将前面数据取出*/
-    *m_version++ = '\0';
-    m_version += strspn(m_version, " \t"); /*TODO:取出数据*/
-    /*下面都是判断*/
-    if (strcasecmp(m_version, "HTTP/1.1") != 0) /*仅支持HTTP/1.1*/
+    if (!m_version)
         return BAD_REQUEST;
-    /*TODO:是不是识别到前缀后,就开始读后面的东西*/
+    *m_version++ = '\0';
+    m_version += strspn(m_version, " \t");
+
+    //仅支持HTTP/1.1
+    if (strcasecmp(m_version, "HTTP/1.1") != 0)
+        return BAD_REQUEST;
+
+    //各种情况的,对请求资源前7个字符进行判断
     if (strncasecmp(m_url, "http://", 7) == 0)
     {
-        m_url += 7; /*TODO:前面的http://?*/
-        m_url = strchr(m_url, '/'); /*TODO:获取后面的东西?*/
+        m_url += 7;
+        m_url = strchr(m_url, '/');
     }
-
     if (strncasecmp(m_url, "https://", 8) == 0)
     {
         m_url += 8;
         m_url = strchr(m_url, '/');
     }
-
-    /*一般不带上面两种前缀的,都是想直接/或用/加资源访问服务器资源*/
     if (!m_url || m_url[0] != '/')
         return BAD_REQUEST;
-    //当url为/时，显示判断界面
     if (strlen(m_url) == 1)
         strcat(m_url, "judge.html");
-    /*请求行处理后,将主状态机转移处理请求头*/
+
+    //请求行处理后,将主状态机转移处理请求头
     m_check_state = CHECK_STATE_HEADER;
-    return NO_REQUEST; /*更新为没有请求*/
+    return NO_REQUEST;
 }
 
 //解析http请求的一个头部信息
 http_conn::HTTP_CODE http_conn::parse_headers(char *text)
 {
-    /*判断是空行还是请求头*/
+    //判断是空行还是请求头
     if (text[0] == '\0')
     {
         /*判断是GET还是POST请求*/
@@ -389,6 +379,7 @@ http_conn::HTTP_CODE http_conn::parse_content(char *text)
     return NO_REQUEST; /*完成该请求的解析*/
 }
 
+//读取报文并进行处理
 http_conn::HTTP_CODE http_conn::process_read()
 {
     //初始化从状态机状态、HTTP请求解析结果
@@ -424,7 +415,6 @@ http_conn::HTTP_CODE http_conn::process_read()
                 ret = parse_headers(text);
                 if (ret == BAD_REQUEST)
                     return BAD_REQUEST;
-                //作为get方法,需要跳转到报文响应函数
                 else if (ret == GET_REQUEST)
                 {
                     return do_request();
@@ -839,11 +829,11 @@ bool http_conn::process_write(HTTP_CODE ret)
     return true;
 }
 
+//请求报文读取并处理-->处理并写入响应报文-->注册写完成事件
 void http_conn::process()
 {
+    //读取并处理请求报文,没读完就继续读
     HTTP_CODE read_ret = process_read();
-
-    //NO_REQUEST表示请求不完整,需要继续接收请求数据
     if (read_ret == NO_REQUEST)
     {
         //注册并监听读事件
@@ -851,11 +841,10 @@ void http_conn::process()
         return;
     }
 
-    //调用 process_write 完成报文响应
+    //写入响应报文
     bool write_ret = process_write(read_ret);
     if (!write_ret)
     {
-        //关闭连接
         close_conn();
     }
 

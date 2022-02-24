@@ -200,10 +200,13 @@
                     <mxGeometry x="280" y="1760" width="120" height="60" as="geometry"/>
                 </mxCell>
                 <mxCell id="104" value="process" style="whiteSpace=wrap;html=1;fontSize=17;" vertex="1" parent="1">
-                    <mxGeometry x="280" y="1670" width="120" height="60" as="geometry"/>
+                    <mxGeometry x="820" y="1790" width="120" height="60" as="geometry"/>
                 </mxCell>
                 <mxCell id="105" value="process_read" style="whiteSpace=wrap;html=1;fontSize=17;" vertex="1" parent="1">
-                    <mxGeometry x="280" y="1590" width="120" height="60" as="geometry"/>
+                    <mxGeometry x="810" y="1870" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="106" value="read_once()" style="whiteSpace=wrap;html=1;fontSize=17;" vertex="1" parent="1">
+                    <mxGeometry x="280" y="1690" width="120" height="60" as="geometry"/>
                 </mxCell>
             </root>
         </mxGraphModel>
