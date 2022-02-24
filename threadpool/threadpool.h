@@ -151,11 +151,13 @@ void threadpool<T>::run()
         if (!request)
             continue;
 
+        //proactor
         if (1 == m_actor_model)
         {
+            //读
             if (0 == request->m_state)
             {
-                //TODO
+                //成功读取数据
                 if (request->read_once())
                 {
                     request->improv = 1;
@@ -165,14 +167,18 @@ void threadpool<T>::run()
                     request->process();
                 }
 
+                //未能成功读取数据
                 else
                 {
                     request->improv = 1;
                     request->timer_flag = 1;
                 }
             }
+
+            //写
             else
             {
+                //将响应报文发送
                 if (request->write())
                 {
                     request->improv = 1;
@@ -185,7 +191,7 @@ void threadpool<T>::run()
             }
         }
 
-        /*TODO:应该是某个直接处理的模式,ET和LT那些*/
+        //reactor
         else
         {
             //获取数据库链接

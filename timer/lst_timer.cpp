@@ -264,10 +264,17 @@ int Utils::u_epollfd = 0;
 
 
 class Utils;
+
+//定时器回调函数
 void cb_func(client_data *user_data)
 {
+    //删除非活动连接在socket上的注册事件
     epoll_ctl(Utils::u_epollfd, EPOLL_CTL_DEL, user_data->sockfd, 0);
     assert(user_data);
+
+    //关闭该socket
     close(user_data->sockfd);
+
+    //更新连接数
     http_conn::m_user_count--;
 }

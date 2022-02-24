@@ -76,27 +76,18 @@ public:
     ~http_conn() {}
 
 public:
-    /*TODO:初始化socket的地址和sql啥的*/
     void init(int sockfd, const sockaddr_in &addr, char *, int, int, string user, string passwd, string sqlname);
-    /*TODO:关闭http连接,具体怎么样不知道*/
     void close_conn(bool real_close = true);
-    /*TODO:对进程干了什么?*/
     void process();
-    /*TODO:读取浏览器端发来的全部数据,具体怎么样去读*/
     bool read_once();
-    /*TODO:响应报文写入函数*/
     bool write();
-    /*TODO:用于获取地址的函数?*/
     sockaddr_in *get_address()
     {
         return &m_address;
     }
-    /*TODO:CGI使用线程池初始化数据库表,即从池中选择一个来初始化*/
     void initmysql_result(connection_pool *connPool);
-    /*TODO:时钟是否到时?*/
-    int timer_flag;
-    /*TODO*/
-    int improv;
+    int timer_flag; //1为要重置,0为不用重置
+    int improv; //1为处理完,0为未处理
 
 
 private:
@@ -133,8 +124,8 @@ private:
 
 public:
     static int m_epollfd; /*TODO*/
-    static int m_user_count; /*TODO:用户数?*/
-    MYSQL *mysql; /*TODO*/
+    static int m_user_count; //用户连接数
+    MYSQL *mysql;
     int m_state;  //读为0, 写为1
 
 private:

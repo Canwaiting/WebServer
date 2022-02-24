@@ -199,9 +199,13 @@ void WebServer::adjust_timer(util_timer *timer)
     LOG_INFO("%s", "adjust timer once");
 }
 
+//删除过期的定时器,终结相应socket
 void WebServer::deal_timer(util_timer *timer, int sockfd)
 {
+    //关闭定时器所绑定的socket
     timer->cb_func(&users_timer[sockfd]);
+
+    //删除该定时器
     if (timer)
     {
         utils.m_timer_lst.del_timer(timer);
@@ -334,31 +338,35 @@ void WebServer::dealwithread(int sockfd)
             adjust_timer(timer);
         }
 
-        //若监测到读事件，将该事件放入请求队列
+        //若监测到读事件直接该事件放入请求队列
         m_pool->append(users + sockfd, 0);
 
         while (true)
         {
             if (1 == users[sockfd].improv)
             {
+                //重置该socket
                 if (1 == users[sockfd].timer_flag)
                 {
+                    //删除该socket和定时器
                     deal_timer(timer, sockfd);
                     users[sockfd].timer_flag = 0;
                 }
+                //重置状态
                 users[sockfd].improv = 0;
                 break;
             }
         }
     }
+
     //proactor 放读完成到队列上
     else
-    {
+    {   //读完成
         if (users[sockfd].read_once())
         {
             LOG_INFO("deal with the client(%s)", inet_ntoa(users[sockfd].get_address()->sin_addr));
 
-            //读完成事件,将该事件放入队列
+            //将该事件放入队列
             m_pool->append_p(users + sockfd);
 
             //调整计时器
@@ -370,6 +378,7 @@ void WebServer::dealwithread(int sockfd)
 
         else
         {
+            //删除计时器和相应socket
             deal_timer(timer, sockfd);
         }
     }

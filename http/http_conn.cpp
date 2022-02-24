@@ -204,8 +204,7 @@ http_conn::LINE_STATUS http_conn::parse_line()
     return LINE_OPEN; /*获取到的行不完整*/
 }
 
-//循环读取客户数据，直到无数据可读或对方关闭连接
-//非阻塞ET工作模式下，需要一次性将数据读完
+//读取数据 ET/LT
 bool http_conn::read_once()
 {
     if (m_read_idx >= READ_BUFFER_SIZE)
@@ -214,10 +213,10 @@ bool http_conn::read_once()
     }
     int bytes_read = 0;
 
-    //LT读取数据
+    //读取数据 LT
     if (0 == m_TRIGMode)
     {
-        //从socket中接收数据,储存在m_read_buf
+        //接收数据并储存
         bytes_read = recv(m_sockfd, m_read_buf + m_read_idx, READ_BUFFER_SIZE - m_read_idx, 0);
         m_read_idx += bytes_read;
         if (bytes_read <= 0)
@@ -228,27 +227,29 @@ bool http_conn::read_once()
         return true;
     }
 
-    //ET读数据
+    //读取数据 ET
     else
     {
         while (true)
         {
-            //从socket中接收数据,储存在m_read_buf
+            //接收数据并储存
             bytes_read = recv(m_sockfd, m_read_buf + m_read_idx, READ_BUFFER_SIZE - m_read_idx, 0);
-            if (bytes_read == -1) /*TODO*/
+
+            if (bytes_read == -1)
             {
-                /*如果返回的不是下次再询问,或者 EWOULDBLOCK,则结束*/
-                if (errno == EAGAIN || errno == EWOULDBLOCK) /*TODO:哪里可以获得errno,linux内核定义的吗*/
+                //非阻塞ET模式下,需要一次性把所有数据读完
+                if (errno == EAGAIN || errno == EWOULDBLOCK)
                     break;
                 return false;
             }
 
-            else if (bytes_read == 0) /*recv:0-->客户端已经关闭*/
+            //客户端已经关闭了
+            else if (bytes_read == 0)
             {
                 return false;
             }
 
-            m_read_idx += bytes_read; /*更新数据*/
+            m_read_idx += bytes_read;
         }
         return true;
     }
@@ -601,7 +602,7 @@ void http_conn::unmap()
     }
 }
 
-/*将响应报文发送给浏览器端*/
+//将响应报文发送给浏览器端
 bool http_conn::write()
 {
     int temp = 0;
@@ -609,8 +610,6 @@ bool http_conn::write()
     /*如果发送的数据长度为0,即至少响应报文为0,一般不会出现*/
     if (bytes_to_send == 0)
     {
-        /*TODO:重新注册?*/
-        /*TODO:EPOLLIN*/
         modfd(m_epollfd, m_sockfd, EPOLLIN, m_TRIGMode);
         init();
         return true;
@@ -639,7 +638,6 @@ bool http_conn::write()
 
         bytes_have_send += temp; /*更新还没有发的字节*/
         bytes_to_send -= temp; /*更新已发送了的字节*/
-        /*TODO:第一个iovec头部信息的数据已发完,发送第二个iovec数据*/
         if (bytes_have_send >= m_iv[0].iov_len)
         {
             /*不再继续发送头部信息*/
