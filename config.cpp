@@ -32,6 +32,7 @@ Config::Config(){
     actor_model = 0;
 }
 
+//解析参数并赋值给相应变量
 void Config::parse_arg(int argc, char*argv[]){
     int opt;
     const char *str = "p:l:m:o:s:t:c:a:";
