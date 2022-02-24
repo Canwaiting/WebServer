@@ -121,6 +121,9 @@
                 <mxCell id="72" value="1" style="shape=singleArrow;whiteSpace=wrap;html=1;arrowWidth=0.4;arrowSize=0.4;fontSize=15;fontColor=#ffffff;strokeColor=#2D7600;strokeWidth=3;fillColor=#60a917;" vertex="1" parent="1">
                     <mxGeometry x="1800" y="190" width="80" height="60" as="geometry"/>
                 </mxCell>
+                <mxCell id="73" value="总结:&lt;br&gt;建树--&amp;gt;后序遍历(剪枝)&lt;br&gt;建栈--&amp;gt;弹出&lt;br&gt;关键:&lt;br&gt;1.学习到哪个程度&lt;br&gt;2.时刻检查是否能完成上一级的任务&lt;br&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontColor=#000000;fontSize=15;" vertex="1" parent="1">
+                    <mxGeometry x="2295" y="85" width="250" height="110" as="geometry"/>
+                </mxCell>
             </root>
         </mxGraphModel>
     </diagram>
