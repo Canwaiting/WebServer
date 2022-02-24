@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="3BqlQae-uJvHGfJxJHLW" name="第 1 页">
-        <mxGraphModel dx="2102" dy="1254" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="1920" background="#FFFFFF" math="0" shadow="0">
+        <mxGraphModel dx="223" dy="1791" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="1920" background="#FFFFFF" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -192,36 +192,6 @@
                 </mxCell>
                 <mxCell id="101" value="" style="shape=partialRectangle;whiteSpace=wrap;html=1;bottom=1;right=1;left=1;top=0;fillColor=none;routingCenterX=-0.5;fontSize=17;fontColor=#FFFFFF;strokeColor=#000000;strokeWidth=5;" vertex="1" parent="1">
                     <mxGeometry x="220" y="1240" width="240" height="740" as="geometry"/>
-                </mxCell>
-                <mxCell id="102" value="worker" style="whiteSpace=wrap;html=1;fontSize=17;" vertex="1" parent="1">
-                    <mxGeometry x="600" y="1800" width="120" height="60" as="geometry"/>
-                </mxCell>
-                <mxCell id="103" value="run" style="whiteSpace=wrap;html=1;fontSize=17;" vertex="1" parent="1">
-                    <mxGeometry x="930" y="1750" width="120" height="60" as="geometry"/>
-                </mxCell>
-                <mxCell id="104" value="dealwithread" style="whiteSpace=wrap;html=1;fontSize=17;" vertex="1" parent="1">
-                    <mxGeometry x="640" y="1480" width="120" height="60" as="geometry"/>
-                </mxCell>
-                <mxCell id="105" value="process_read" style="whiteSpace=wrap;html=1;fontSize=17;" vertex="1" parent="1">
-                    <mxGeometry x="810" y="1870" width="120" height="60" as="geometry"/>
-                </mxCell>
-                <mxCell id="106" value="read_once()" style="whiteSpace=wrap;html=1;fontSize=17;" vertex="1" parent="1">
-                    <mxGeometry x="800" y="1950" width="120" height="60" as="geometry"/>
-                </mxCell>
-                <mxCell id="108" value="m_state" style="whiteSpace=wrap;html=1;fontSize=17;" vertex="1" parent="1">
-                    <mxGeometry x="670" y="1670" width="120" height="60" as="geometry"/>
-                </mxCell>
-                <mxCell id="109" value="improve" style="whiteSpace=wrap;html=1;fontSize=17;" vertex="1" parent="1">
-                    <mxGeometry x="770" y="1660" width="120" height="60" as="geometry"/>
-                </mxCell>
-                <mxCell id="112" value="time flag" style="whiteSpace=wrap;html=1;fontSize=17;" vertex="1" parent="1">
-                    <mxGeometry x="560" y="1570" width="120" height="60" as="geometry"/>
-                </mxCell>
-                <mxCell id="113" value="improve" style="whiteSpace=wrap;html=1;fontSize=17;" vertex="1" parent="1">
-                    <mxGeometry x="730" y="1530" width="120" height="60" as="geometry"/>
-                </mxCell>
-                <mxCell id="115" value="write" style="whiteSpace=wrap;html=1;fontSize=17;" vertex="1" parent="1">
-                    <mxGeometry x="740" y="1270" width="120" height="60" as="geometry"/>
                 </mxCell>
             </root>
         </mxGraphModel>
