@@ -267,33 +267,31 @@ bool http_conn::read_once()
 //解析http请求行，获得请求方法，目标url及http版本号
 http_conn::HTTP_CODE http_conn::parse_request_line(char *text)
 {
-    /*在HTTP报文中，请求行用来说明请求类型,要访问的资源以及所使用的HTTP版本，其中各个部分之间通过\t或空格分隔。*/
-    /*TODO:不了解代码意思,请求行中最先含有空格和\t任一字符的位置并返回*/
-    m_url = strpbrk(text, " \t"); /*TODO:可能返回的是布尔类型,是否有空格或\t*/
-    /*如果没有空格或\t,则报文格式有误*/
+    //跳过一开始含有空格和\t的位置
+    m_url = strpbrk(text, " \t");
     if (!m_url)
     {
         return BAD_REQUEST; /*TODO: BAD_REQUEST*/
     }
-    /*将该位置改成\0,用于将前面数据取出*/
-    *m_url++ = '\0'; /*++完不是空格后面的数吗*/
-    char *method = text; /*TODO:取出数据*/
-    /*TODO:应该是匹配字符,抓住method后面的值*/
-    if (strcasecmp(method, "GET") == 0) /*GET*/
+
+    //将该位置改成\0,用于取出的前面数据
+    *m_url++ = '\0';
+    char *method = text;
+
+    //取出数据,确定请求方式
+    if (strcasecmp(method, "GET") == 0)
         m_method = GET;
-    else if (strcasecmp(method, "POST") == 0) /*POST*/
+    else if (strcasecmp(method, "POST") == 0)
     {
         m_method = POST;
-        cgi = 1; /*TODO:cgi是什么*/
+        cgi = 1;
     }
     else
-        return BAD_REQUEST; /*语法错误,没有get也没有post*/
-    /*m_url此时跳过了第一个空格或\t字符，但不知道之后是否还有*/
-    /*将m_url向后偏移，通过查找，继续跳过空格和\t字符，指向请求资源的第一个字符*/
-    /*TODO:逻辑不知道什么意思*/
-    m_url += strspn(m_url, " \t"); /*TODO:strspn*/
-    /*使用方法和判断请求方式的相同逻辑,判断HTTP版本号*/
-    m_version = strpbrk(m_url, " \t"); /*TODO:strpbrk*/
+        return BAD_REQUEST;
+
+    //识别并指向资源
+    m_url += strspn(m_url, " \t");
+    m_version = strpbrk(m_url, " \t");
     if (!m_version) /*TODO:m_version有东西就不会进入*/
         return BAD_REQUEST; /*请求报文有语法错误*/
     /*将该位置改成\0,用于将前面数据取出*/
@@ -394,53 +392,59 @@ http_conn::HTTP_CODE http_conn::parse_content(char *text)
 http_conn::HTTP_CODE http_conn::process_read()
 {
     //初始化从状态机状态、HTTP请求解析结果
-    LINE_STATUS line_status = LINE_OK; /*TODO:完整读取一行,初始调这个,方便接收*/
-    HTTP_CODE ret = NO_REQUEST; /*请求不完整,继续请求*/
-    /*TODO:CPP,可能这就是数组*/
-    char *text = 0; /*TODO:文本为什么是0,不是应该清空数组吗*/
+    LINE_STATUS line_status = LINE_OK;
+    HTTP_CODE ret = NO_REQUEST;
+    char *text = 0;
 
-    /*主状态机m_check_state:CHECK_STATE_CONTENT解析消息体(post) */
-    /*line_status:完整读取一行*/
-    /*TODO:为什么还要这个check_state,不是只要读了完整行就行了吗*/
+    //判断条件,就是这里从状态机驱动主状态机
     while ((m_check_state == CHECK_STATE_CONTENT && line_status == LINE_OK) || ((line_status = parse_line()) == LINE_OK))
     {
-        /**/
-        text = get_line(); /*获取一行文本*/
-        /*m_start_line是每一个数据行在m_read_buf中的起始位置*/
-        /*m_checked_idx表示从状态机在m_read_buf中读取的位置*/
-        m_start_line = m_checked_idx; /*更新读取的位置*/
-        LOG_INFO("%s", text); /*TODO:应该是报文中的分隔符*/
-        /*主状态机的三种状态逻辑*/
+        text = get_line();
+
+        //更新读取的位置
+        m_start_line = m_checked_idx;
+
+        LOG_INFO("%s", text);
+
+        //主状态机的三种状态逻辑
         switch (m_check_state)
         {
-        case CHECK_STATE_REQUESTLINE: /*解析请求行*/
-        {
-            ret = parse_request_line(text);
-            if (ret == BAD_REQUEST)
-                return BAD_REQUEST;
-            break;
-        }
-        case CHECK_STATE_HEADER: /*解析请求头*/
-        {
-            ret = parse_headers(text);
-            if (ret == BAD_REQUEST) /*解析有语法错误*/
-                return BAD_REQUEST;
-            else if (ret == GET_REQUEST) /*完整解析get请求后,跳转到报文响应函数*/
+            //解析请求行
+            case CHECK_STATE_REQUESTLINE:
             {
-                return do_request();
+                ret = parse_request_line(text);
+                if (ret == BAD_REQUEST)
+                    return BAD_REQUEST;
+                break;
             }
-            break;
-        }
-        case CHECK_STATE_CONTENT: /*解析消息体*/
-        {
-            ret = parse_content(text);
-            if (ret == GET_REQUEST) /*完整解析post请求后,跳转到报文响应函数*/
-                return do_request();
-            line_status = LINE_OPEN; /*把状态设置成完成报文解析,防止继续循环*/
-            break;
-        }
-        default:
-            return INTERNAL_ERROR; /*服务器内部错误，该结果在主状态机逻辑switch的default下，一般不会触发*/
+
+            //解析请求头
+            case CHECK_STATE_HEADER:
+            {
+                ret = parse_headers(text);
+                if (ret == BAD_REQUEST)
+                    return BAD_REQUEST;
+                //作为get方法,需要跳转到报文响应函数
+                else if (ret == GET_REQUEST)
+                {
+                    return do_request();
+                }
+                break;
+            }
+
+            //解析消息体
+            case CHECK_STATE_CONTENT:
+            {
+                ret = parse_content(text);
+                if (ret == GET_REQUEST)
+                    return do_request();
+                line_status = LINE_OPEN;
+                break;
+            }
+
+            //服务器内部错误，该结果在主状态机逻辑switch的default下，一般不会触发
+            default:
+                return INTERNAL_ERROR;
         }
     }
     return NO_REQUEST;
@@ -835,26 +839,26 @@ bool http_conn::process_write(HTTP_CODE ret)
     return true;
 }
 
-//TODO:用来接收报文和写入报文,不解析?
 void http_conn::process()
 {
-    HTTP_CODE read_ret = process_read(); /*TODO*/
+    HTTP_CODE read_ret = process_read();
 
     //NO_REQUEST表示请求不完整,需要继续接收请求数据
-    if (read_ret == NO_REQUEST) /*TODO:如何继续接收数据,如同断连一样*/
+    if (read_ret == NO_REQUEST)
     {
-        /*TODO:注册并监听读事件*/
+        //注册并监听读事件
         modfd(m_epollfd, m_sockfd, EPOLLIN, m_TRIGMode);
         return;
     }
 
     //调用 process_write 完成报文响应
-    bool write_ret = process_write(read_ret); /*TODO:应该是返回是否成功*/
+    bool write_ret = process_write(read_ret);
     if (!write_ret)
     {
+        //关闭连接
         close_conn();
     }
+
     //注册并监听写事件
-    /*TODO:这时候还注册写干嘛*/
     modfd(m_epollfd, m_sockfd, EPOLLOUT, m_TRIGMode);
 }

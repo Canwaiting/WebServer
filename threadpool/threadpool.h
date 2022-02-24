@@ -42,13 +42,12 @@ private:
 template <typename T>
 threadpool<T>::threadpool( int actor_model, connection_pool *connPool, int thread_number, int max_requests) : m_actor_model(actor_model),m_thread_number(thread_number), m_max_requests(max_requests), m_threads(NULL),m_connPool(connPool)
 {
-    if (thread_number <= 0 || max_requests <= 0) /*检查报错*/
+    if (thread_number <= 0 || max_requests <= 0)
         throw std::exception();
 
-    /*TODO:为什么要有这一步*/
-    m_threads = new pthread_t[m_thread_number]; /*TODO:多少个,还是一个线程id初始化*/
-
-    if (!m_threads) /*TODO:线程数为0则报错*/
+    //创建线程池
+    m_threads = new pthread_t[m_thread_number];
+    if (!m_threads)
         throw std::exception();
 
     //循环初始化线程
@@ -70,14 +69,13 @@ threadpool<T>::threadpool( int actor_model, connection_pool *connPool, int threa
     }
 }
 
-//TODO:删除什么 m_threads?
 template <typename T>
 threadpool<T>::~threadpool()
 {
     delete[] m_threads;
 }
 
-//TODO:这个添加的是什么
+//向请求队列中添加任务
 template <typename T>
 bool threadpool<T>::append(T *request, int state)
 {
@@ -98,7 +96,7 @@ bool threadpool<T>::append(T *request, int state)
 template <typename T>
 bool threadpool<T>::append_p(T *request)
 {
-    m_queuelocker.lock(); /*TODO:线程锁?*/
+    m_queuelocker.lock();
 
     //根据硬件，预先设置请求队列的最大值
     if (m_workqueue.size() >= m_max_requests) /*如果请求队列大于允许最大请求数,就结束*/
@@ -116,7 +114,7 @@ bool threadpool<T>::append_p(T *request)
     return true;
 }
 
-//线程处理函数
+//创建线程同时进入工作模式
 template <typename T>
 void *threadpool<T>::worker(void *arg)
 {

@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="3BqlQae-uJvHGfJxJHLW" name="第 1 页">
-        <mxGraphModel dx="1752" dy="1045" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="1920" background="#FFFFFF" math="0" shadow="0">
+        <mxGraphModel dx="2102" dy="1254" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="1920" background="#FFFFFF" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -183,6 +183,27 @@
                 </mxCell>
                 <mxCell id="98" value="如果是有用户连接&lt;br&gt;LT&lt;br&gt;ET" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=25;fontColor=#000000;" vertex="1" parent="1">
                     <mxGeometry x="940" y="990" width="220" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="99" value="&lt;font color=&quot;#ffffff&quot; style=&quot;font-size: 17px&quot;&gt;worker&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;fontSize=25;fontColor=#000000;strokeColor=#000000;strokeWidth=5;" vertex="1" parent="1">
+                    <mxGeometry x="960" y="1260" width="130" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="100" value="" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;fontSize=25;fontColor=#000000;strokeColor=#000000;strokeWidth=5;" vertex="1" parent="1">
+                    <mxGeometry x="1125" y="1120" width="80" height="500" as="geometry"/>
+                </mxCell>
+                <mxCell id="101" value="" style="shape=partialRectangle;whiteSpace=wrap;html=1;bottom=1;right=1;left=1;top=0;fillColor=none;routingCenterX=-0.5;fontSize=17;fontColor=#FFFFFF;strokeColor=#000000;strokeWidth=5;" vertex="1" parent="1">
+                    <mxGeometry x="220" y="1510" width="240" height="430" as="geometry"/>
+                </mxCell>
+                <mxCell id="102" value="worker" style="whiteSpace=wrap;html=1;fontSize=17;" vertex="1" parent="1">
+                    <mxGeometry x="280" y="1850" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="103" value="run" style="whiteSpace=wrap;html=1;fontSize=17;" vertex="1" parent="1">
+                    <mxGeometry x="280" y="1760" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="104" value="process" style="whiteSpace=wrap;html=1;fontSize=17;" vertex="1" parent="1">
+                    <mxGeometry x="280" y="1670" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="105" value="process_read" style="whiteSpace=wrap;html=1;fontSize=17;" vertex="1" parent="1">
+                    <mxGeometry x="280" y="1590" width="120" height="60" as="geometry"/>
                 </mxCell>
             </root>
         </mxGraphModel>
