@@ -1,50 +1,92 @@
 <mxfile host="65bd71144e">
     <diagram id="LbE9PppjevmL19wuLY-l" name="第 1 页">
-        <mxGraphModel dx="701" dy="627" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="1920" background="#FFFFFF" math="0" shadow="0">
+        <mxGraphModel dx="1596" dy="1140" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="1920" background="#FFFFFF" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
+                <mxCell id="42" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#000000;strokeWidth=4;" edge="1" parent="1" source="10" target="31">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="54" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#000000;strokeWidth=4;" edge="1" parent="1" source="10" target="53">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
                 <mxCell id="10" value="dealwithread()" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" parent="1" vertex="1">
-                    <mxGeometry x="530" y="80" width="120" height="60" as="geometry"/>
+                    <mxGeometry x="610" y="70" width="120" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="19" value="hello world" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontColor=#000000;" parent="1" vertex="1">
-                    <mxGeometry x="750" y="120" width="80" height="20" as="geometry"/>
+                <mxCell id="41" style="edgeStyle=none;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#000000;strokeWidth=4;" edge="1" parent="1" source="31" target="33">
+                    <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="20" value="hello world" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontColor=#000000;" parent="1" vertex="1">
-                    <mxGeometry x="700" y="100" width="80" height="20" as="geometry"/>
+                <mxCell id="43" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;strokeColor=#000000;strokeWidth=4;" edge="1" parent="1" source="31" target="34">
+                    <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="21" value="hello world" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontColor=#000000;" parent="1" vertex="1">
-                    <mxGeometry x="380" y="70" width="80" height="20" as="geometry"/>
+                <mxCell id="31" value="判断条件:参数的模式对应是reactor&lt;br&gt;&lt;br&gt;" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" parent="1" vertex="1">
+                    <mxGeometry x="390" y="240" width="120" height="140" as="geometry"/>
                 </mxCell>
-                <mxCell id="31" value="reactor" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" parent="1" vertex="1">
-                    <mxGeometry x="390" y="240" width="120" height="60" as="geometry"/>
+                <mxCell id="45" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#000000;strokeWidth=4;" edge="1" parent="1" source="33" target="34">
+                    <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="32" value="proactor" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" parent="1" vertex="1">
-                    <mxGeometry x="730" y="230" width="120" height="60" as="geometry"/>
+                <mxCell id="33" value="判断条件:计时器非空&lt;br&gt;运用adjust_timer(),调整了超时时间&lt;br&gt;并写日志" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" parent="1" vertex="1">
+                    <mxGeometry x="150" y="380" width="120" height="110" as="geometry"/>
                 </mxCell>
-                <mxCell id="33" value="adjust_timer()" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" parent="1" vertex="1">
-                    <mxGeometry x="230" y="360" width="120" height="60" as="geometry"/>
+                <mxCell id="48" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;strokeColor=#000000;strokeWidth=4;" edge="1" parent="1" source="34" target="35">
+                    <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="34" value="append" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" vertex="1" parent="1">
-                    <mxGeometry x="390" y="480" width="120" height="60" as="geometry"/>
+                <mxCell id="34" value="调用append()将该fd加入到请求队列中" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" parent="1" vertex="1">
+                    <mxGeometry x="390" y="550" width="120" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="35" value="deal_timer" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" vertex="1" parent="1">
-                    <mxGeometry x="240" y="620" width="120" height="60" as="geometry"/>
+                <mxCell id="47" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#000000;strokeWidth=4;" edge="1" parent="1" source="35" target="36">
+                    <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="36" value="break" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" vertex="1" parent="1">
-                    <mxGeometry x="390" y="760" width="120" height="60" as="geometry"/>
+                <mxCell id="52" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;strokeColor=#000000;strokeWidth=4;" edge="1" parent="1" source="35" target="50">
+                    <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="37" value="LOG_INFO&lt;br&gt;" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" vertex="1" parent="1">
-                    <mxGeometry x="600" y="370" width="120" height="60" as="geometry"/>
+                <mxCell id="35" value="不断循环直到&lt;br&gt;判断条件:该fd已经被处理过&lt;br&gt;" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" parent="1" vertex="1">
+                    <mxGeometry x="390" y="730" width="120" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="38" value="deal_timer" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" vertex="1" parent="1">
-                    <mxGeometry x="880" y="380" width="120" height="60" as="geometry"/>
+                <mxCell id="51" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#000000;strokeWidth=4;" edge="1" parent="1" source="36" target="50">
+                    <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="39" value="append_p" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" vertex="1" parent="1">
-                    <mxGeometry x="600" y="490" width="120" height="60" as="geometry"/>
+                <mxCell id="36" value="判断条件:处理失败&lt;br&gt;&lt;br&gt;调用deal_timer()删除于该fd有关的东西&lt;br&gt;&lt;br&gt;重置处理是否失败的标志&lt;br&gt;" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" parent="1" vertex="1">
+                    <mxGeometry x="230" y="840" width="120" height="110" as="geometry"/>
                 </mxCell>
-                <mxCell id="40" value="adjust_timer" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" vertex="1" parent="1">
-                    <mxGeometry x="730" y="620" width="120" height="60" as="geometry"/>
+                <mxCell id="57" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;strokeColor=#000000;strokeWidth=4;" edge="1" parent="1" source="37" target="39">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="37" value="判断条件:读完成&lt;br&gt;调用LOG_INFO()打印调用成功的日志" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" parent="1" vertex="1">
+                    <mxGeometry x="690" y="430" width="120" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="56" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#000000;strokeWidth=4;" edge="1" parent="1" source="39" target="58">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="900" y="740" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="39" value="调用append_p()插入读完成事件" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" parent="1" vertex="1">
+                    <mxGeometry x="690" y="600" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="49" style="edgeStyle=none;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.75;entryY=0;entryDx=0;entryDy=0;strokeColor=#000000;strokeWidth=4;" edge="1" parent="1" source="35" target="35">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="580" y="680"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="50" value="重置用于判断该fd已经被处理过的标志&lt;br&gt;&lt;br&gt;break" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" vertex="1" parent="1">
+                    <mxGeometry x="390" y="980" width="120" height="110" as="geometry"/>
+                </mxCell>
+                <mxCell id="55" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#000000;strokeWidth=4;" edge="1" parent="1" source="53" target="37">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="60" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#000000;strokeWidth=4;" edge="1" parent="1" source="53" target="59">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="53" value="判断条件:参数的模式对应是proactor&lt;br&gt;调用read_once()进行读取数据" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" vertex="1" parent="1">
+                    <mxGeometry x="840" y="220" width="120" height="140" as="geometry"/>
+                </mxCell>
+                <mxCell id="58" value="判断条件:计时器非空&lt;br&gt;运用adjust_timer(),调整了超时时间&lt;br&gt;并写日志" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" vertex="1" parent="1">
+                    <mxGeometry x="840" y="740" width="120" height="110" as="geometry"/>
+                </mxCell>
+                <mxCell id="59" value="判断条件:未能读完成&lt;br&gt;&lt;br&gt;调用deal_timer()删除于该fd有关的东西" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" vertex="1" parent="1">
+                    <mxGeometry x="990" y="440" width="120" height="110" as="geometry"/>
                 </mxCell>
             </root>
         </mxGraphModel>

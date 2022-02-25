@@ -13,7 +13,7 @@ WebServer::WebServer()
     strcpy(m_root, server_path);
     strcat(m_root, root);
 
-    //定时器
+    //定时器数组
     users_timer = new client_data[MAX_FD];
 }
 
@@ -166,7 +166,7 @@ void WebServer::eventListen()
     //每隔TIMESLOT触发SIGALRM信号
     alarm(TIMESLOT);
 
-    //工具类,信号和描述符基础操作
+    //工具类,信号和描述符基础操作,方便用其他地方操作
     Utils::u_pipefd = m_pipefd;
     Utils::u_epollfd = m_epollfd;
 }
@@ -192,8 +192,13 @@ void WebServer::timer(int connfd, struct sockaddr_in client_address)
 //并对新的定时器在链表上的位置进行调整
 void WebServer::adjust_timer(util_timer *timer)
 {
+    //获取现在的时间
     time_t cur = time(NULL);
+
+    //超出时间为后3个最小超时单位
     timer->expire = cur + 3 * TIMESLOT;
+
+    //调整改变后的计时器的位置
     utils.m_timer_lst.adjust_timer(timer);
 
     LOG_INFO("%s", "adjust timer once");
@@ -208,6 +213,7 @@ void WebServer::deal_timer(util_timer *timer, int sockfd)
     //删除该定时器
     if (timer)
     {
+        //从升序定时器链表中删除定时器
         utils.m_timer_lst.del_timer(timer);
     }
 
@@ -320,6 +326,7 @@ bool WebServer::dealwithsignal(bool &timeout, bool &stop_server)
             }
         }
     }
+
     return true;
 }
 
@@ -332,7 +339,7 @@ void WebServer::dealwithread(int sockfd)
     //reactor 放读就绪到队列上
     if (1 == m_actormodel)
     {
-        //调整计时器,相当与LRU那样
+        //调整计时器
         if (timer)
         {
             adjust_timer(timer);
@@ -480,11 +487,13 @@ void WebServer::eventLoop()
                     LOG_ERROR("%s", "dealclientdata failure");
             }
 
-            //处理客户连接上接收到的数据
+            //事件为可读
             else if (events[i].events & EPOLLIN)
             {
                 dealwithread(sockfd);
             }
+
+            //事件为可写
             else if (events[i].events & EPOLLOUT)
             {
                 dealwithwrite(sockfd);
@@ -492,6 +501,7 @@ void WebServer::eventLoop()
         }
         if (timeout)
         {
+            //处理超时事件并重置超时信号警告
             utils.timer_handler();
 
             LOG_INFO("%s", "timer tick");

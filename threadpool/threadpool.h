@@ -79,16 +79,28 @@ threadpool<T>::~threadpool()
 template <typename T>
 bool threadpool<T>::append(T *request, int state)
 {
+    //加锁
     m_queuelocker.lock();
+
+    //满员
     if (m_workqueue.size() >= m_max_requests)
     {
         m_queuelocker.unlock();
         return false;
     }
+
+    //TODO
     request->m_state = state;
+
+    //把fd加入请求队列
     m_workqueue.push_back(request);
+
+    //解锁
     m_queuelocker.unlock();
+
+    //TODO:如果错误终止并返回false?
     m_queuestat.post();
+
     return true;
 }
 
@@ -151,7 +163,7 @@ void threadpool<T>::run()
         if (!request)
             continue;
 
-        //proactor
+        //reactor
         if (1 == m_actor_model)
         {
             //读
@@ -191,7 +203,7 @@ void threadpool<T>::run()
             }
         }
 
-        //reactor
+        //proactor
         else
         {
             //获取数据库链接

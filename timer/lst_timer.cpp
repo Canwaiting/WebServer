@@ -51,6 +51,7 @@ void sort_timer_lst::adjust_timer(util_timer *timer)
     {
         return;
     }
+
     util_timer *tmp = timer->next;
     //被调整的定时器在链表尾部
     //定时器超时值仍然小于下一个定时器超时值，不调整
@@ -112,13 +113,15 @@ void sort_timer_lst::del_timer(util_timer *timer)
     delete timer;
 }
 
+//执行所有超时计时器的事件,并从计时器链表中删除
 void sort_timer_lst::tick()
 {
     if (!head)
     {
         return;
     }
-    //获取当前时间
+
+    //获取当前时间,和第一个计时器
     time_t cur = time(NULL);
     util_timer *tmp = head;
 
@@ -249,7 +252,9 @@ void Utils::addsig(int sig, void(handler)(int), bool restart)
 //定时处理任务，重新定时以不断触发SIGALRM信号
 void Utils::timer_handler()
 {
+    //执行所有超时计时器的事件,并从计时器链表中删除
     m_timer_lst.tick();
+    //m_TIMESLOT秒后继续发送超时信号
     alarm(m_TIMESLOT);
 }
 
@@ -268,7 +273,7 @@ class Utils;
 //定时器回调函数
 void cb_func(client_data *user_data)
 {
-    //删除非活动连接在socket上的注册事件
+    //删除内核时间表中该socket上的注册事件
     epoll_ctl(Utils::u_epollfd, EPOLL_CTL_DEL, user_data->sockfd, 0);
     assert(user_data);
 

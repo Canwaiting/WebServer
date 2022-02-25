@@ -593,6 +593,7 @@ http_conn::HTTP_CODE http_conn::do_request()
     close(fd); /*TODO:为什么要创建一个fd来进行映射*/
     return FILE_REQUEST; /*表示文件存在,且可以访问*/
 }
+
 void http_conn::unmap()
 {
     if (m_file_address)
