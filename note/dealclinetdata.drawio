@@ -1,56 +1,62 @@
 <mxfile host="65bd71144e">
     <diagram id="LbE9PppjevmL19wuLY-l" name="第 1 页">
-        <mxGraphModel dx="813" dy="738" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="1920" background="#FFFFFF" math="0" shadow="0">
+        <mxGraphModel dx="1768" dy="738" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="1920" background="#FFFFFF" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
+                <mxCell id="35" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#000000;strokeWidth=3;" edge="1" parent="1" source="10" target="22">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="37" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#000000;strokeWidth=3;" edge="1" parent="1" source="10" target="15">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
                 <mxCell id="10" value="dealclinetdata()" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" parent="1" vertex="1">
                     <mxGeometry x="530" y="80" width="120" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="11" value="hello world" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontColor=#000000;" vertex="1" parent="1">
-                    <mxGeometry x="740" y="170" width="80" height="20" as="geometry"/>
+                <mxCell id="38" value="" style="edgeStyle=none;html=1;strokeColor=#000000;strokeWidth=3;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="15" target="23">
+                    <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="15" value="accpet()&lt;br&gt;" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" vertex="1" parent="1">
-                    <mxGeometry x="720" y="250" width="120" height="60" as="geometry"/>
+                <mxCell id="39" style="edgeStyle=none;html=1;exitX=0.75;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#000000;strokeWidth=3;" edge="1" parent="1" source="15" target="28">
+                    <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="16" value="LOG_ERROR()&lt;br&gt;return false;" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" vertex="1" parent="1">
-                    <mxGeometry x="260" y="390" width="120" height="60" as="geometry"/>
+                <mxCell id="44" style="edgeStyle=none;html=1;exitX=1;exitY=0.75;exitDx=0;exitDy=0;entryX=0;entryY=1;entryDx=0;entryDy=0;strokeColor=#000000;strokeWidth=3;" edge="1" parent="1" source="15" target="40">
+                    <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="18" value="ET" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontColor=#000000;" vertex="1" parent="1">
-                    <mxGeometry x="395" y="190" width="30" height="20" as="geometry"/>
+                <mxCell id="15" value="判断条件:LT模式&lt;br&gt;不断循环&lt;br&gt;&lt;br&gt;调用accpet()接受连接&lt;br&gt;" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" parent="1" vertex="1">
+                    <mxGeometry x="730" y="170" width="120" height="120" as="geometry"/>
                 </mxCell>
-                <mxCell id="19" value="hello world" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontColor=#000000;" vertex="1" parent="1">
-                    <mxGeometry x="750" y="120" width="80" height="20" as="geometry"/>
+                <mxCell id="16" value="判断条件:连接失败&lt;br&gt;&lt;br&gt;调用LOG_ERROR()写日志,并返回false&lt;br&gt;" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" parent="1" vertex="1">
+                    <mxGeometry x="200" y="390" width="120" height="110" as="geometry"/>
                 </mxCell>
-                <mxCell id="20" value="hello world" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontColor=#000000;" vertex="1" parent="1">
-                    <mxGeometry x="700" y="100" width="80" height="20" as="geometry"/>
+                <mxCell id="32" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#000000;strokeWidth=3;" edge="1" parent="1" source="22" target="16">
+                    <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="21" value="hello world" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontColor=#000000;" vertex="1" parent="1">
-                    <mxGeometry x="380" y="70" width="80" height="20" as="geometry"/>
+                <mxCell id="33" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#000000;strokeWidth=3;" edge="1" parent="1" source="22" target="25">
+                    <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="22" value="accept()" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" vertex="1" parent="1">
-                    <mxGeometry x="350" y="240" width="120" height="60" as="geometry"/>
+                <mxCell id="34" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#000000;strokeWidth=3;" edge="1" parent="1" source="22" target="26">
+                    <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="23" value="LOG_ERROR&lt;br&gt;break;" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" vertex="1" parent="1">
+                <mxCell id="22" value="判断条件:ET模式&lt;br&gt;&lt;br&gt;调用accpet()接受连接" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" parent="1" vertex="1">
+                    <mxGeometry x="340" y="180" width="130" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="23" value="判断条件:连接失败&lt;br&gt;&lt;br&gt;返回false&lt;br&gt;&lt;br&gt;" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" parent="1" vertex="1">
                     <mxGeometry x="640" y="390" width="120" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="25" value="show_error()&lt;br&gt;LOG_ERROR()&lt;br&gt;return false" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" vertex="1" parent="1">
-                    <mxGeometry x="440" y="390" width="120" height="60" as="geometry"/>
+                <mxCell id="25" value="判断条件:用户满了&lt;br&gt;&lt;br&gt;用show_error()向客户端输出满员信息&lt;br&gt;&lt;br&gt;用LOG_ERROR()写日志&lt;br&gt;&lt;br&gt;返回false" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" parent="1" vertex="1">
+                    <mxGeometry x="450" y="360" width="140" height="150" as="geometry"/>
                 </mxCell>
-                <mxCell id="26" value="timer()" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" vertex="1" parent="1">
-                    <mxGeometry x="350" y="510" width="120" height="60" as="geometry"/>
+                <mxCell id="26" value="用timer()创建该fd的计时器&lt;br&gt;&lt;br&gt;返回true" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" parent="1" vertex="1">
+                    <mxGeometry x="340" y="580" width="120" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="28" value="show_error()&lt;br&gt;LOG_ERROR()&lt;br&gt;break;" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" vertex="1" parent="1">
-                    <mxGeometry x="870" y="390" width="120" height="60" as="geometry"/>
+                <mxCell id="28" value="判断条件:用户满了&lt;br&gt;&lt;br&gt;用show_error()向客户端输出满员信息&lt;br&gt;&lt;br&gt;用LOG_ERROR()写日志&lt;br&gt;&lt;br&gt;返回false" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" parent="1" vertex="1">
+                    <mxGeometry x="870" y="390" width="120" height="130" as="geometry"/>
                 </mxCell>
-                <mxCell id="29" value="timer()" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" vertex="1" parent="1">
-                    <mxGeometry x="730" y="490" width="120" height="60" as="geometry"/>
+                <mxCell id="45" style="edgeStyle=none;html=1;exitX=0;exitY=0;exitDx=0;exitDy=0;entryX=1;entryY=0.25;entryDx=0;entryDy=0;strokeColor=#000000;strokeWidth=3;" edge="1" parent="1" source="40" target="15">
+                    <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="30" value="return false;" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" vertex="1" parent="1">
-                    <mxGeometry x="730" y="650" width="120" height="60" as="geometry"/>
-                </mxCell>
-                <mxCell id="31" value="return true;" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" vertex="1" parent="1">
-                    <mxGeometry x="350" y="670" width="120" height="60" as="geometry"/>
+                <mxCell id="40" value="用timer()创建该fd的计时器&lt;br&gt;" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" vertex="1" parent="1">
+                    <mxGeometry x="920" y="200" width="120" height="60" as="geometry"/>
                 </mxCell>
             </root>
         </mxGraphModel>
