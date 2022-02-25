@@ -367,6 +367,9 @@
                 <mxCell id="178" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=17;fontColor=#000000;strokeColor=#000000;strokeWidth=4;" edge="1" parent="1" source="149" target="154">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
+                <mxCell id="179" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=17;fontColor=#000000;strokeColor=#000000;strokeWidth=4;" edge="1" parent="1" source="149" target="155">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
                 <mxCell id="149" value="不断循环&lt;br&gt;epoll_wait()维护着内核表&lt;br&gt;没有事件发生时一直阻塞&lt;br&gt;事件发生后,返回值&lt;br&gt;&lt;br&gt;逐个fd判断" style="whiteSpace=wrap;html=1;fontSize=17;fontColor=#FFFFFF;strokeWidth=1;" vertex="1" parent="1">
                     <mxGeometry x="165" y="4140" width="200" height="170" as="geometry"/>
                 </mxCell>
@@ -376,17 +379,17 @@
                 <mxCell id="152" value="" style="whiteSpace=wrap;html=1;fontSize=17;fontColor=#FFFFFF;strokeWidth=1;" vertex="1" parent="1">
                     <mxGeometry x="-100" y="4050" width="60" height="50" as="geometry"/>
                 </mxCell>
-                <mxCell id="154" value="判断条件:fd的事件为对方关闭TCP连接或写操作/挂起/错误&lt;br&gt;&lt;br&gt;调用deal_timer()" style="whiteSpace=wrap;html=1;fontSize=17;fontColor=#FFFFFF;strokeWidth=1;" vertex="1" parent="1">
-                    <mxGeometry x="110" y="4540" width="150" height="180" as="geometry"/>
+                <mxCell id="154" value="判断条件:fd的事件为对方关闭TCP连接或写操作/挂起/错误&lt;br&gt;&lt;br&gt;调用deal_timer()删除关闭该fd有关的&lt;br&gt;1.删除内核事件表中的注册事件&lt;br&gt;2.关闭fd&lt;br&gt;3.计时器从链表中移除" style="whiteSpace=wrap;html=1;fontSize=17;fontColor=#FFFFFF;strokeWidth=1;" vertex="1" parent="1">
+                    <mxGeometry x="110" y="4540" width="190" height="240" as="geometry"/>
                 </mxCell>
-                <mxCell id="155" value="dealwithsignal()" style="whiteSpace=wrap;html=1;fontSize=17;fontColor=#FFFFFF;strokeWidth=1;" vertex="1" parent="1">
-                    <mxGeometry x="310" y="4490" width="170" height="60" as="geometry"/>
+                <mxCell id="155" value="判断条件:fd是管道读端并且该事件是可读&lt;br&gt;&lt;br&gt;调用dealwithsignal()处理相应的信号,可能还会改变标志参数(用于条件判断),并获取返回值&lt;br&gt;&lt;br&gt;如果是false,调用LOG_ERROR()打日志" style="whiteSpace=wrap;html=1;fontSize=17;fontColor=#FFFFFF;strokeWidth=1;" vertex="1" parent="1">
+                    <mxGeometry x="457.5" y="4540" width="170" height="250" as="geometry"/>
                 </mxCell>
                 <mxCell id="156" value="dealwithread()" style="whiteSpace=wrap;html=1;fontSize=17;fontColor=#FFFFFF;strokeWidth=1;" vertex="1" parent="1">
-                    <mxGeometry x="540" y="4490" width="120" height="60" as="geometry"/>
+                    <mxGeometry x="677.5" y="4490" width="120" height="60" as="geometry"/>
                 </mxCell>
                 <mxCell id="157" value="dealwithwrite()" style="whiteSpace=wrap;html=1;fontSize=17;fontColor=#FFFFFF;strokeWidth=1;" vertex="1" parent="1">
-                    <mxGeometry x="705" y="4490" width="120" height="60" as="geometry"/>
+                    <mxGeometry x="842.5" y="4490" width="120" height="60" as="geometry"/>
                 </mxCell>
                 <mxCell id="159" value="eventLoop()" style="whiteSpace=wrap;html=1;fontSize=17;fontColor=#FFFFFF;strokeWidth=1;" vertex="1" parent="1">
                     <mxGeometry x="175" y="3910" width="145" height="60" as="geometry"/>
@@ -428,7 +431,7 @@
                     <mxGeometry x="-110" y="4220" width="160" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="173" value="deal_timer()" style="whiteSpace=wrap;html=1;fontSize=17;fontColor=#FFFFFF;strokeWidth=1;" vertex="1" parent="1">
-                    <mxGeometry x="615" y="4580" width="150" height="60" as="geometry"/>
+                    <mxGeometry x="752.5" y="4580" width="150" height="60" as="geometry"/>
                 </mxCell>
                 <mxCell id="174" value="出现非预期报错时,调用LOG_ERROR(),在日志上写入报错&lt;br&gt;&lt;br&gt;退出循环" style="whiteSpace=wrap;html=1;fontSize=17;fontColor=#FFFFFF;strokeWidth=1;" vertex="1" parent="1">
                     <mxGeometry x="617.5" y="4145" width="175" height="160" as="geometry"/>

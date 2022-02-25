@@ -1,38 +1,57 @@
 <mxfile host="65bd71144e">
     <diagram id="LbE9PppjevmL19wuLY-l" name="第 1 页">
-        <mxGraphModel dx="701" dy="627" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="1920" background="#FFFFFF" math="0" shadow="0">
+        <mxGraphModel dx="878" dy="627" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="1920" background="#FFFFFF" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
+                <mxCell id="38" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;strokeColor=#000000;strokeWidth=3;" edge="1" parent="1" source="10" target="31">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
                 <mxCell id="10" value="dealwithsignal()" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" parent="1" vertex="1">
                     <mxGeometry x="530" y="80" width="120" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="19" value="hello world" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontColor=#000000;" parent="1" vertex="1">
-                    <mxGeometry x="750" y="120" width="80" height="20" as="geometry"/>
+                <mxCell id="37" style="edgeStyle=none;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#000000;strokeWidth=3;" edge="1" parent="1" source="31" target="32">
+                    <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="20" value="hello world" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontColor=#000000;" parent="1" vertex="1">
-                    <mxGeometry x="700" y="100" width="80" height="20" as="geometry"/>
+                <mxCell id="40" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;strokeColor=#000000;strokeWidth=3;" edge="1" parent="1" source="31" target="33">
+                    <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="21" value="hello world" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontColor=#000000;" parent="1" vertex="1">
-                    <mxGeometry x="380" y="70" width="80" height="20" as="geometry"/>
-                </mxCell>
-                <mxCell id="31" value="recv" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" parent="1" vertex="1">
+                <mxCell id="31" value="调用recv()接收信号数据" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" parent="1" vertex="1">
                     <mxGeometry x="530" y="200" width="120" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="32" value="return false;" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" parent="1" vertex="1">
-                    <mxGeometry x="390" y="330" width="120" height="60" as="geometry"/>
+                <mxCell id="32" value="判断条件:返回值为-1即对方关闭连接/返回值为0,出错&lt;br&gt;&lt;br&gt;return false;" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" parent="1" vertex="1">
+                    <mxGeometry x="210" y="290" width="120" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="42" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#000000;strokeWidth=3;" edge="1" parent="1" source="33" target="35">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="43" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#000000;strokeWidth=3;" edge="1" parent="1" source="33" target="36">
+                    <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
                 <mxCell id="33" value="遍历信号" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" parent="1" vertex="1">
-                    <mxGeometry x="700" y="330" width="120" height="60" as="geometry"/>
+                    <mxGeometry x="530" y="340" width="120" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="34" value="return true;" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
-                    <mxGeometry x="710" y="690" width="120" height="60" as="geometry"/>
+                <mxCell id="34" value="return true;" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="530" y="630" width="120" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="35" value="timout=true;&lt;br&gt;" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" vertex="1" parent="1">
-                    <mxGeometry x="590" y="460" width="120" height="60" as="geometry"/>
+                <mxCell id="44" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#000000;strokeWidth=3;" edge="1" parent="1" source="35" target="34">
+                    <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="36" value="stop_server" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" vertex="1" parent="1">
-                    <mxGeometry x="830" y="460" width="120" height="60" as="geometry"/>
+                <mxCell id="35" value="判断条件:SIGALARM即计时器过期&lt;br&gt;&lt;br&gt;设置timout=true,后面在回调函数中有用&lt;br&gt;&lt;br&gt;break" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" parent="1" vertex="1">
+                    <mxGeometry x="410" y="440" width="120" height="140" as="geometry"/>
+                </mxCell>
+                <mxCell id="45" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#000000;strokeWidth=3;" edge="1" parent="1" source="36" target="34">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="36" value="判断条件:SIGTERM即服务器端关闭&lt;br&gt;&lt;br&gt;设stop_server=true&lt;br&gt;&lt;br&gt;break" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" parent="1" vertex="1">
+                    <mxGeometry x="650" y="440" width="120" height="140" as="geometry"/>
+                </mxCell>
+                <mxCell id="41" style="edgeStyle=none;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#000000;strokeWidth=3;" edge="1" parent="1" source="33" target="33">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="730" y="270"/>
+                        </Array>
+                    </mxGeometry>
                 </mxCell>
             </root>
         </mxGraphModel>
