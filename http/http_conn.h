@@ -32,7 +32,6 @@ public:
     static const int FILENAME_LEN = 200; /*设置读取文件的名称m_real_file大小*/
     static const int READ_BUFFER_SIZE = 2048; /*设置读缓冲区m_read_buf大小*/
     static const int WRITE_BUFFER_SIZE = 1024; /*设置写缓冲区m_write_buf大小*/
-    /*TODO:HEAD,PUT那些为什么要写上来*/
     enum METHOD /*设置报文的请求方式,本项目只用到GET和POST*/
     { GET = 0,
         POST,
@@ -91,26 +90,16 @@ public:
 
 
 private:
-    /*TODO:初始化什么?*/
     void init();
-    /*TODO:从m_read_buf读取里面的状态,并处理请求报文*/
     HTTP_CODE process_read();
-    /*TODO:往m_write_buf中写入响应报文数据,究竟是状态还是主体数据还是什么*/
     bool process_write(HTTP_CODE ret);
-    /*TODO:主状态机解析报文中的请求行数据*/
     HTTP_CODE parse_request_line(char *text);
-    /*TODO:主状态机解析报文中的请求头数据*/
     HTTP_CODE parse_headers(char *text);
-    /*TODO:主状态机解析报文中的请求内容数据*/
     HTTP_CODE parse_content(char *text);
-    /*TODO:生成响应报文*/
     HTTP_CODE do_request();
-    /*TODO:m_start_line是已经解析的字符,为什么还需要添加m_read_buf*/
     /*get_line用于将指针向后偏移,指向未处理的字符*/
     char *get_line() { return m_read_buf + m_start_line; };
-    /*TODO:从状态机读取一行,分析是请求报文的哪一部分,OK,BAD,OPEN*/
     LINE_STATUS parse_line();
-    /*TODO*/
     void unmap();
     //根据响应报文格式,生成对应8个部分,以下函数均由do_request调用
     bool add_response(const char *format, ...);

@@ -15,17 +15,17 @@ const char *error_500_title = "Internal Error";
 const char *error_500_form = "There was an unusual problem serving the request file.\n";
 
 locker m_lock;
-map<string, string> users; /*用一个map来管理user的key-name和value-password*/
+map<string, string> users; //缓存数据库中的信息
 
-/*载入数据库中的用户名和密码到服务器中*/
+//载入数据库中的用户名和密码到服务器中
 void http_conn::initmysql_result(connection_pool *connPool)
 {
     //先从连接池中取一个连接
     MYSQL *mysql = NULL;
-    connectionRAII mysqlcon(&mysql, connPool); /*TODO:用RAII释放它?*/
+    connectionRAII mysqlcon(&mysql, connPool);
 
     //在user表中检索username，passwd数据，浏览器端输入
-    if (mysql_query(mysql, "SELECT username,passwd FROM user")) /*TODO:为什么没有加！*/
+    if (mysql_query(mysql, "SELECT username,passwd FROM user"))
     {
         LOG_ERROR("SELECT error:%s\n", mysql_error(mysql));
     }
@@ -37,14 +37,14 @@ void http_conn::initmysql_result(connection_pool *connPool)
     int num_fields = mysql_num_fields(result);
 
     //返回所有字段结构的数组
-    MYSQL_FIELD *fields = mysql_fetch_fields(result); /*TODO:不知道具体如何把数据存储到数据结构*/
+    MYSQL_FIELD *fields = mysql_fetch_fields(result);
 
     //从结果集中获取下一行，将对应的用户名和密码，存入map中
     while (MYSQL_ROW row = mysql_fetch_row(result))
     {
         string temp1(row[0]);
         string temp2(row[1]);
-        users[temp1] = temp2; /*MAP也可以这样存储*/
+        users[temp1] = temp2;
     }
 }
 

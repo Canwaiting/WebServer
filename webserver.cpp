@@ -85,13 +85,16 @@ void WebServer::log_write()
     }
 }
 
+//初始化数据库连接池并将数据存到服务器中
 void WebServer::sql_pool()
 {
-    //初始化数据库连接池
+    //获取连接池实例
     m_connPool = connection_pool::GetInstance();
+
+    //初始化该数据库连接池
     m_connPool->init("localhost", m_user, m_passWord, m_databaseName, 3306, m_sql_num, m_close_log);
 
-    //初始化数据库读取表
+    //将数据库中的数据存到服务器中
     users->initmysql_result(m_connPool);
 }
 

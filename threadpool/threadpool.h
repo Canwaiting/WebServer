@@ -146,6 +146,8 @@ void threadpool<T>::run()
 
         //被唤醒后,先加互斥锁
         m_queuelocker.lock();
+
+        //如果请求队列没有任务则解锁并跳过下面代码
         if (m_workqueue.empty())
         {
             m_queuelocker.unlock();
@@ -176,7 +178,7 @@ void threadpool<T>::run()
                     //获取数据库链接
                     connectionRAII mysqlcon(&request->mysql, m_connPool);
                     //process进行处理
-                    request->process();
+                    request->process();//TODO
                 }
 
                 //未能成功读取数据
