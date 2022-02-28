@@ -264,10 +264,10 @@ http_conn::HTTP_CODE http_conn::parse_request_line(char *text)
     m_url = strpbrk(text, " \t");
     if (!m_url)
     {
-        return BAD_REQUEST; /*TODO: BAD_REQUEST*/
+        return BAD_REQUEST;
     }
 
-    //将该位置改成\0,用于取出的前面数据
+    //将\t改成\0,用于取出的前面数据
     *m_url++ = '\0';
     char *method = text;
 
@@ -390,15 +390,16 @@ http_conn::HTTP_CODE http_conn::process_read()
     HTTP_CODE ret = NO_REQUEST;
     char *text = 0;
 
-    //判断条件,就是这里从状态机驱动主状态机
-    //TODO:判断条件
+    //就是这里从状态机驱动主状态机
     while ((m_check_state == CHECK_STATE_CONTENT && line_status == LINE_OK) || ((line_status = parse_line()) == LINE_OK))
     {
+        //TODO
         text = get_line();
 
         //更新读取的位置
         m_start_line = m_checked_idx;
 
+        //TODO
         LOG_INFO("%s", text);
 
         //主状态机的三种状态逻辑

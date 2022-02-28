@@ -99,7 +99,7 @@ private:
     HTTP_CODE parse_headers(char *text);
     HTTP_CODE parse_content(char *text);
     HTTP_CODE do_request();
-    /*get_line用于将指针向后偏移,指向未处理的字符*/
+    //get_line用于将指针向后偏移,指向未处理的字符
     char *get_line() { return m_read_buf + m_start_line; };
     LINE_STATUS parse_line();
     void unmap();
@@ -122,10 +122,10 @@ public:
 private:
     int m_sockfd; /*socket*/
     sockaddr_in m_address; /*socket的地址*/
-    char m_read_buf[READ_BUFFER_SIZE]; /*存储读取的请求报文数据*/
+    char m_read_buf[READ_BUFFER_SIZE]; //存储读取的请求报文数据
     int m_read_idx; /*缓冲区中m_read_buf中数据的最后一个字节的下一个位置*/
     int m_checked_idx; /*m_read_buf读取的位置*/
-    int m_start_line; /*m_read_buf中已经解析的字符个数*/
+    int m_start_line; //m_read_buf中已经解析的字符个数
 
     char m_write_buf[WRITE_BUFFER_SIZE]; /*存储发出的响应报文数据*/
     int m_write_idx; /*指示buffer中的长度*/
