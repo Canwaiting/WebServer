@@ -165,43 +165,45 @@ void http_conn::init()
 http_conn::LINE_STATUS http_conn::parse_line()
 {
     char temp;
-    /*m_read_idx指向缓冲区m_read_buf的数据末尾的下一个字节*/
-    /*m_checked_id指向从状态机当前正在分析的字节*/
-    /*不断分析buffer里面的数据*/
+    //读取未被处理的
     for (; m_checked_idx < m_read_idx; ++m_checked_idx)
     {
-        temp = m_read_buf[m_checked_idx]; /*取出来*/
-        /*行的结束为\r\n,所以判断是否可能读取到完整行*/
+        //在缓冲区中获取当前字符
+        temp = m_read_buf[m_checked_idx];
+        //行的结束为\r\n,所以判断是否可能读取到完整行
         if (temp == '\r')
         {
-            /*读完了还没有\n,即接收不完整,需要继续接收*/
+            //读完了还没有\n,即接收不完整,需要继续接收
             if ((m_checked_idx + 1) == m_read_idx)
                 return LINE_OPEN;
-            /*下一个字符是\n,读完了该行,将\r\n改成\0\0*/
+
+            //下一个字符是\n,读完了该行,将\r\n改成\0\0
             else if (m_read_buf[m_checked_idx + 1] == '\n')
             {
                 m_read_buf[m_checked_idx++] = '\0';
                 m_read_buf[m_checked_idx++] = '\0';
                 return LINE_OK;
             }
+
+            //返回语法错误
             return LINE_BAD;
         }
-        /*上次读到的是\r,但是没有完整读完就会出现这种情况*/
+        //上次读到的是\r,但是没有完整读完就会出现这种情况
         else if (temp == '\n')
         {
             /*检查前一个字符是否是\r*/
             if (m_checked_idx > 1 && m_read_buf[m_checked_idx - 1] == '\r')
             {
-                /*将\r\n改成\0\0*/
+                //将\r\n改成\0\0
                 m_read_buf[m_checked_idx - 1] = '\0';
                 m_read_buf[m_checked_idx++] = '\0';
                 return LINE_OK;
             }
-            /*前一个字符不是\r,返回语法有错误*/
+            //前一个字符不是\r,返回语法有错误
             return LINE_BAD;
         }
     }
-    return LINE_OPEN; /*获取到的行不完整*/
+    return LINE_OPEN;
 }
 
 //读取数据 ET/LT
@@ -389,6 +391,7 @@ http_conn::HTTP_CODE http_conn::process_read()
     char *text = 0;
 
     //判断条件,就是这里从状态机驱动主状态机
+    //TODO:判断条件
     while ((m_check_state == CHECK_STATE_CONTENT && line_status == LINE_OK) || ((line_status = parse_line()) == LINE_OK))
     {
         text = get_line();
@@ -438,6 +441,7 @@ http_conn::HTTP_CODE http_conn::process_read()
                 return INTERNAL_ERROR;
         }
     }
+
     return NO_REQUEST;
 }
 
@@ -823,7 +827,7 @@ bool http_conn::process_write(HTTP_CODE ret)
     /*除了访问资源状态,即FILE_REQUEST外,其余状态只有一个指针,指向响应报文缓冲区*/
     m_iv[0].iov_base = m_write_buf;
     m_iv[0].iov_len = m_write_idx;
-    m_iv_count = 1; /*TODO:指针数?*/
+    m_iv_count = 1;
     bytes_to_send = m_write_idx; /*报文大小*/
     return true;
 }

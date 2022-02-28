@@ -44,18 +44,18 @@ public:
         PATH
     };
 
-    enum CHECK_STATE /*主状态机的状态*/
+    //主状态机的状态
+    enum CHECK_STATE
     {
         CHECK_STATE_REQUESTLINE = 0, /*解析请求行*/
         CHECK_STATE_HEADER, /*解析请求头*/
         CHECK_STATE_CONTENT /*解析消息体,仅用于解析post请求*/
     };
 
-    /*TODO:是不是一整个报文*/
-    enum HTTP_CODE /*TODO:报文解析的结果,其他是什么意思*/
+    enum HTTP_CODE
     {
-        NO_REQUEST, /*请求不完整,需要继续读取请求报文数据*/
-        GET_REQUEST, /*获取了完整的HTTP请求*/
+        NO_REQUEST, //请求不完整,需要继续读取请求报文数据
+        GET_REQUEST, //获取了完整的HTTP请求
         BAD_REQUEST, /*HTTP请求报文有语法错误*/
         NO_RESOURCE, /*资源不存在*/
         FORBIDDEN_REQUEST, /*文件不可读,没有访问权限*/
@@ -63,11 +63,13 @@ public:
         INTERNAL_ERROR, /*服务器内部错误，该结果在主状态机逻辑switch的default下，一般不会触发*/
         CLOSED_CONNECTION /*关闭连接*/
     };
-    enum LINE_STATUS /*从状态机的状态*/
+
+    //从状态机的状态
+    enum LINE_STATUS
     {
-        LINE_OK = 0, /*完整读取一行*/
-        LINE_BAD, /*报文语法有误*/
-        LINE_OPEN /*读取的行不完整*/
+        LINE_OK = 0, //完整读取一行
+        LINE_BAD, //报文语法有误
+        LINE_OPEN //读取的行不完整
     };
 
 public:
@@ -128,7 +130,7 @@ private:
     char m_write_buf[WRITE_BUFFER_SIZE]; /*存储发出的响应报文数据*/
     int m_write_idx; /*指示buffer中的长度*/
 
-    CHECK_STATE m_check_state; /*主状态机的状态*/
+    CHECK_STATE m_check_state; //主状态机的状态
     METHOD m_method; /*请求方法*/
     /*以下为解析请求报文中对应的6个变量*/
     char m_real_file[FILENAME_LEN]; /*存储读取文件的名称*/
