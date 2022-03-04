@@ -267,7 +267,7 @@ http_conn::HTTP_CODE http_conn::parse_request_line(char *text)
         return BAD_REQUEST;
     }
 
-    //将\t改成\0,用于取出的前面数据
+    //将text文本中的\t改成\0并赋值给mothod,用于下面识别请求方法
     *m_url++ = '\0';
     char *method = text;
 
@@ -763,67 +763,67 @@ bool http_conn::process_write(HTTP_CODE ret)
     switch (ret)
     {
         /*内部错误,500*/
-    case INTERNAL_ERROR:
-    {
-        add_status_line(500, error_500_title);
-        add_headers(strlen(error_500_form));
-        if (!add_content(error_500_form))
-            return false;
-        break;
-    }
-    /*报文语法有误,404*/
-    case BAD_REQUEST:
-    {
-        add_status_line(404, error_404_title);
-        add_headers(strlen(error_404_form));
-        if (!add_content(error_404_form))
-            return false;
-        break;
-    }
+        case INTERNAL_ERROR:
+                                {
+                                add_status_line(500, error_500_title);
+                                add_headers(strlen(error_500_form));
+                                if (!add_content(error_500_form))
+                                return false;
+                                break;
+                                }
+        /*报文语法有误,404*/
+        case BAD_REQUEST:
+                             {
+                             add_status_line(404, error_404_title);
+                             add_headers(strlen(error_404_form));
+                             if (!add_content(error_404_form))
+                             return false;
+                             break;
+                             }
 
-    /*资源没有访问权限,403*/
-    case FORBIDDEN_REQUEST:
-    {
-        add_status_line(403, error_403_title);
-        add_headers(strlen(error_403_form));
-        if (!add_content(error_403_form))
-            return false;
-        break;
-    }
+        /*资源没有访问权限,403*/
+        case FORBIDDEN_REQUEST:
+                                   {
+                                   add_status_line(403, error_403_title);
+                                   add_headers(strlen(error_403_form));
+                                   if (!add_content(error_403_form))
+                                   return false;
+                                   break;
+                                   }
 
-    /*文件存在,200*/
-    case FILE_REQUEST:
-    {
-        /*不管如何都要有的*/
-        add_status_line(200, ok_200_title);
-        /*如果请求的资源存在*/
-        if (m_file_stat.st_size != 0) /*TODO:资源是非空的*/
-        {
-            /*TODO:写该文件的长度?*/
-            add_headers(m_file_stat.st_size);
-            /*第一个指针指向响应报文缓冲区,长度指向m_write_idx*/
-            /*报文*/
-            m_iv[0].iov_base = m_write_buf;
-            m_iv[0].iov_len = m_write_idx;
-            /*第二个指针指向mmap返回的文件指针,长度指向文件大小*/
-            /*申请的资源*/
-            m_iv[1].iov_base = m_file_address;
-            m_iv[1].iov_len = m_file_stat.st_size;
-            m_iv_count = 2; /*TODO:指针数?*/
-            /*发送的全部数据为响应保温头部信息和文件大小*/
-            bytes_to_send = m_write_idx + m_file_stat.st_size;
-            return true;
-        }
-        else /*如果请求的资源大小为0,则返回空白html文件*/
-        {
-            const char *ok_string = "<html><body></body></html>";
-            add_headers(strlen(ok_string));
-            if (!add_content(ok_string))
-                return false;
-        }
-    }
-    default:
-        return false;
+        /*文件存在,200*/
+        case FILE_REQUEST:
+                              {
+                              /*不管如何都要有的*/
+                              add_status_line(200, ok_200_title);
+                              /*如果请求的资源存在*/
+                              if (m_file_stat.st_size != 0) /*TODO:资源是非空的*/
+                              {
+                              /*TODO:写该文件的长度?*/
+                              add_headers(m_file_stat.st_size);
+                              /*第一个指针指向响应报文缓冲区,长度指向m_write_idx*/
+                              /*报文*/
+                              m_iv[0].iov_base = m_write_buf;
+                              m_iv[0].iov_len = m_write_idx;
+                              /*第二个指针指向mmap返回的文件指针,长度指向文件大小*/
+                              /*申请的资源*/
+                              m_iv[1].iov_base = m_file_address;
+                              m_iv[1].iov_len = m_file_stat.st_size;
+                              m_iv_count = 2; /*TODO:指针数?*/
+                              /*发送的全部数据为响应保温头部信息和文件大小*/
+                              bytes_to_send = m_write_idx + m_file_stat.st_size;
+                              return true;
+                              }
+                              else /*如果请求的资源大小为0,则返回空白html文件*/
+                              {
+                              const char *ok_string = "<html><body></body></html>";
+                              add_headers(strlen(ok_string));
+                              if (!add_content(ok_string))
+                              return false;
+                              }
+                              }
+        default:
+            return false;
     }
     /*除了访问资源状态,即FILE_REQUEST外,其余状态只有一个指针,指向响应报文缓冲区*/
     m_iv[0].iov_base = m_write_buf;
