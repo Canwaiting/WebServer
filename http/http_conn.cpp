@@ -323,63 +323,67 @@ http_conn::HTTP_CODE http_conn::parse_headers(char *text)
     //判断是空行还是请求头
     if (text[0] == '\0')
     {
-        /*判断是GET还是POST请求*/
+        //判断是GET还是POST请求
         if (m_content_length != 0)
         {
-            /*POST需要跳转到消息体处理状态*/
+            //POST需要跳转到消息体处理状态
             m_check_state = CHECK_STATE_CONTENT;
-            return NO_REQUEST; /*TODO:为什么说请求不完整,然后继续接收?*/
+            return NO_REQUEST;
         }
-        /*GET*/
-        return GET_REQUEST; /*返回接收完全*/
+
+        //GET
+        return GET_REQUEST;
     }
-    /*解析请求头部连接字段*/
+
+    //解析请求头部连接字段
     else if (strncasecmp(text, "Connection:", 11) == 0)
     {
-        /*把指针后移,然后读取前面的东西?*/
         text += 11;
-        text += strspn(text, " \t"); /*TODO:跳过空格和\t字符*/
-        if (strcasecmp(text, "keep-alive") == 0) /*等于0即为长连接*/
+        text += strspn(text, " \t");
+        if (strcasecmp(text, "keep-alive") == 0)
         {
-            /*如果是长连接,则将linger标志设置为true*/
             m_linger = true;
         }
     }
-    /*解析请求头部内容长度字段*/
+
+    //解析请求头部内容长度字段
     else if (strncasecmp(text, "Content-length:", 15) == 0)
     {
         text += 15;
         text += strspn(text, " \t");
-        m_content_length = atol(text); /*TODO:atol,应该是获取内容的函数*/
+        m_content_length = atol(text);
     }
-    /*解析请求头部HOST字段*/
+
+    //解析请求头部HOST字段
     else if (strncasecmp(text, "Host:", 5) == 0)
     {
-        /*应该是把指针指向HOST:后面,然后读取后面到\t部分*/
         text += 5;
         text += strspn(text, " \t");
         m_host = text;
     }
-    /*打印错误信息*/
+
+    //打印错误信息
     else
     {
         LOG_INFO("oop!unknow header: %s", text);
     }
-    return NO_REQUEST; /*处理完成*/
+
+    return NO_REQUEST;
 }
 
 //判断http请求是否被完整读入
 http_conn::HTTP_CODE http_conn::parse_content(char *text)
 {
-    /*判断buffer中是否读取了消息体*/
+    //判断buffer中是否读取了消息体
     if (m_read_idx >= (m_content_length + m_checked_idx))
     {
-        text[m_content_length] = '\0'; /*TODO:为什么又要判断\0,从状态机传了什么过来*/
+        text[m_content_length] = '\0';
+
         //POST请求中最后为输入的用户名和密码
         m_string = text;
-        return GET_REQUEST; /*获取了完整的请求*/
+        return GET_REQUEST;
     }
-    return NO_REQUEST; /*完成该请求的解析*/
+    return NO_REQUEST;
 }
 
 //读取报文并进行处理
@@ -393,13 +397,12 @@ http_conn::HTTP_CODE http_conn::process_read()
     //就是这里从状态机驱动主状态机
     while ((m_check_state == CHECK_STATE_CONTENT && line_status == LINE_OK) || ((line_status = parse_line()) == LINE_OK))
     {
-        //TODO
+        //指针指向未被处理的文本
         text = get_line();
 
         //更新读取的位置
         m_start_line = m_checked_idx;
 
-        //TODO
         LOG_INFO("%s", text);
 
         //主状态机的三种状态逻辑
@@ -575,7 +578,6 @@ http_conn::HTTP_CODE http_conn::do_request()
 
         free(m_url_real);
     }
-    /*TODO:否则发送url实际请求文件?意思是假设服务器中有hello.txt文件,你就可以获取?*/
     else
         strncpy(m_real_file + len, m_url, FILENAME_LEN - len - 1);
 

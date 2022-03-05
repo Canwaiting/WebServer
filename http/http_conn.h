@@ -131,14 +131,15 @@ private:
     int m_write_idx; /*指示buffer中的长度*/
 
     CHECK_STATE m_check_state; //主状态机的状态
-    METHOD m_method; /*请求方法*/
-    /*以下为解析请求报文中对应的6个变量*/
-    char m_real_file[FILENAME_LEN]; /*存储读取文件的名称*/
-    char *m_url;
-    char *m_version;
-    char *m_host;
+    METHOD m_method; //请求方法
+
+    //以下为解析请求报文中对应的6个变量
+    char m_real_file[FILENAME_LEN]; //存储读取文件的名称
+    char *m_url; //资源
+    char *m_version; //HTTP协议版本
+    char *m_host; //客户端Host
     int m_content_length;
-    bool m_linger;
+    bool m_linger; //长连接
 
     char *m_file_address; /*读取服务器上的文件地址*/
     struct stat m_file_stat; /*TODO:被读取文件的状态*/
