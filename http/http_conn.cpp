@@ -696,28 +696,32 @@ bool http_conn::write()
     }
 }
 
-/*用于添加响应所要调用的函数,解耦出来了*/
+//用于添加响应所要调用的函数
 bool http_conn::add_response(const char *format, ...)
 {
-    /*如果写入内容比buffer大,则报错*/
+    //待发送字节大于等于写缓存区的最大缓存数
     if (m_write_idx >= WRITE_BUFFER_SIZE)
         return false;
 
-    va_list arg_list; /*TODO:定义可变参数列表*/
-    va_start(arg_list, format); /*将变量arg_list初始化为传入参数*/
-    /*TODO:将数据format从可变参数列表写入缓冲区写,返回写入数据的长度*/
-    /*TODO:写入的是什么*/
+    //定义可变参数列表,并初始化
+    va_list arg_list;
+    va_start(arg_list, format);
+
+    //将数据format从可变参数列表写入缓冲区写，返回写入数据的长度
     int len = vsnprintf(m_write_buf + m_write_idx, WRITE_BUFFER_SIZE - 1 - m_write_idx, format, arg_list);
-    /*如果写入的数据长度超过缓冲区剩余空间,则报错*/
+
+    //如果写入的数据长度超过缓冲区剩余空间,则报错
     if (len >= (WRITE_BUFFER_SIZE - 1 - m_write_idx))
     {
-        va_end(arg_list); /*va_end有什么用*/
+        //清空可变参列表
+        va_end(arg_list);
         return false;
     }
-    /*成功写后,更新m_write_idx的位置*/
+
+    //成功写后,更新m_write_idx的位置
     m_write_idx += len;
-    /*清空可变参数列表*/
-    /*TODO:arg_list是什么来的*/
+
+    //清空可变参数列表
     va_end(arg_list);
 
     /*log*/
@@ -726,17 +730,16 @@ bool http_conn::add_response(const char *format, ...)
     return true;
 }
 
-/*添加状态行*/
+//添加状态行
 bool http_conn::add_status_line(int status, const char *title)
 {
-    /*TODO:format和status,title不知道*/
     return add_response("%s %d %s\r\n", "HTTP/1.1", status, title);
 }
 
-/*添加消息报头,具体的添加文本长度、连接状态和空行*/
+//添加消息报头,具体的添加文本长度、连接状态和空行
 bool http_conn::add_headers(int content_len)
 {
-    /*返回是否添加成功*/
+    //返回是否添加成功
     return add_content_length(content_len) && add_linger() &&
            add_blank_line();
 }
@@ -753,13 +756,13 @@ bool http_conn::add_content_type()
     return add_response("Content-Type:%s\r\n", "text/html");
 }
 
-/*添加连接状态,通知浏览器是保持连接还是关闭*/
+//添加连接状态,通知浏览器是保持连接还是关闭
 bool http_conn::add_linger()
 {
     return add_response("Connection:%s\r\n", (m_linger == true) ? "keep-alive" : "close");
 }
 
-/*添加空行*/
+//添加空行
 bool http_conn::add_blank_line()
 {
     return add_response("%s", "\r\n");
@@ -778,13 +781,16 @@ bool http_conn::process_write(HTTP_CODE ret)
     {
         //内部错误,500
         case INTERNAL_ERROR:
-                                {
-                                add_status_line(500, error_500_title);
-                                add_headers(strlen(error_500_form));
-                                if (!add_content(error_500_form))
-                                return false;
-                                break;
-                                }
+            {
+                //状态行
+                add_status_line(500, error_500_title);
+                //报头
+                add_headers(strlen(error_500_form));
+                //报文主体
+                if (!add_content(error_500_form))
+                return false;
+                break;
+            }
         //报文语法有误,404
         case BAD_REQUEST:
                              {
@@ -807,44 +813,45 @@ bool http_conn::process_write(HTTP_CODE ret)
 
         //文件存在,200
         case FILE_REQUEST:
-                              {
-                              /*不管如何都要有的*/
-                              add_status_line(200, ok_200_title);
-                              /*如果请求的资源存在*/
-                              if (m_file_stat.st_size != 0) /*TODO:资源是非空的*/
-                              {
-                              /*TODO:写该文件的长度?*/
-                              add_headers(m_file_stat.st_size);
-                              /*第一个指针指向响应报文缓冲区,长度指向m_write_idx*/
-                              /*报文*/
-                              m_iv[0].iov_base = m_write_buf;
-                              m_iv[0].iov_len = m_write_idx;
-                              /*第二个指针指向mmap返回的文件指针,长度指向文件大小*/
-                              /*申请的资源*/
-                              m_iv[1].iov_base = m_file_address;
-                              m_iv[1].iov_len = m_file_stat.st_size;
-                              m_iv_count = 2; /*TODO:指针数?*/
-                              /*发送的全部数据为响应保温头部信息和文件大小*/
-                              bytes_to_send = m_write_idx + m_file_stat.st_size;
-                              return true;
-                              }
-                              else /*如果请求的资源大小为0,则返回空白html文件*/
-                              {
-                              const char *ok_string = "<html><body></body></html>";
-                              add_headers(strlen(ok_string));
-                              if (!add_content(ok_string))
-                              return false;
-                              }
-                              }
+          {
+            //响应行
+            add_status_line(200, ok_200_title);
+            //如果请求的资源存在
+            if (m_file_stat.st_size != 0)
+            {
+              add_headers(m_file_stat.st_size);
+              //第一个指针指向响应报文缓冲区,长度指向m_write_idx
+              m_iv[0].iov_base = m_write_buf;
+              m_iv[0].iov_len = m_write_idx;
+              //第二个指针指向mmap返回的文件指针(即资源),长度指向文件大小
+              m_iv[1].iov_base = m_file_address;
+              m_iv[1].iov_len = m_file_stat.st_size;
+              m_iv_count = 2;
+              //发送的全部数据为响应报文头部信息和文件大小
+              bytes_to_send = m_write_idx + m_file_stat.st_size;
+              return true;
+            }
+
+            //如果请求的资源大小为0,则返回空白html文件
+            else
+            {
+              const char *ok_string = "<html><body></body></html>";
+              add_headers(strlen(ok_string));
+              if (!add_content(ok_string))
+              return false;
+            }
+
+          }
         default:
             return false;
     }
 
+    //TODO
     //除了访问资源状态,即FILE_REQUEST外,其余状态只有一个指针,指向响应报文缓冲区
     m_iv[0].iov_base = m_write_buf;
     m_iv[0].iov_len = m_write_idx;
     m_iv_count = 1;
-    bytes_to_send = m_write_idx; /*报文大小*/
+    bytes_to_send = m_write_idx;
     return true;
 }
 

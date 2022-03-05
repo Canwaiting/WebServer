@@ -30,8 +30,8 @@ class http_conn
 {
 public:
     static const int FILENAME_LEN = 200; //设置读取文件的名称m_real_file大小
-    static const int READ_BUFFER_SIZE = 2048; /*设置读缓冲区m_read_buf大小*/
-    static const int WRITE_BUFFER_SIZE = 1024; /*设置写缓冲区m_write_buf大小*/
+    static const int READ_BUFFER_SIZE = 2048; //设置读缓冲区m_read_buf大小
+    static const int WRITE_BUFFER_SIZE = 1024; //设置写缓冲区m_write_buf大小
     enum METHOD /*设置报文的请求方式,本项目只用到GET和POST*/
     { GET = 0,
         POST,
@@ -120,15 +120,15 @@ public:
     int m_state;  //读为0, 写为1
 
 private:
-    int m_sockfd; /*socket*/
+    int m_sockfd;
     sockaddr_in m_address; /*socket的地址*/
-    char m_read_buf[READ_BUFFER_SIZE]; //存储读取的请求报文数据
+    char m_read_buf[READ_BUFFER_SIZE]; //读缓冲区
     int m_read_idx; /*缓冲区中m_read_buf中数据的最后一个字节的下一个位置*/
     int m_checked_idx; /*m_read_buf读取的位置*/
     int m_start_line; //m_read_buf中已经解析的字符个数
 
-    char m_write_buf[WRITE_BUFFER_SIZE]; /*存储发出的响应报文数据*/
-    int m_write_idx; /*指示buffer中的长度*/
+    char m_write_buf[WRITE_BUFFER_SIZE]; //写缓冲区
+    int m_write_idx; //写缓冲区中待发送的字节数
 
     CHECK_STATE m_check_state; //主状态机的状态
     METHOD m_method; //请求方法
@@ -143,8 +143,8 @@ private:
 
     char *m_file_address; //客户请求的文件的地址
     struct stat m_file_stat; //被读取文件的状态
-    struct iovec m_iv[2]; /*TODO:IO向量机制iovec,这个是什么来的*/
-    int m_iv_count; /*TODO:iovec的数量?*/
+    struct iovec m_iv[2];//io向量
+    int m_iv_count; //内存块数
     int cgi;        //POST-1 , GET-0
     char *m_string; //存储请求头数据
     int bytes_to_send; /*剩余发送字节数*/
