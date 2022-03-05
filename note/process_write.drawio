@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="8oDaPV_DR-buTWtK-_A-" name="第 1 页">
-        <mxGraphModel dx="1925" dy="432" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="1920" background="#FFFFFF" math="0" shadow="0">
+        <mxGraphModel dx="2251" dy="627" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="1920" background="#FFFFFF" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -46,8 +46,8 @@
                 <mxCell id="12" value="响应行" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
                     <mxGeometry x="560" y="440" width="120" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="14" value="写入响应报头" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
-                    <mxGeometry x="540" y="550" width="120" height="60" as="geometry"/>
+                <mxCell id="14" value="写入响应报头&lt;br&gt;把第一个io向量指向响应报文&lt;br&gt;第二个指向mmap&lt;br&gt;&lt;br&gt;更新发送的长度为两个之和&lt;br&gt;return true;" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="540" y="550" width="120" height="150" as="geometry"/>
                 </mxCell>
                 <mxCell id="19" value="定义一个空白html文件&lt;br&gt;&lt;br&gt;写入响应报头&lt;br&gt;&lt;br&gt;写入响应主体,并获取返回值 如果错误则return false" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
                     <mxGeometry x="730" y="550" width="120" height="120" as="geometry"/>
@@ -63,6 +63,9 @@
                 </mxCell>
                 <mxCell id="26" value="&lt;font color=&quot;#000000&quot;&gt;default&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
                     <mxGeometry x="660" y="300" width="60" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="27" value="&lt;div&gt;&amp;nbsp; &amp;nbsp; 除了访问资源状态,即FILE_REQUEST外,其余状态只有一个指针,指向响应报文缓冲区&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;return true;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="360" y="800" width="120" height="150" as="geometry"/>
                 </mxCell>
             </root>
         </mxGraphModel>

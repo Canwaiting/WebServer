@@ -627,7 +627,7 @@ bool http_conn::write()
 {
     int temp = 0;
 
-    /*如果发送的数据长度为0,即至少响应报文为0,一般不会出现*/
+    //如果发送的数据长度为0,即至少响应报文为0,一般不会出现
     if (bytes_to_send == 0)
     {
         modfd(m_epollfd, m_sockfd, EPOLLIN, m_TRIGMode);
@@ -846,7 +846,6 @@ bool http_conn::process_write(HTTP_CODE ret)
             return false;
     }
 
-    //TODO
     //除了访问资源状态,即FILE_REQUEST外,其余状态只有一个指针,指向响应报文缓冲区
     m_iv[0].iov_base = m_write_buf;
     m_iv[0].iov_len = m_write_idx;
