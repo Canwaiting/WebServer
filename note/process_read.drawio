@@ -10,7 +10,7 @@
                 <mxCell id="10" value="process_read" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" parent="1" vertex="1">
                     <mxGeometry x="530" y="80" width="120" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="31" value="while循环条件:主状态机为解析消息体并且完整读取一行&lt;br&gt;或者&lt;br&gt;行状态为parse_line()为完整读取一行" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" parent="1" vertex="1">
+                <mxCell id="31" value="while循环条件:主状态机为解析消息体并且完整读取一行&lt;br&gt;或者&lt;br&gt;&lt;br&gt;成功读取报文" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" parent="1" vertex="1">
                     <mxGeometry x="530" y="180" width="120" height="140" as="geometry"/>
                 </mxCell>
                 <mxCell id="40" value="调用get_line()指向未被处理的字符" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" parent="1" vertex="1">
@@ -28,7 +28,10 @@
                 <mxCell id="42" value="主状态机的逻辑" style="rhombus;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="530" y="490" width="120" height="80" as="geometry"/>
                 </mxCell>
-                <mxCell id="57" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;strokeColor=#000000;" edge="1" parent="1" source="43" target="56">
+                <mxCell id="57" style="edgeStyle=none;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=2;strokeColor=#000000;" edge="1" parent="1" source="43" target="56">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="60" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#000000;strokeWidth=2;" edge="1" parent="1" source="43" target="59">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
                 <mxCell id="43" value="调用parse_request_line(),&lt;br&gt;如果正常的话,会让逻辑会变成解析请求头" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
@@ -37,8 +40,11 @@
                 <mxCell id="44" value="解析请求行" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontColor=#000000;" parent="1" vertex="1">
                     <mxGeometry x="450" y="590" width="80" height="20" as="geometry"/>
                 </mxCell>
+                <mxCell id="65" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#000000;strokeWidth=2;" edge="1" parent="1" source="46" target="64">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
                 <mxCell id="46" value="" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
-                    <mxGeometry x="580" y="660" width="120" height="60" as="geometry"/>
+                    <mxGeometry x="570" y="670" width="120" height="60" as="geometry"/>
                 </mxCell>
                 <mxCell id="48" value="解析请求头" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontColor=#000000;" parent="1" vertex="1">
                     <mxGeometry x="620" y="590" width="80" height="20" as="geometry"/>
@@ -48,8 +54,11 @@
                         <mxPoint x="770" y="580" as="sourcePoint"/>
                     </mxGeometry>
                 </mxCell>
+                <mxCell id="66" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#000000;strokeWidth=2;" edge="1" parent="1" source="51" target="64">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
                 <mxCell id="51" value="" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
-                    <mxGeometry x="820" y="660" width="120" height="70" as="geometry"/>
+                    <mxGeometry x="800" y="660" width="120" height="70" as="geometry"/>
                 </mxCell>
                 <mxCell id="52" value="解析消息体" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontColor=#000000;" parent="1" vertex="1">
                     <mxGeometry x="740" y="640" width="80" height="20" as="geometry"/>
@@ -60,11 +69,32 @@
                 <mxCell id="55" value="default" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontColor=#000000;" parent="1" vertex="1">
                     <mxGeometry x="920" y="610" width="60" height="20" as="geometry"/>
                 </mxCell>
-                <mxCell id="56" value="return BAD_REQUEST&lt;br&gt;&lt;br&gt;并break" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
-                    <mxGeometry x="310" y="800" width="120" height="110" as="geometry"/>
+                <mxCell id="56" value="return BAD_REQUEST&lt;br&gt;&lt;br&gt;" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="80" y="655" width="120" height="70" as="geometry"/>
                 </mxCell>
                 <mxCell id="58" value="返回值&lt;br&gt;为BAD_REQUEST" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontColor=#000000;" vertex="1" parent="1">
-                    <mxGeometry x="260" y="765" width="110" height="30" as="geometry"/>
+                    <mxGeometry x="210" y="655" width="110" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="59" value="break" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="310" y="820" width="120" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="62" value="return NO_REQUEST" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" vertex="1" parent="1">
+                    <mxGeometry x="500" y="1050" width="120" height="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="63" value="while结束后" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontColor=#000000;" vertex="1" parent="1">
+                    <mxGeometry x="520" y="1010" width="80" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="69" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;strokeColor=#000000;strokeWidth=2;" edge="1" parent="1" source="64" target="68">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="64" value="do_requst()" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="710" y="800" width="120" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="67" value="返回值为GET_REQUEST" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontColor=#000000;" vertex="1" parent="1">
+                    <mxGeometry x="685" y="780" width="150" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="68" value="break" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="710" y="900" width="120" height="70" as="geometry"/>
                 </mxCell>
             </root>
         </mxGraphModel>

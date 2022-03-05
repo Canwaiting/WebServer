@@ -29,7 +29,7 @@
 class http_conn
 {
 public:
-    static const int FILENAME_LEN = 200; /*设置读取文件的名称m_real_file大小*/
+    static const int FILENAME_LEN = 200; //设置读取文件的名称m_real_file大小
     static const int READ_BUFFER_SIZE = 2048; /*设置读缓冲区m_read_buf大小*/
     static const int WRITE_BUFFER_SIZE = 1024; /*设置写缓冲区m_write_buf大小*/
     enum METHOD /*设置报文的请求方式,本项目只用到GET和POST*/
@@ -134,7 +134,7 @@ private:
     METHOD m_method; //请求方法
 
     //以下为解析请求报文中对应的6个变量
-    char m_real_file[FILENAME_LEN]; //存储读取文件的名称
+    char m_real_file[FILENAME_LEN]; //客户请求目标文件的完整路径
     char *m_url; //资源
     char *m_version; //HTTP协议版本
     char *m_host; //客户端Host
@@ -145,12 +145,11 @@ private:
     struct stat m_file_stat; /*TODO:被读取文件的状态*/
     struct iovec m_iv[2]; /*TODO:IO向量机制iovec,这个是什么来的*/
     int m_iv_count; /*TODO:iovec的数量?*/
-    /*TODO:CGI是什么*/
-    int cgi;        //是否启用的POST
+    int cgi;        //POST-1 , GET-0
     char *m_string; //存储请求头数据
     int bytes_to_send; /*剩余发送字节数*/
     int bytes_have_send; /*已发送字节数*/
-    char *doc_root; /*TODO:文档的根?*/
+    char *doc_root; //文档的根,表现为数字
 
     map<string, string> m_users; /*TODO:可能存储的是用户的名字和密码*/
     int m_TRIGMode; /*TODO:ET和LT模式?*/
