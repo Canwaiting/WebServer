@@ -450,6 +450,7 @@ http_conn::HTTP_CODE http_conn::process_read()
     return NO_REQUEST;
 }
 
+//将用户想要的资源映射到一个内存中
 http_conn::HTTP_CODE http_conn::do_request()
 {
     //初始化
@@ -592,24 +593,24 @@ http_conn::HTTP_CODE http_conn::do_request()
     else
         strncpy(m_real_file + len, m_url, FILENAME_LEN - len - 1);
 
-    //TODO
     //通过stat获取请求资源文件信息m_file_stat,成功则将信息更新到m_real_file结构体中
     if (stat(m_real_file, &m_file_stat) < 0)
-        return NO_RESOURCE; /*失败则返回NO_RESOURCE状态,表示资源不存在*/
+        return NO_RESOURCE;
 
-    /*判断文件的权限,是否可读*/
+    //判断文件的权限,是否可读
     if (!(m_file_stat.st_mode & S_IROTH))
-        return FORBIDDEN_REQUEST; /*文件不可读*/
+        return FORBIDDEN_REQUEST;
 
-    /*判断文件的类型,如果是目录*/
+    //判断文件的类型,如果是目录
     if (S_ISDIR(m_file_stat.st_mode))
-        return BAD_REQUEST; /*请求报文有误*/
+        return BAD_REQUEST;
 
-    /*以只读方式获取文件描述符,通过mmap将文件映射到内存中*/
-    int fd = open(m_real_file, O_RDONLY); /*TODO:open函数*/
+    //以只读方式获取文件描述符,通过mmap将文件映射到内存中
+    int fd = open(m_real_file, O_RDONLY);
     m_file_address = (char *)mmap(0, m_file_stat.st_size, PROT_READ, MAP_PRIVATE, fd, 0);
-    close(fd); /*TODO:为什么要创建一个fd来进行映射*/
-    return FILE_REQUEST; /*表示文件存在,且可以访问*/
+    close(fd);
+
+    return FILE_REQUEST;
 }
 
 void http_conn::unmap()
@@ -838,7 +839,8 @@ bool http_conn::process_write(HTTP_CODE ret)
         default:
             return false;
     }
-    /*除了访问资源状态,即FILE_REQUEST外,其余状态只有一个指针,指向响应报文缓冲区*/
+
+    //除了访问资源状态,即FILE_REQUEST外,其余状态只有一个指针,指向响应报文缓冲区
     m_iv[0].iov_base = m_write_buf;
     m_iv[0].iov_len = m_write_idx;
     m_iv_count = 1;
@@ -851,6 +853,8 @@ void http_conn::process()
 {
     //读取并处理请求报文,没读完就继续读
     HTTP_CODE read_ret = process_read();
+
+    //NO_REQUEST，表示请求不完整，需要继续接收请求数据
     if (read_ret == NO_REQUEST)
     {
         //注册并监听读事件

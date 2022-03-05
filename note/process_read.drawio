@@ -22,7 +22,7 @@
                 <mxCell id="47" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontColor=#000000;strokeColor=#000000;strokeWidth=3;" parent="1" source="42" target="46" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="54" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontColor=#000000;strokeColor=#000000;strokeWidth=3;" parent="1" source="42" target="53" edge="1">
+                <mxCell id="54" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontColor=#000000;strokeColor=#000000;strokeWidth=3;" parent="1" source="42" target="53" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
                 <mxCell id="42" value="主状态机的逻辑" style="rhombus;whiteSpace=wrap;html=1;" parent="1" vertex="1">
@@ -43,28 +43,37 @@
                 <mxCell id="65" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#000000;strokeWidth=2;" edge="1" parent="1" source="46" target="64">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
+                <mxCell id="78" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#000000;strokeWidth=2;" edge="1" parent="1" source="46" target="76">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="81" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.75;entryY=0;entryDx=0;entryDy=0;strokeColor=#000000;strokeWidth=2;" edge="1" parent="1" source="46" target="79">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
                 <mxCell id="46" value="" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="570" y="670" width="120" height="60" as="geometry"/>
                 </mxCell>
                 <mxCell id="48" value="解析请求头" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontColor=#000000;" parent="1" vertex="1">
-                    <mxGeometry x="620" y="590" width="80" height="20" as="geometry"/>
+                    <mxGeometry x="605" y="620" width="80" height="20" as="geometry"/>
                 </mxCell>
                 <mxCell id="50" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontColor=#000000;strokeColor=#000000;strokeWidth=3;" parent="1" source="42" target="51" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <mxPoint x="770" y="580" as="sourcePoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="66" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#000000;strokeWidth=2;" edge="1" parent="1" source="51" target="64">
+                <mxCell id="84" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#000000;strokeWidth=2;" edge="1" parent="1" source="51" target="82">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="51" value="" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                <mxCell id="86" style="edgeStyle=none;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#000000;strokeWidth=2;" edge="1" parent="1" source="51" target="85">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="51" value="调用parse_content()" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="800" y="660" width="120" height="70" as="geometry"/>
                 </mxCell>
                 <mxCell id="52" value="解析消息体" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontColor=#000000;" parent="1" vertex="1">
                     <mxGeometry x="740" y="640" width="80" height="20" as="geometry"/>
                 </mxCell>
                 <mxCell id="53" value="return INTERNAL_ERROR;&lt;br&gt;即服务器内部错误&amp;nbsp;" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
-                    <mxGeometry x="980" y="660" width="120" height="70" as="geometry"/>
+                    <mxGeometry x="1030" y="580" width="120" height="70" as="geometry"/>
                 </mxCell>
                 <mxCell id="55" value="default" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontColor=#000000;" parent="1" vertex="1">
                     <mxGeometry x="920" y="610" width="60" height="20" as="geometry"/>
@@ -73,28 +82,43 @@
                     <mxGeometry x="80" y="655" width="120" height="70" as="geometry"/>
                 </mxCell>
                 <mxCell id="58" value="返回值&lt;br&gt;为BAD_REQUEST" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontColor=#000000;" vertex="1" parent="1">
-                    <mxGeometry x="210" y="655" width="110" height="30" as="geometry"/>
+                    <mxGeometry x="200" y="630" width="110" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="59" value="break" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
                     <mxGeometry x="310" y="820" width="120" height="70" as="geometry"/>
                 </mxCell>
                 <mxCell id="62" value="return NO_REQUEST" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" vertex="1" parent="1">
-                    <mxGeometry x="500" y="1050" width="120" height="90" as="geometry"/>
+                    <mxGeometry x="470" y="1130" width="120" height="90" as="geometry"/>
                 </mxCell>
                 <mxCell id="63" value="while结束后" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontColor=#000000;" vertex="1" parent="1">
-                    <mxGeometry x="520" y="1010" width="80" height="20" as="geometry"/>
+                    <mxGeometry x="490" y="1090" width="80" height="20" as="geometry"/>
                 </mxCell>
-                <mxCell id="69" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;strokeColor=#000000;strokeWidth=2;" edge="1" parent="1" source="64" target="68">
+                <mxCell id="80" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#000000;strokeWidth=2;" edge="1" parent="1" source="64" target="79">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
                 <mxCell id="64" value="do_requst()" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
-                    <mxGeometry x="710" y="800" width="120" height="70" as="geometry"/>
+                    <mxGeometry x="520" y="800" width="120" height="70" as="geometry"/>
                 </mxCell>
                 <mxCell id="67" value="返回值为GET_REQUEST" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontColor=#000000;" vertex="1" parent="1">
-                    <mxGeometry x="685" y="780" width="150" height="20" as="geometry"/>
+                    <mxGeometry x="505" y="765" width="150" height="20" as="geometry"/>
                 </mxCell>
-                <mxCell id="68" value="break" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
-                    <mxGeometry x="710" y="900" width="120" height="70" as="geometry"/>
+                <mxCell id="76" value="return BAD_REQUEST&lt;br&gt;&lt;br&gt;" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="660" y="800" width="120" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="77" value="返回值&lt;br&gt;为BAD_REQUEST" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontColor=#000000;" vertex="1" parent="1">
+                    <mxGeometry x="660" y="760" width="110" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="79" value="break" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="570" y="900" width="120" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="82" value="调用do_request()&lt;br&gt;并返回其值" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="830" y="800" width="120" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="83" value="返回值为GET_REQUEST" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontColor=#000000;" vertex="1" parent="1">
+                    <mxGeometry x="830" y="770" width="150" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="85" value="行状态设置为LINE_OPEN&lt;br&gt;即读取不完整&lt;br&gt;并break" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="1020" y="740" width="120" height="70" as="geometry"/>
                 </mxCell>
             </root>
         </mxGraphModel>

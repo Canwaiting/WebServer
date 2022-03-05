@@ -8,7 +8,7 @@
                     <mxGeometry x="150" width="665.79" height="890" as="geometry"/>
                 </mxCell>
                 <mxCell id="3" value="" style="triangle;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-                    <mxGeometry x="-530" y="280" width="60" height="80" as="geometry"/>
+                    <mxGeometry x="-190" y="410" width="60" height="80" as="geometry"/>
                 </mxCell>
                 <mxCell id="4" value="" style="triangle;whiteSpace=wrap;html=1;fillColor=#a0522d;fontColor=#ffffff;strokeColor=#6D1F00;" parent="1" vertex="1">
                     <mxGeometry x="400" y="740" width="60" height="80" as="geometry"/>
@@ -29,16 +29,16 @@
                     <mxGeometry x="-430" y="460" width="120" height="60" as="geometry"/>
                 </mxCell>
                 <mxCell id="22" value="parse_content" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" parent="1" vertex="1">
-                    <mxGeometry x="-420" y="130" width="120" height="60" as="geometry"/>
+                    <mxGeometry x="-230" y="160" width="120" height="60" as="geometry"/>
                 </mxCell>
                 <mxCell id="23" value="do_request" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" parent="1" vertex="1">
-                    <mxGeometry x="-430" y="220" width="120" height="60" as="geometry"/>
+                    <mxGeometry x="-210" y="250" width="120" height="60" as="geometry"/>
                 </mxCell>
                 <mxCell id="24" value="adjust_timer" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" parent="1" vertex="1">
                     <mxGeometry x="20" y="530" width="120" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="25" value="process_read()" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" parent="1" vertex="1">
-                    <mxGeometry x="-440" y="290" width="120" height="60" as="geometry"/>
+                <mxCell id="25" value="process_write()" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" parent="1" vertex="1">
+                    <mxGeometry x="-430" y="280" width="120" height="60" as="geometry"/>
                 </mxCell>
                 <mxCell id="26" value="" style="triangle;whiteSpace=wrap;html=1;" vertex="1" parent="1">
                     <mxGeometry x="-530" y="370" width="60" height="80" as="geometry"/>

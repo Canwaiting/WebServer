@@ -141,8 +141,8 @@ private:
     int m_content_length;
     bool m_linger; //长连接
 
-    char *m_file_address; /*读取服务器上的文件地址*/
-    struct stat m_file_stat; /*TODO:被读取文件的状态*/
+    char *m_file_address; //客户请求的文件的地址
+    struct stat m_file_stat; //被读取文件的状态
     struct iovec m_iv[2]; /*TODO:IO向量机制iovec,这个是什么来的*/
     int m_iv_count; /*TODO:iovec的数量?*/
     int cgi;        //POST-1 , GET-0
