@@ -765,18 +765,18 @@ bool http_conn::add_blank_line()
     return add_response("%s", "\r\n");
 }
 
-/*添加文本content*/
+//添加文本content
 bool http_conn::add_content(const char *content)
 {
     return add_response("%s", content);
 }
 
-/*根据不同的情况来发送响应,调用上面的写报文的函数*/
+//根据不同的情况来发送响应,调用上面的写报文的函数
 bool http_conn::process_write(HTTP_CODE ret)
 {
     switch (ret)
     {
-        /*内部错误,500*/
+        //内部错误,500
         case INTERNAL_ERROR:
                                 {
                                 add_status_line(500, error_500_title);
@@ -785,7 +785,7 @@ bool http_conn::process_write(HTTP_CODE ret)
                                 return false;
                                 break;
                                 }
-        /*报文语法有误,404*/
+        //报文语法有误,404
         case BAD_REQUEST:
                              {
                              add_status_line(404, error_404_title);
@@ -795,7 +795,7 @@ bool http_conn::process_write(HTTP_CODE ret)
                              break;
                              }
 
-        /*资源没有访问权限,403*/
+        //资源没有访问权限,403
         case FORBIDDEN_REQUEST:
                                    {
                                    add_status_line(403, error_403_title);
@@ -805,7 +805,7 @@ bool http_conn::process_write(HTTP_CODE ret)
                                    break;
                                    }
 
-        /*文件存在,200*/
+        //文件存在,200
         case FILE_REQUEST:
                               {
                               /*不管如何都要有的*/
