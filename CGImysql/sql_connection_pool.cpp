@@ -143,7 +143,6 @@ int connection_pool::GetFreeConn()
 	return this->m_FreeConn;
 }
 
-/*TODO:RAII机制销毁连接池,什么是RAII*/
 connection_pool::~connection_pool()
 {
 	DestroyPool();

@@ -74,29 +74,32 @@ void addfd(int epollfd, int fd, bool one_shot, int TRIGMode)
     setnonblocking(fd);
 }
 
-//从内核时间表删除描述符
+//从内核树上删除描述符
 void removefd(int epollfd, int fd)
 {
     epoll_ctl(epollfd, EPOLL_CTL_DEL, fd, 0);
     close(fd);
 }
 
-//将事件重置为EPOLLONESHOT
+//将事件重置为EPOLLONESHOT,并加上传入的事件
 void modfd(int epollfd, int fd, int ev, int TRIGMode)
 {
     epoll_event event;
     event.data.fd = fd;
 
+    //ET
     if (1 == TRIGMode)
         event.events = ev | EPOLLET | EPOLLONESHOT | EPOLLRDHUP;
+
+    //LT
     else
         event.events = ev | EPOLLONESHOT | EPOLLRDHUP;
 
     epoll_ctl(epollfd, EPOLL_CTL_MOD, fd, &event);
 }
 
-int http_conn::m_user_count = 0;
-int http_conn::m_epollfd = -1;
+int http_conn::m_user_count = 0; //用户数
+int http_conn::m_epollfd = -1; //注册的内核表
 
 //关闭连接，关闭一个连接，客户总量减一
 void http_conn::close_conn(bool real_close)
@@ -613,11 +616,15 @@ http_conn::HTTP_CODE http_conn::do_request()
     return FILE_REQUEST;
 }
 
+//取消映射
 void http_conn::unmap()
 {
+    //如果被映射了
     if (m_file_address)
     {
+        //取消映射
         munmap(m_file_address, m_file_stat.st_size);
+        //重置
         m_file_address = 0;
     }
 }
@@ -630,6 +637,7 @@ bool http_conn::write()
     //如果发送的数据长度为0,即至少响应报文为0,一般不会出现
     if (bytes_to_send == 0)
     {
+        //注册可读事件,并重置ONESHOT
         modfd(m_epollfd, m_sockfd, EPOLLIN, m_TRIGMode);
         init();
         return true;
@@ -637,54 +645,54 @@ bool http_conn::write()
 
     while (1)
     {
-        /*将响应报文的状态行、消息头、空行和响应正文发送给浏览器端*/
-        /*现在又用回socket了*/
+        //将向量指向的内存一次发出
         temp = writev(m_sockfd, m_iv, m_iv_count);
-
-        /*报错*/
         if (temp < 0)
         {
-            /*缓冲区已经满了*/
+            //缓冲区已经满了
             if (errno == EAGAIN)
             {
-                /*TODO:重新注册写事件,相当于再来?*/
+                //注册可写事件,并重置ONESHOT
                 modfd(m_epollfd, m_sockfd, EPOLLOUT, m_TRIGMode);
                 return true;
             }
-            /*TODO:如果发送失败,但不是缓冲区的问题,取消映射*/
+
+            //如果发送失败，但不是缓冲区问题，取消映射
             unmap();
             return false;
         }
 
-        bytes_have_send += temp; /*更新还没有发的字节*/
-        bytes_to_send -= temp; /*更新已发送了的字节*/
+        //更新已发送和发生的字节数
+        bytes_have_send += temp;
+        bytes_to_send -= temp;
+
+        //第一个向量中的数据发送完了
         if (bytes_have_send >= m_iv[0].iov_len)
         {
-            /*不再继续发送头部信息*/
-            m_iv[0].iov_len = 0; /*TODO:清零?*/
-            m_iv[1].iov_base = m_file_address + (bytes_have_send - m_write_idx); /*TODO*/
-            m_iv[1].iov_len = bytes_to_send; /*TODO:开始发资源?*/
+            //不再继续发送头部信息
+            m_iv[0].iov_len = 0;
+            m_iv[1].iov_base = m_file_address + (bytes_have_send - m_write_idx);
+            m_iv[1].iov_len = bytes_to_send;
         }
-        /*继续发地一个iovec头部信息的数据*/
+
+        //继续发第一个iovec头部信息的数据
         else
         {
-            /*TODO*/
             m_iv[0].iov_base = m_write_buf + bytes_have_send;
             m_iv[0].iov_len = m_iv[0].iov_len - bytes_have_send;
         }
 
-        /*数据全部发完*/
+        //数据全部发完
         if (bytes_to_send <= 0)
         {
             unmap();
-            /*TODO:在epoll树上重置EPOLLONESHOT事件,EPOLLONESHOT是什么*/
+            //注册可读事件,并重置ONESHOT
             modfd(m_epollfd, m_sockfd, EPOLLIN, m_TRIGMode);
 
-            /*如果是长连接*/
+            //长连接
             if (m_linger)
             {
-                /*重新初始化http对象*/
-                /*TODO:不用参数?还是新的一个*/
+                //重新初始化http对象
                 init();
                 return true;
             }
@@ -854,7 +862,7 @@ bool http_conn::process_write(HTTP_CODE ret)
     return true;
 }
 
-//请求报文读取并处理-->处理并写入响应报文-->注册写完成事件
+//读入报文-->分析报文-->写入报文
 void http_conn::process()
 {
     //读取并处理请求报文,没读完就继续读
@@ -863,7 +871,7 @@ void http_conn::process()
     //NO_REQUEST，表示请求不完整，需要继续接收请求数据
     if (read_ret == NO_REQUEST)
     {
-        //注册并监听读事件
+        //注册可读事件,并重置ONESHOT
         modfd(m_epollfd, m_sockfd, EPOLLIN, m_TRIGMode);
         return;
     }
@@ -875,6 +883,6 @@ void http_conn::process()
         close_conn();
     }
 
-    //注册并监听写事件
+    //注册监听写事件,并重置ONESHOT
     modfd(m_epollfd, m_sockfd, EPOLLOUT, m_TRIGMode);
 }

@@ -120,7 +120,7 @@ public:
     int m_state;  //读为0, 写为1
 
 private:
-    int m_sockfd;
+    int m_sockfd; //子线程中处理的socket
     sockaddr_in m_address; /*socket的地址*/
     char m_read_buf[READ_BUFFER_SIZE]; //读缓冲区
     int m_read_idx; /*缓冲区中m_read_buf中数据的最后一个字节的下一个位置*/
@@ -147,8 +147,8 @@ private:
     int m_iv_count; //内存块数
     int cgi;        //POST-1 , GET-0
     char *m_string; //存储请求头数据
-    int bytes_to_send; /*剩余发送字节数*/
-    int bytes_have_send; /*已发送字节数*/
+    int bytes_to_send; //剩余发送字节数
+    int bytes_have_send; //已发送字节数
     char *doc_root; //文档的根,表现为数字
 
     map<string, string> m_users; /*TODO:可能存储的是用户的名字和密码*/

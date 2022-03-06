@@ -4,67 +4,67 @@
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
-                <mxCell id="2" value="process_write" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                <mxCell id="2" value="process_write" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="470" y="60" width="120" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="11" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontColor=#000000;strokeColor=#000000;strokeWidth=2;" edge="1" parent="1" source="3" target="4">
+                <mxCell id="11" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontColor=#000000;strokeColor=#000000;strokeWidth=2;" parent="1" source="3" target="4" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="13" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontColor=#000000;strokeColor=#000000;strokeWidth=2;" edge="1" parent="1" source="3" target="12">
+                <mxCell id="13" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontColor=#000000;strokeColor=#000000;strokeWidth=2;" parent="1" source="3" target="12" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="25" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontColor=#000000;strokeColor=#000000;strokeWidth=2;" edge="1" parent="1" source="3" target="24">
+                <mxCell id="25" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontColor=#000000;strokeColor=#000000;strokeWidth=2;" parent="1" source="3" target="24" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="3" value="根据不同状态码选择" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                <mxCell id="3" value="根据不同状态码选择" style="rhombus;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="460" y="160" width="140" height="80" as="geometry"/>
                 </mxCell>
-                <mxCell id="4" value="状态行&lt;br&gt;报头&lt;br&gt;" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                <mxCell id="4" value="状态行&lt;br&gt;报头&lt;br&gt;" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="150" y="440" width="120" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="5" value="&lt;font color=&quot;#000000&quot;&gt;内部错误,500&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+                <mxCell id="5" value="&lt;font color=&quot;#000000&quot;&gt;内部错误,500&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
                     <mxGeometry x="290" y="310" width="90" height="20" as="geometry"/>
                 </mxCell>
-                <mxCell id="6" value="&lt;span style=&quot;color: rgba(0 , 0 , 0 , 0) ; font-family: monospace ; font-size: 0px&quot;&gt;%3CmxGraphModel%3E%3Croot%3E%3CmxCell%20id%3D%220%22%2F%3E%3CmxCell%20id%3D%221%22%20parent%3D%220%22%2F%3E%3CmxCell%20id%3D%222%22%20value%3D%22%26lt%3Bfont%20color%3D%26quot%3B%23000000%26quot%3B%26gt%3B%E5%86%85%E9%83%A8%E9%94%99%E8%AF%AF%2C500%26lt%3B%2Ffont%26gt%3B%22%20style%3D%22text%3Bhtml%3D1%3Balign%3Dcenter%3BverticalAlign%3Dmiddle%3Bresizable%3D0%3Bpoints%3D%5B%5D%3Bautosize%3D1%3BstrokeColor%3Dnone%3BfillColor%3Dnone%3B%22%20vertex%3D%221%22%20parent%3D%221%22%3E%3CmxGeometry%20x%3D%22290%22%20y%3D%22290%22%20width%3D%2290%22%20height%3D%2220%22%20as%3D%22geometry%22%2F%3E%3C%2FmxCell%3E%3C%2Froot%3E%3C%2FmxGraphModel%3E&lt;/span&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+                <mxCell id="6" value="&lt;span style=&quot;color: rgba(0 , 0 , 0 , 0) ; font-family: monospace ; font-size: 0px&quot;&gt;%3CmxGraphModel%3E%3Croot%3E%3CmxCell%20id%3D%220%22%2F%3E%3CmxCell%20id%3D%221%22%20parent%3D%220%22%2F%3E%3CmxCell%20id%3D%222%22%20value%3D%22%26lt%3Bfont%20color%3D%26quot%3B%23000000%26quot%3B%26gt%3B%E5%86%85%E9%83%A8%E9%94%99%E8%AF%AF%2C500%26lt%3B%2Ffont%26gt%3B%22%20style%3D%22text%3Bhtml%3D1%3Balign%3Dcenter%3BverticalAlign%3Dmiddle%3Bresizable%3D0%3Bpoints%3D%5B%5D%3Bautosize%3D1%3BstrokeColor%3Dnone%3BfillColor%3Dnone%3B%22%20vertex%3D%221%22%20parent%3D%221%22%3E%3CmxGeometry%20x%3D%22290%22%20y%3D%22290%22%20width%3D%2290%22%20height%3D%2220%22%20as%3D%22geometry%22%2F%3E%3C%2FmxCell%3E%3C%2Froot%3E%3C%2FmxGraphModel%3E&lt;/span&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
                     <mxGeometry x="185" y="110" width="20" height="20" as="geometry"/>
                 </mxCell>
-                <mxCell id="7" value="&lt;span style=&quot;color: rgba(0 , 0 , 0 , 0) ; font-family: monospace ; font-size: 0px&quot;&gt;%3CmxGraphModel%3E%3Croot%3E%3CmxCell%20id%3D%220%22%2F%3E%3CmxCell%20id%3D%221%22%20parent%3D%220%22%2F%3E%3CmxCell%20id%3D%222%22%20value%3D%22%26lt%3Bfont%20color%3D%26quot%3B%23000000%26quot%3B%26gt%3B%E5%86%85%E9%83%A8%E9%94%99%E8%AF%AF%2C500%26lt%3B%2Ffont%26gt%3B%22%20style%3D%22text%3Bhtml%3D1%3Balign%3Dcenter%3BverticalAlign%3Dmiddle%3Bresizable%3D0%3Bpoints%3D%5B%5D%3Bautosize%3D1%3BstrokeColor%3Dnone%3BfillColor%3Dnone%3B%22%20vertex%3D%221%22%20parent%3D%221%22%3E%3CmxGeometry%20x%3D%22290%22%20y%3D%22290%22%20width%3D%2290%22%20height%3D%2220%22%20as%3D%22geometry%22%2F%3E%3C%2FmxCell%3E%3C%2Froot%3E%3C%2FmxGraphModel%3E&lt;/span&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+                <mxCell id="7" value="&lt;span style=&quot;color: rgba(0 , 0 , 0 , 0) ; font-family: monospace ; font-size: 0px&quot;&gt;%3CmxGraphModel%3E%3Croot%3E%3CmxCell%20id%3D%220%22%2F%3E%3CmxCell%20id%3D%221%22%20parent%3D%220%22%2F%3E%3CmxCell%20id%3D%222%22%20value%3D%22%26lt%3Bfont%20color%3D%26quot%3B%23000000%26quot%3B%26gt%3B%E5%86%85%E9%83%A8%E9%94%99%E8%AF%AF%2C500%26lt%3B%2Ffont%26gt%3B%22%20style%3D%22text%3Bhtml%3D1%3Balign%3Dcenter%3BverticalAlign%3Dmiddle%3Bresizable%3D0%3Bpoints%3D%5B%5D%3Bautosize%3D1%3BstrokeColor%3Dnone%3BfillColor%3Dnone%3B%22%20vertex%3D%221%22%20parent%3D%221%22%3E%3CmxGeometry%20x%3D%22290%22%20y%3D%22290%22%20width%3D%2290%22%20height%3D%2220%22%20as%3D%22geometry%22%2F%3E%3C%2FmxCell%3E%3C%2Froot%3E%3C%2FmxGraphModel%3E&lt;/span&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
                     <mxGeometry x="200" y="100" width="20" height="20" as="geometry"/>
                 </mxCell>
-                <mxCell id="9" value="&lt;div&gt;HTTP/1.1 200 OK&lt;/div&gt;&lt;div&gt;Date: Sat, 31 Dec 2005 23:59:59 GMT&lt;/div&gt;&lt;div&gt;Content-Type: text/html;charset=ISO-8859-1&lt;/div&gt;&lt;div&gt;Content-Length: 122&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;＜html＞&lt;/div&gt;&lt;div&gt;＜head＞&lt;/div&gt;&lt;div&gt;＜title＞Wrox Homepage＜/title＞&lt;/div&gt;&lt;div&gt;＜/head＞&lt;/div&gt;&lt;div&gt;＜body＞&lt;/div&gt;&lt;div&gt;＜!-- body goes here --＞&lt;/div&gt;&lt;div&gt;＜/body＞&lt;/div&gt;&lt;div&gt;＜/html＞&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontColor=#000000;" vertex="1" parent="1">
+                <mxCell id="9" value="&lt;div&gt;HTTP/1.1 200 OK&lt;/div&gt;&lt;div&gt;Date: Sat, 31 Dec 2005 23:59:59 GMT&lt;/div&gt;&lt;div&gt;Content-Type: text/html;charset=ISO-8859-1&lt;/div&gt;&lt;div&gt;Content-Length: 122&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;＜html＞&lt;/div&gt;&lt;div&gt;＜head＞&lt;/div&gt;&lt;div&gt;＜title＞Wrox Homepage＜/title＞&lt;/div&gt;&lt;div&gt;＜/head＞&lt;/div&gt;&lt;div&gt;＜body＞&lt;/div&gt;&lt;div&gt;＜!-- body goes here --＞&lt;/div&gt;&lt;div&gt;＜/body＞&lt;/div&gt;&lt;div&gt;＜/html＞&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontColor=#000000;" parent="1" vertex="1">
                     <mxGeometry x="120" y="80" width="260" height="180" as="geometry"/>
                 </mxCell>
-                <mxCell id="10" value="＜request-line＞&lt;br&gt;&lt;br&gt;＜headers＞&lt;br&gt;&lt;br&gt;＜blank line＞&lt;br&gt;&lt;br&gt;[＜request-body＞" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontColor=#000000;" vertex="1" parent="1">
+                <mxCell id="10" value="＜request-line＞&lt;br&gt;&lt;br&gt;＜headers＞&lt;br&gt;&lt;br&gt;＜blank line＞&lt;br&gt;&lt;br&gt;[＜request-body＞" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontColor=#000000;" parent="1" vertex="1">
                     <mxGeometry x="-50" y="280" width="120" height="100" as="geometry"/>
                 </mxCell>
-                <mxCell id="17" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontColor=#000000;strokeColor=#000000;strokeWidth=2;" edge="1" parent="1" source="12" target="14">
+                <mxCell id="17" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontColor=#000000;strokeColor=#000000;strokeWidth=2;" parent="1" source="12" target="14" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="20" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontColor=#000000;strokeColor=#000000;strokeWidth=2;" edge="1" parent="1" source="12" target="19">
+                <mxCell id="20" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontColor=#000000;strokeColor=#000000;strokeWidth=2;" parent="1" source="12" target="19" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="12" value="响应行" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                <mxCell id="12" value="响应行" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="560" y="440" width="120" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="14" value="写入响应报头&lt;br&gt;把第一个io向量指向响应报文&lt;br&gt;第二个指向mmap&lt;br&gt;&lt;br&gt;更新发送的长度为两个之和&lt;br&gt;return true;" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                <mxCell id="14" value="写入响应报头&lt;br&gt;把第一个io向量指向响应报文&lt;br&gt;第二个指向mmap&lt;br&gt;&lt;br&gt;更新发送的长度为两个之和&lt;br&gt;return true;" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="540" y="550" width="120" height="150" as="geometry"/>
                 </mxCell>
-                <mxCell id="19" value="定义一个空白html文件&lt;br&gt;&lt;br&gt;写入响应报头&lt;br&gt;&lt;br&gt;写入响应主体,并获取返回值 如果错误则return false" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                <mxCell id="19" value="定义一个空白html文件&lt;br&gt;&lt;br&gt;写入响应报头&lt;br&gt;&lt;br&gt;写入响应主体,并获取返回值 如果错误则return false" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="730" y="550" width="120" height="120" as="geometry"/>
                 </mxCell>
-                <mxCell id="21" value="&lt;font color=&quot;#000000&quot;&gt;请求的资源存在&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+                <mxCell id="21" value="&lt;font color=&quot;#000000&quot;&gt;请求的资源存在&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
                     <mxGeometry x="525" y="510" width="100" height="20" as="geometry"/>
                 </mxCell>
-                <mxCell id="23" value="&lt;font color=&quot;#000000&quot;&gt;请求的资源大小为0&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+                <mxCell id="23" value="&lt;font color=&quot;#000000&quot;&gt;请求的资源大小为0&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
                     <mxGeometry x="700" y="510" width="120" height="20" as="geometry"/>
                 </mxCell>
-                <mxCell id="24" value="return false;" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                <mxCell id="24" value="return false;" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="820" y="370" width="120" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="26" value="&lt;font color=&quot;#000000&quot;&gt;default&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+                <mxCell id="26" value="&lt;font color=&quot;#000000&quot;&gt;default&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
                     <mxGeometry x="660" y="300" width="60" height="20" as="geometry"/>
                 </mxCell>
-                <mxCell id="27" value="&lt;div&gt;&amp;nbsp; &amp;nbsp; 除了访问资源状态,即FILE_REQUEST外,其余状态只有一个指针,指向响应报文缓冲区&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;return true;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                <mxCell id="27" value="&lt;div&gt;&amp;nbsp; &amp;nbsp; 除了访问资源状态,即FILE_REQUEST外,其余状态只有一个指针,指向响应报文缓冲区&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;return true;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="360" y="800" width="120" height="150" as="geometry"/>
                 </mxCell>
             </root>
