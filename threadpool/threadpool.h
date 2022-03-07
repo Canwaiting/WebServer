@@ -8,7 +8,6 @@
 #include "../lock/locker.h"
 #include "../CGImysql/sql_connection_pool.h"
 
-/*TODO:template不知道怎么用 */
 template <typename T>
 class threadpool
 {
