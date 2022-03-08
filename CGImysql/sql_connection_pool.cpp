@@ -105,7 +105,7 @@ bool connection_pool::ReleaseConnection(MYSQL *con)
 
 	lock.unlock(); /*解锁*/
 	reserve.post();
-	return true; /*TODO:应该是给别人做错误处理*/
+	return true;
 }
 
 //销毁数据库连接池

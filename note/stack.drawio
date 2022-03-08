@@ -19,8 +19,8 @@
                 <mxCell id="10" value="eventLoop" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" parent="1" vertex="1">
                     <mxGeometry x="422.9" y="240" width="120" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="14" value="template" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" parent="1" vertex="1">
-                    <mxGeometry x="-170" y="30" width="120" height="60" as="geometry"/>
+                <mxCell id="14" value="proactor只能是读吗" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" parent="1" vertex="1">
+                    <mxGeometry x="-190" y="-60" width="120" height="60" as="geometry"/>
                 </mxCell>
                 <mxCell id="18" value="并发模型相关" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" parent="1" vertex="1">
                     <mxGeometry x="-440" y="160" width="120" height="60" as="geometry"/>
@@ -28,11 +28,11 @@
                 <mxCell id="21" value="数据库登录注册相关" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" parent="1" vertex="1">
                     <mxGeometry x="-440" y="350" width="120" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="22" value="项目介绍" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" parent="1" vertex="1">
-                    <mxGeometry x="-610" y="-110" width="120" height="60" as="geometry"/>
+                <mxCell id="22" value="锁是本来就有的吗" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" parent="1" vertex="1">
+                    <mxGeometry x="-630" y="100" width="120" height="60" as="geometry"/>
                 </mxCell>
                 <mxCell id="23" value="线程池相关" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" parent="1" vertex="1">
-                    <mxGeometry x="-440" y="80" width="120" height="60" as="geometry"/>
+                    <mxGeometry x="-430" y="90" width="120" height="60" as="geometry"/>
                 </mxCell>
                 <mxCell id="24" value="adjust_timer" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" parent="1" vertex="1">
                     <mxGeometry x="20" y="530" width="120" height="60" as="geometry"/>
@@ -51,6 +51,9 @@
                 </mxCell>
                 <mxCell id="29" value="综合能力" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" parent="1" vertex="1">
                     <mxGeometry x="-440" y="600" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="30" value="" style="shape=partialRectangle;whiteSpace=wrap;html=1;bottom=1;right=1;left=1;top=0;fillColor=none;routingCenterX=-0.5;strokeColor=#000000;strokeWidth=3;" vertex="1" parent="1">
+                    <mxGeometry x="-660" y="-70" width="180" height="730" as="geometry"/>
                 </mxCell>
             </root>
         </mxGraphModel>
