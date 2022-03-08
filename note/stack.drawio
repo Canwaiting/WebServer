@@ -31,8 +31,8 @@
                 <mxCell id="22" value="锁是本来就有的吗" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" parent="1" vertex="1">
                     <mxGeometry x="-630" y="100" width="120" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="23" value="线程池相关" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" parent="1" vertex="1">
-                    <mxGeometry x="-430" y="90" width="120" height="60" as="geometry"/>
+                <mxCell id="23" value="&lt;span style=&quot;font-size: inherit ; color: inherit ; line-height: inherit&quot;&gt;reactor、proactor、主从reactor模型的区别？&lt;/span&gt;" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" parent="1" vertex="1">
+                    <mxGeometry x="-430" y="70" width="120" height="60" as="geometry"/>
                 </mxCell>
                 <mxCell id="24" value="adjust_timer" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" parent="1" vertex="1">
                     <mxGeometry x="20" y="530" width="120" height="60" as="geometry"/>
