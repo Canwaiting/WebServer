@@ -41,6 +41,7 @@ public:
         return sem_wait(&m_sem) == 0;
     }
 
+    //发送有任务入列信号
     bool post()
     {
         return sem_post(&m_sem) == 0;

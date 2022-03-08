@@ -154,7 +154,7 @@ void http_conn::init()
     m_read_idx = 0;
     m_write_idx = 0;
     cgi = 0;
-    m_state = 0;
+    m_state = 0; //读为0,写为1
     timer_flag = 0;
     improv = 0;
 

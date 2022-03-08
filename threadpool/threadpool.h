@@ -34,7 +34,7 @@ private:
     locker m_queuelocker;       //保护请求队列的互斥锁
     sem m_queuestat;            //是否有任务需要处理
     connection_pool *m_connPool;  //数据库连接池
-    int m_actor_model;          //模型切换
+    int m_actor_model;          //reactor为1,0为proactor
 };
 
 //初始化线程,使其成功运行,但是分离回收
@@ -88,7 +88,7 @@ bool threadpool<T>::append(T *request, int state)
         return false;
     }
 
-    //TODO
+    //读为0,写为1
     request->m_state = state;
 
     //把fd加入请求队列
@@ -97,7 +97,7 @@ bool threadpool<T>::append(T *request, int state)
     //解锁
     m_queuelocker.unlock();
 
-    //TODO:如果错误终止并返回false?
+    //发送信号
     m_queuestat.post();
 
     return true;
@@ -110,18 +110,18 @@ bool threadpool<T>::append_p(T *request)
     m_queuelocker.lock();
 
     //根据硬件，预先设置请求队列的最大值
-    if (m_workqueue.size() >= m_max_requests) /*如果请求队列大于允许最大请求数,就结束*/
+    if (m_workqueue.size() >= m_max_requests)
     {
-        m_queuelocker.unlock(); /*TODO:为什么要unlock*/
+        m_queuelocker.unlock();
         return false;
     }
 
     //添加任务
     m_workqueue.push_back(request);
-    m_queuelocker.unlock(); /*TODO:m_queuelocker有什么用*/
+    m_queuelocker.unlock();
 
     //信号量提醒有任务处理
-    m_queuestat.post(); /*TODO:m_queuestat会把状态调成post吗*/
+    m_queuestat.post();
     return true;
 }
 

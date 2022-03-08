@@ -104,8 +104,6 @@ bool connection_pool::ReleaseConnection(MYSQL *con)
 	--m_CurConn; /*现用的连接减少*/
 
 	lock.unlock(); /*解锁*/
-
-    /*TODO:释放连接原子加1*/
 	reserve.post();
 	return true; /*TODO:应该是给别人做错误处理*/
 }

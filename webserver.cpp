@@ -423,7 +423,7 @@ void WebServer::dealwithwrite(int sockfd)
         }
     }
 
-    //proactor 把写完成事件放进队列
+    //proactor 直接写
     else
     {
         if (users[sockfd].write())
