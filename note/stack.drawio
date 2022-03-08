@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="LbE9PppjevmL19wuLY-l" name="第 1 页">
-        <mxGraphModel dx="2251" dy="2547" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="1920" background="#FFFFFF" math="0" shadow="0">
+        <mxGraphModel dx="2078" dy="2547" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="1920" background="#FFFFFF" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -14,34 +14,43 @@
                     <mxGeometry x="400" y="740" width="60" height="80" as="geometry"/>
                 </mxCell>
                 <mxCell id="5" value="" style="shape=partialRectangle;whiteSpace=wrap;html=1;bottom=1;right=1;left=1;top=0;fillColor=none;routingCenterX=-0.5;strokeColor=#000000;strokeWidth=3;" parent="1" vertex="1">
-                    <mxGeometry x="-460" y="-160" width="180" height="730" as="geometry"/>
+                    <mxGeometry x="-450" y="-50" width="180" height="730" as="geometry"/>
                 </mxCell>
                 <mxCell id="10" value="eventLoop" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" parent="1" vertex="1">
                     <mxGeometry x="422.9" y="240" width="120" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="14" value="process()" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" parent="1" vertex="1">
-                    <mxGeometry x="10" y="340" width="120" height="60" as="geometry"/>
+                <mxCell id="14" value="template" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" parent="1" vertex="1">
+                    <mxGeometry x="-170" y="30" width="120" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="18" value="parse_head" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" parent="1" vertex="1">
-                    <mxGeometry x="-90" y="230" width="120" height="60" as="geometry"/>
+                <mxCell id="18" value="并发模型相关" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" parent="1" vertex="1">
+                    <mxGeometry x="-440" y="160" width="120" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="21" value="run" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" parent="1" vertex="1">
-                    <mxGeometry x="-430" y="460" width="120" height="60" as="geometry"/>
+                <mxCell id="21" value="数据库登录注册相关" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" parent="1" vertex="1">
+                    <mxGeometry x="-440" y="350" width="120" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="22" value="modfd()" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" parent="1" vertex="1">
-                    <mxGeometry x="-110" y="40" width="120" height="60" as="geometry"/>
+                <mxCell id="22" value="项目介绍" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" parent="1" vertex="1">
+                    <mxGeometry x="-610" y="-110" width="120" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="23" value="close_conn" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" parent="1" vertex="1">
-                    <mxGeometry x="-180" y="140" width="120" height="60" as="geometry"/>
+                <mxCell id="23" value="线程池相关" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" parent="1" vertex="1">
+                    <mxGeometry x="-440" y="80" width="120" height="60" as="geometry"/>
                 </mxCell>
                 <mxCell id="24" value="adjust_timer" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" parent="1" vertex="1">
                     <mxGeometry x="20" y="530" width="120" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="25" value="http::write()" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" parent="1" vertex="1">
-                    <mxGeometry x="-120" y="390" width="120" height="60" as="geometry"/>
+                <mxCell id="25" value="HTTP报文解析相关" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" parent="1" vertex="1">
+                    <mxGeometry x="-440" y="260" width="120" height="60" as="geometry"/>
                 </mxCell>
                 <mxCell id="26" value="" style="triangle;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="-200" y="290" width="60" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="27" value="定时器相关" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" parent="1" vertex="1">
+                    <mxGeometry x="-440" y="420" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="28" value="压测相关" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" parent="1" vertex="1">
+                    <mxGeometry x="-440" y="510" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="29" value="综合能力" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" parent="1" vertex="1">
+                    <mxGeometry x="-440" y="600" width="120" height="60" as="geometry"/>
                 </mxCell>
             </root>
         </mxGraphModel>
