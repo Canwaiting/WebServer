@@ -732,7 +732,6 @@ bool http_conn::add_response(const char *format, ...)
     //清空可变参数列表
     va_end(arg_list);
 
-    /*log*/
     LOG_INFO("request:%s", m_write_buf);
 
     return true;

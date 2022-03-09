@@ -114,7 +114,7 @@ private:
     bool add_blank_line();
 
 public:
-    static int m_epollfd; /*TODO*/
+    static int m_epollfd;
     static int m_user_count; //用户连接数
     MYSQL *mysql;
     int m_state;  //读为0, 写为1
@@ -123,9 +123,9 @@ private:
     int m_sockfd; //子线程中处理的socket
     sockaddr_in m_address; /*socket的地址*/
     char m_read_buf[READ_BUFFER_SIZE]; //读缓冲区
-    int m_read_idx; /*缓冲区中m_read_buf中数据的最后一个字节的下一个位置*/
-    int m_checked_idx; /*m_read_buf读取的位置*/
-    int m_start_line; //m_read_buf中已经解析的字符个数
+    int m_read_idx; //读缓冲区中数据最后一个字节的下一个位置*/
+    int m_checked_idx; //读缓冲区中已发送字节
+    int m_start_line; //读缓冲区中已经解析的字符个数
 
     char m_write_buf[WRITE_BUFFER_SIZE]; //写缓冲区
     int m_write_idx; //写缓冲区中待发送的字节数
@@ -151,7 +151,7 @@ private:
     int bytes_have_send; //已发送字节数
     char *doc_root; //文档的根,表现为数字
 
-    map<string, string> m_users; /*TODO:可能存储的是用户的名字和密码*/
+    map<string, string> m_users; //服务器缓存数据库数据
     int m_TRIGMode; /*TODO:ET和LT模式?*/
     int m_close_log; /*关闭LOG?*/
 
