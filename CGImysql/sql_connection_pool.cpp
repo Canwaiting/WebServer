@@ -118,17 +118,16 @@ void connection_pool::DestroyPool()
     /*如果连接池非空*/
 	if (connList.size() > 0)
 	{
-        /*TODO:cpp 通过迭代器遍历,关闭数据库链接*/
-		list<MYSQL *>::iterator it; /*TODO:cpp*/
+		list<MYSQL *>::iterator it;
 		for (it = connList.begin(); it != connList.end(); ++it) /*从头到尾不断*/
 		{
-			MYSQL *con = *it; /*TODO:相当于暂存?*/
+			MYSQL *con = *it;
 			mysql_close(con); /*调用关闭函数*/
 		}
         /*更新参数*/
 		m_CurConn = 0;
 		m_FreeConn = 0;
-		connList.clear(); /*TODO:cpp中的函数?还是自己的*/
+		connList.clear();
 	}
 
     /*解锁*/

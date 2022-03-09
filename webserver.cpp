@@ -502,6 +502,8 @@ void WebServer::eventLoop()
                 dealwithwrite(sockfd);
             }
         }
+
+        //超时信号
         if (timeout)
         {
             //处理超时事件并重置超时信号警告
