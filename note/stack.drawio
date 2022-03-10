@@ -19,38 +19,29 @@
                 <mxCell id="10" value="eventLoop" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" parent="1" vertex="1">
                     <mxGeometry x="422.9" y="240" width="120" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="14" value="proactor只能是读吗" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" parent="1" vertex="1">
-                    <mxGeometry x="-190" y="-60" width="120" height="60" as="geometry"/>
+                <mxCell id="23" value="&lt;span style=&quot;font-size: inherit ; color: inherit ; line-height: inherit&quot;&gt;最小堆&lt;/span&gt;" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" parent="1" vertex="1">
+                    <mxGeometry x="-420" y="490" width="120" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="18" value="" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" parent="1" vertex="1">
-                    <mxGeometry x="-650" y="80" width="120" height="60" as="geometry"/>
+                <mxCell id="24" value="两题leetcode" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" parent="1" vertex="1">
+                    <mxGeometry x="-190" y="70" width="120" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="21" value="数据库登录注册相关" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" parent="1" vertex="1">
-                    <mxGeometry x="-220" y="50" width="120" height="60" as="geometry"/>
-                </mxCell>
-                <mxCell id="22" value="锁是本来就有的吗" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" parent="1" vertex="1">
-                    <mxGeometry x="-650" y="240" width="120" height="60" as="geometry"/>
-                </mxCell>
-                <mxCell id="23" value="&lt;span style=&quot;font-size: inherit ; color: inherit ; line-height: inherit&quot;&gt;line_bad和line_ok的去向&lt;/span&gt;" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" parent="1" vertex="1">
-                    <mxGeometry x="-230" y="120" width="120" height="60" as="geometry"/>
-                </mxCell>
-                <mxCell id="24" value="adjust_timer" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" parent="1" vertex="1">
-                    <mxGeometry x="20" y="530" width="120" height="60" as="geometry"/>
-                </mxCell>
-                <mxCell id="25" value="日志相关" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" parent="1" vertex="1">
-                    <mxGeometry x="-420" y="410" width="120" height="60" as="geometry"/>
+                <mxCell id="25" value="1题leetcode" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" parent="1" vertex="1">
+                    <mxGeometry x="-410" y="180" width="120" height="60" as="geometry"/>
                 </mxCell>
                 <mxCell id="26" value="" style="triangle;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="-200" y="290" width="60" height="80" as="geometry"/>
                 </mxCell>
-                <mxCell id="27" value="定时器相关" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" parent="1" vertex="1">
-                    <mxGeometry x="-420" y="320" width="120" height="60" as="geometry"/>
+                <mxCell id="27" value="网络5面经" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" parent="1" vertex="1">
+                    <mxGeometry x="-410" y="80" width="120" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="28" value="压测相关" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" parent="1" vertex="1">
-                    <mxGeometry x="-440" y="510" width="120" height="60" as="geometry"/>
+                <mxCell id="28" value="cpp5面经" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" parent="1" vertex="1">
+                    <mxGeometry x="-410" y="260" width="120" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="29" value="综合能力" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" parent="1" vertex="1">
+                <mxCell id="29" value="&lt;b&gt;说一下前端发送请求后，服务器处理的过程，中间涉及哪些协议&lt;/b&gt;？" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" parent="1" vertex="1">
                     <mxGeometry x="-440" y="600" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="30" value="2题leetcode" style="whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=3;" vertex="1" parent="1">
+                    <mxGeometry x="-410" y="340" width="120" height="60" as="geometry"/>
                 </mxCell>
             </root>
         </mxGraphModel>
